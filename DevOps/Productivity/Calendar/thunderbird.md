@@ -2,8 +2,8 @@
 title: Thunderbird
 linkTitle: Thunderbird
 author: Christian Külker
-date: 2023-07-14
-version: 0.1.4
+date: 2023-07-17
+version: 0.1.5
 locale: en_US
 lang: en
 type: doc
@@ -264,7 +264,7 @@ The is the template `tpl/caldav_calendar.js`:
 user_pref("calendar.registry.{{ calendar.uuid }}.cache.enabled", true);
 user_pref("calendar.registry.{{ calendar.uuid }}.calendar-main-default", true);
 user_pref("calendar.registry.{{ calendar.uuid }}.calendar-main-in-composite", true);
-user_pref("calendar.registry.{{ calendar.uuid }}.color", "#1c71d8");
+user_pref("calendar.registry.{{ calendar.uuid }}.color", "{{ calendar.color }}");
 user_pref("calendar.registry.{{ calendar.uuid }}.disabled", false);
 user_pref("calendar.registry.{{ calendar.uuid }}.imip.identity.key", "{{ calendar.imip.identity }}");
 user_pref("calendar.registry.{{ calendar.uuid }}.name", "{{ calendar.name }}");
@@ -397,6 +397,7 @@ ICS calendars into Thunderbird across various machines for one user.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.5   | 2023-07-15 | Fix missing color in CalDAV template                 |
 | 0.1.4   | 2023-07-14 | Add section about adding a ICS calendar (Ansible)    |
 | 0.1.3   | 2023-07-13 | Add section about adding a CalDAV calendar (Ansible) |
 | 0.1.2   | 2023-07-12 | Fix formatting                                       |
