@@ -16,9 +16,7 @@ description: Compiling Perl From Source is easier then most people think
 
 ## Introduction
 
-[LINK](index.en.md)
-
-Compiling Perl From Source is easier then most people think.
+> Compiling Perl From Source is easier then most people think.
 
 ## Compiling Perl from Source
 
