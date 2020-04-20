@@ -1,6 +1,6 @@
 ---
 title: Dev
-type: doc
+type: title
 author: Christian Külker
 list: True
 description: Development

@@ -1,6 +1,6 @@
 ---
 title: DevOps
-type: doc
+type: title
 list: True
 
 ---
