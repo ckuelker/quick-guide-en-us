@@ -4,7 +4,6 @@ type: title
 author: Christian Külker
 date: 2020-04-20
 description: The Quick Guide provides documents to various topics to get task done fast without much reading
-list: True
 
 ---
 
