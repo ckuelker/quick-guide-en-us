@@ -1,5 +1,5 @@
 ---
-linkTitle NUMA
+linkTitle: NUMA
 title: Non-Uniform Memory Access
 type: doc
 author: Christian Külker
