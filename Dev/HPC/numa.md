@@ -30,11 +30,11 @@ is quite popular in High Performance Computing (HPC).
 
 ## Changes
 
-Version Date       Author           Notes
-------- ---------- ---------------- -------------------------------------------
-0.1.1   2020-05-01 Christian Külker update for Debian Buster
-0.1.0   2016-03-24 Christian Külker initial release
- 
+| Version | Date       | Author           | Notes                             |
+| ------- | ---------- | ---------------- | --------------------------------- |
+| 0.1.1   | 2020-05-01 | Christian Külker | update for Debian Buster          |
+| 0.1.0   | 2016-03-24 | Christian Külker | initial release                   |
+
 ## Installing
 
 The content of installation varies. It is recommended to either
