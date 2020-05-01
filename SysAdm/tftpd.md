@@ -91,7 +91,7 @@ option domain-name-servers 208.67.222.222, 208.67.220.220;
 
 The boot directory is at `/var/lib/tftpboot`
 
-```
+```shell
 mkdir -v /var/lib/tftpboot/pxelinux.cfg
 mkdir -vp /var/lib/tftpboot/centos6/i386 /var/lib/tftpboot/centos6/x86_64 
 rsync -av rsync.hrz.tu-chemnitz.de::ftp/pub/linux/centos/6/os/i386/images/\
