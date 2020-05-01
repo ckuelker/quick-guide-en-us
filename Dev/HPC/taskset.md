@@ -10,7 +10,7 @@ categories:
     - HPC
 tags:
     - taskset
-    - numctl
+    - numactl
 
 ---
 
