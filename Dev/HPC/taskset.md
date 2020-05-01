@@ -35,9 +35,9 @@ taskset -p 32677
 pid 32677's current affinity mask: ff
 ```
 
-The mask is a bit mask. For this example the process as the affinity to run on
-all CPUs hex `xff` = binary `11111111` = decimal 8 cores. That the system as 8
-cores can easy confirmed with [numctl](./numactl.html)
+The mask is a bit mask. For this example the process has the affinity to run on
+all CPUs hex `0xff` = binary `11111111` = decimal 8 cores. That the system has
+8 cores can easy confirmed with [numctl](./numa.html)
 
 ```shell
 numactl --hardware
@@ -71,6 +71,7 @@ scheduler one should know and understand how to pin a process to certain CPU's
 taskset 0xf0 long-running-command
 ```
 
-It is of cores also possible to run a process on a **range** of CPU's with the
-`-cp` option, but that usually make sense if the task switching has no penalty
-involved. Usually it is better to pin a process to one core.
+It is of course also possible to run a process on a **range** of CPU's with the
+`-cp` option, but that usually makes only sense if the task switching has no
+penalty involved. Usually it is better to pin a process to one core unless the
+task is a wrapper that pins it sub process by itself to dedicated cores.
