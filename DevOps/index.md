@@ -12,7 +12,7 @@ information-technology operations[^1] (Ops) which aims to _shorten_ the systems
 development life cycle and provide _continuous_ delivery with high software
 quality. [🡺 wikipedia](https://en.wikipedia.org/wiki/DevOps)
 
-[^1]: The term _information-technology operations (Ops)_ is linked in wikipedia
+[^1]: The term _information-technology operations (Ops)_ is linked in Wikipedia
 to [Data Center
 Management](https://en.wikipedia.org/wiki/Data_center_management#Operations)
 which is translated into only _Bahasa Indonesia_ and no other language (at the
