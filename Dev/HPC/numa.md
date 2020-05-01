@@ -4,6 +4,7 @@ title: Non-Uniform Memory Access
 type: doc
 author: Christian Külker
 date: 2020-05-01
+version: 0.1.1
 keywords:
     - NUMA
     - HPC
