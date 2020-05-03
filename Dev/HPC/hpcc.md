@@ -1,8 +1,17 @@
 ---
 linkTitle: HPCC
-title: HPC Callange
+title: HPC Challenge
 author: Christian Külker
 date: 2016-03-20
+type: doc
+disclaimer: True
+toc: True
+categories:
+- HPC
+- Benchmark
+tags:
+- Hpcc
+description: HPC Challenge Benchmark
 
 ---
 
