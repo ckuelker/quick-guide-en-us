@@ -2,8 +2,22 @@
 title: Ipmitool
 type: doc
 author: Christian Külker
-date: 2016-02-12
-description:  Interaction with the Board Management Controller
+date: 2020-05-03
+keywords:
+    - ipmitool
+categories:
+    - BMC
+tags:
+    - ipmitool
+    - IPMI
+    - BIOS
+    - SDR
+    - SEL
+    - FRU
+    - SOL
+    - nmap
+    - DHCP
+description: Interaction with the Board Management Controller
 
 ---
 
@@ -17,6 +31,14 @@ information.
 * SDR - Sensor Data Repository
 * SEL - System Event Log
 * FRU - Field Replaceable Unit
+
+## Changes
+
+| Version | Date       | Author           | Notes                             |
+| ------- | ---------- | ---------------- | --------------------------------- |
+| 0.1.2   | 2020-05-03 | Christian Külker | Debug SOL                         |
+| 0.1.1   | 2020-05-02 | Christian Külker | Set MAC address raw               |
+| 0.1.0   | 2016-02-12 | Christian Külker | initial release                   |
 
 ## Install
 
@@ -89,6 +111,20 @@ Setting the MAC address if the BMC can be done via the OS.
 ipmitool lan set <channel> macaddr <macaddr>
 ```
 
+Sometimes the MAC address can only be set by Vendor specific raw commands.
+Sometimes the BMC has 2 LAN interfaces. The number depends on the hardware and
+BMC firmware. The channel number needs usually to be specified.
+
+```shell
+ipmitool raw 0x0c 0x01 0x01 0xc2 0x00
+ipmitool lan set 1 macaddr aa:bb:cc:dd:ee:ff
+ipmitool lan print 1
+
+ipmitool raw 0x0c 0x01 0x08 0xc2 0x01
+ipmitool lan set 8 macaddr a0:42:3f:2c:61:a2
+ipmitool lan print 8
+```
+
 ## Activate SOL
 
 To activate the **Serial Console Over LAN** (SOL). If the OEM configured the
@@ -99,6 +135,20 @@ is usually not changed, it can be a security problem.
 ipmitool -I lanplus -H $REMOTEHOST -U $USER -P $PASSWORD sol activate
 ipmitool -I lanplus -H $REMOTEHOST -U $USER -P $PASSWORD -v sol info
 ```
+
+## Debug SOL
+
+To debug the setup of **Serial Over Lan** (SOL) add the `-v` option to enable
+verbose output and in some case set the privilege level explicit with the `-L`
+option.
+
+```shell
+    ipmitool -v -L USER -I lanplus -H 172.20.50.102 -U admin -P admin sol activate
+```
+
+If his does not help use `namp`. See [ipmitool Fails with Authentication
+Issues](http://h20564.www2.hpe.com/hpsc/doc/public/display?docId=emr_na-c03481170)
+
 
 ## Raw Commands
 
@@ -123,5 +173,7 @@ Selftest: passed
 ## Links
 
 * [ipmitool source](https://github.com/ipmitool/ipmitool)
+* [IPMI v2.0 Rev 1.1](https://www.intel.com/content/dam/www/public/us/en/documents/product-briefs/ipmi-second-gen-interface-spec-v2-rev1-1.pdf)
+
 
 
