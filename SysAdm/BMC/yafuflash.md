@@ -1,5 +1,5 @@
 ---
-title:  YAFUFlash
+title: YAFUFlash
 type: doc
 author: Christian Külker
 date: 2020-05-02
