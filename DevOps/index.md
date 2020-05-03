@@ -1,7 +1,7 @@
 ---
 title: DevOps
 type: title
-list: True
+cards: True
 
 ---
 
@@ -21,3 +21,14 @@ in [🡺 Wikipedia](https://de.wikipedia.org/wiki/DevOps) the term _System
 Administration_ is used.
 
 {{% /pageinfo %}}
+
+* HPC: Not only development need to be rolled out fast also new versions
+  of the OS needs to be deployed fast. As for HPC image solutions for the base
+  OS and for basic software like the MPI stack are quite common. There are many
+  solution: Bright Cluster Manager, Warewulf, OpenHPC just to name a few.
+  Unlike traditional server deployment DevOps is available in HPC since decades
+  as some part of HPC is to deploy and test out code. The flexibility is
+  archived via queueing system (like Slurm and others) that sends new
+  applications including its environment to the worker nodes.
+
+
