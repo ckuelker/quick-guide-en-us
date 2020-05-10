@@ -30,6 +30,22 @@ checking.
 aptitude install flake8
 ```
 
+## Versions
+
+Debian Stretch
+
+```shell
+flake8 --version
+3.2.1 (mccabe: 0.5.3, pyflakes: 1.3.0, pycodestyle: 2.2.0) CPython 3.5.3 on Linux
+```
+
+Debian Buster
+
+```shell
+flake8 --version
+3.6.0 (mccabe: 0.6.1, pycodestyle: 2.4.0, pyflakes: 2.0.0) CPython 3.7.3 on Linux
+```
+
 ## Usage
 
 The command line tool `flake8` can be used on a single file or on multiple
@@ -63,6 +79,42 @@ subset of useful command line options.
 * `--config=CONFIG`: specify the configuration file (for custom options)
 * `--max-line-length=n`: set different line length (default 79)
 
+## Ignoring Errors (Violations)
+
+### Ignoring Files Or Directory
+
+To ignore whole files or directories
+
+```shell
+flake8 --exclude path/to/file
+```
+
+### Ignoring Error (Violation) Types
+
+To ignore certain error (violation) types, it is possible to provide the ID on
+the command line. (It is also possible to it in a configuration file)
+
+New exclude list:
+
+```shell
+flake8 --ignore=E1,E23,W503 path/to/files/
+```
+
+Extending the exclude list:
+
+```shell
+flake8 --extend-ignore=E1,E23 path/to/files/
+```
+
+### Ignoring Lines
+
+If the line is short enough it is possible to ignore one line with a special
+comment `# noqa`.
+
+```shell
+example = lambda: 'example'  # noqa: E731
+```
+
 ## Discussion
 
 Having **flake8**  under Python is nice to have. Compared with other solutions,
@@ -78,12 +130,3 @@ Perl the syntax philosophy "there is only one way" it is of course no
 wonder that **flake8** do not offer much to customize syntax, but one real
 advantage of **flake8** is, that it print out IDs referencing the rules, that
 can be used up to look up and find more information about specific rules.
-
-Using **flake8**, I did not found a method to disable the report of one
-specific occurrence of a syntax violations on a specific line, like it is
-possible to silence **perltidy** for one specific code line. There are cases
-when longer function names or variable names make code clearer. It seems quite
-strange, just to silence **flake8** to rename those, disable the whole issue ID
-or to spend more time on formatting, than to write the function in the first
-place.
-
