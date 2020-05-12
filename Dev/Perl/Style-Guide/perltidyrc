@@ -1,0 +1,66 @@
+#
+# PBP perltidy version 0.1 (2009-03-06)
+#
+
+# Max line width is 78 cols
+-l=78
+
+# Indent level is 4 cols
+-i=4
+
+# Continuation indent is 4 cols
+-ci=4
+
+# Output to STDOUT
+-st
+
+# ckuelker 2009-02-05: if you switch this on in vim it will print error
+# messages directly in your code! Happy clean up!!
+# Errors to STDERR
+#-se
+
+# Maximal vertical tightness
+# switch this on (set this to 2) seems to be make the layout too tight
+# switch this on might be a mistake in PBP (German edition) since PBP
+# recommends K&R style, see chapter 2
+# ON:
+#            my $dog = CipUX::Dog->new(
+#                {   dog_hr       => $dog_hr,
+#                    object       => $object,
+#                    overwrite_hr => $overwrite_hr,
+#                }
+#            );
+# OFF:
+#            my $dog = CipUX::Dog->new(
+#                {
+#                    dog_hr       => $dog_hr,
+#                    object       => $object,
+#                    overwrite_hr => $overwrite_hr,
+#                }
+#            );
+#-vt=2
+
+# No extra indentation for closing brackets
+-cti=0
+
+# Medium parenthesis tightness
+-pt=1
+
+# Medium brace tightness
+-bt=1
+
+# Medium square bracket tightness
+-sbt=1
+
+# Medium block brace tightness
+-bbt=1
+
+# No space before semicolons
+-nsfs
+
+# Don't outdent long quoted strings
+-nolq
+
+# Break before all operators
+-wbb="% + - * / x != == >= <= =~ !~ < > | & >= < = **= += *= &= <<= &&= -= /= |= >>= ||= .= %= ^= x="
+
