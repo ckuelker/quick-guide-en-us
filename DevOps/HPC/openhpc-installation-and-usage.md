@@ -9,6 +9,19 @@ disclaimer: True
 TOC: True
 categories:
 - HPC
+commands:
+- selinux
+- selinuxenables
+- setenforce
+- getenforce 
+- yum
+- systemctl
+- rpm
+- ifconfig
+- useradd
+- perl 
+- exportfs
+- chroot
 tags:
 - OpenHPC Installation
 - OpenHPC Usage
