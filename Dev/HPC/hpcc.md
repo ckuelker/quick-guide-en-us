@@ -5,7 +5,7 @@ author: Christian Külker
 date: 2016-03-20
 type: doc
 disclaimer: True
-toc: True
+TOC: True
 categories:
 - HPC
 - Benchmark

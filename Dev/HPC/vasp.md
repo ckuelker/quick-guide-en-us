@@ -6,7 +6,7 @@ date: 2020-05-03
 version: 0.1.0
 type: doc
 disclaimer: True
-toc: True
+TOC: True
 categories:
 - HPC
 - Benchmark

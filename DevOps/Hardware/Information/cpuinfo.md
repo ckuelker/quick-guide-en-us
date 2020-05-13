@@ -6,7 +6,7 @@ date: 2016-06-22
 version: 0.1.0
 type: doc
 disclaimer: True
-toc: True
+TOC: True
 categories:
 - SysAdm
 tags:

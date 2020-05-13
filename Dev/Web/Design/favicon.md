@@ -5,7 +5,7 @@ author: Christian Külker
 date: 2020-05-11
 type: doc
 disclaimer: True
-toc: True
+TOC: True
 categories:
 - Web
 - Design

@@ -4,7 +4,7 @@ author: Christian Külker
 date: 2020-05-12
 type: doc
 disclaimer: True
-toc: True
+TOC: True
 categories:
 - Perl
 - Style-Guide

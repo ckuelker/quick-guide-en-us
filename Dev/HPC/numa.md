@@ -6,7 +6,7 @@ author: Christian Külker
 date: 2020-05-01
 version: 0.1.1
 disclaimer: True
-toc: True
+TOC: True
 keywords:
     - NUMA
     - HPC
