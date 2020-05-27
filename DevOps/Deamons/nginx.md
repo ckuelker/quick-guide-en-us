@@ -1,8 +1,8 @@
 ---
 title: Basic Things With Nginx
 author: Christian Külker
-date: 2020-05-23
-version: 0.4
+date: 2020-05-27
+version: 0.5
 type: doc
 disclaimer: True
 TOC: True
@@ -13,6 +13,7 @@ commands:
 - nginx
 - systemctl
 - nmap
+- wget
 tags:
 - Certbot
 - Nginx
@@ -415,10 +416,48 @@ server {
 
 ```
 
+## Serving A Static HTML Mirror
+
+To mirror static HTML files in an ideal world [Nginx] would work out of the box.
+However sometime the pages to served might come from a non static page. In this
+case it can occur that the mirroring script (for example `wget`) had written
+some files with a '?'. Lets assume
+
+```
+https://example.com/Page             - dynamic html page
+https://example.com/Page?action=raw  - raw Markdown content
+```
+
+When writing down the static content this might lead to files like this:
+
+```
+mirror.com/example.com/Page/index.html   - a static HTML page
+mirror.com/example.com/Page?action=raw   - a static conten file
+```
+
+With the usual configuration [Nginx] would give a `404 Not Found` result, when
+trying to get the URL `http://mirror.com/example.com/Page?action=raw`.  With a
+changed try setup `$uri?$args` [Nginx] can server this page at least to let the
+client have a download option, as this will be `application/octet-stream`.
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name localhost;
+    root /opt/mirror.com/example.com;
+    index index.html;
+    location / {
+        try_files $uri $uri/ $uri?$args =404;
+    }
+}
+```
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.5     | 2020-05-27 | Serving static HTML mirror                           |
 | 0.4     | 2020-05-23 | Certbot root with $host                              |
 | 0.3     | 2020-01-31 | TLSv1 TLSv1.1                                        |
 | 0.2     | 2017-01-27 |                                                      |
