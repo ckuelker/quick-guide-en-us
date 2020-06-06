@@ -114,7 +114,7 @@ Perltidy uses its configuration file at: `~/.perltidyrc`
 
 * Download: [./perltidyrc](perltidyrc)
 
-# Activation In Vim
+## Activation In Vim
 
 To activate ``perltidy`` cleanup in vim you can add this to `~/.vimrc`
 
