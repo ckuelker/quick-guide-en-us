@@ -1,8 +1,8 @@
 ---
 title: Infiniband
 author: Christian Külker
-date: 2020-05-18
-version: 0.1.0
+date: 2020-09-05
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
@@ -359,7 +359,7 @@ On host B:
 # rdma_bw -b nodeABC
 ```
 
-# Other Useful Commands
+## Other Useful Commands
 
 
 ```shell
