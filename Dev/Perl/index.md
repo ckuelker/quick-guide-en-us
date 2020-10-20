@@ -2,7 +2,7 @@
 title: Perl
 type: title
 author: Christian Külker
-list: true
+cards: True
 description: Perl Development
 
 ---
