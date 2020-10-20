@@ -2,7 +2,7 @@
 title: Dev
 type: title
 author: Christian Külker
-list: True
+cards: True
 description: Development
 
 ---
