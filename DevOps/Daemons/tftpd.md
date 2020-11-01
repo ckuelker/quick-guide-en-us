@@ -1,6 +1,7 @@
 ---
 linkTitle: Tftpd
 title: Trivial File Transfer Daemon
+type: doc
 author: Christian Külker
 date: 2016-06-22
 keywords:
