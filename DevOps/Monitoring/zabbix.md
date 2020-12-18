@@ -1,8 +1,8 @@
 ---
 title: Zabbix
 author: Christian Külker
-date: 2020-12-15
-version: 0.1.0
+date: 2020-12-18
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
@@ -177,6 +177,11 @@ forward.
 aptitude install zabbix-agent
 ```
 
+Under Debian 10 Buster is the [Zabbix] client configured to use a [Zabbix]
+server on `localhost`. Of course this is seldom the case. To use a different
+server, add server IP to the entries of `Server` and `ServerActive` parameters
+inside the client configuration `/etc/zabbix/zabbix_agentd.conf`.
+
 In case you use a firewall you have to open port `tcp/10050`. There is also the
 service `zabbix-agent` for `firewalld`.
 
@@ -185,6 +190,14 @@ service `zabbix-agent` for `firewalld`.
 - [zabbix]
 - [documentation]
 - [row-size-too-large]
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2020-12-18 | Add hint for client configuration                    |
+| 0.1.0   | 2020-12-15 | Initial release                                      |
+
 
 [zabbix]: https://www.zabbix.com/
 [documentation]:  https://www.zabbix.com/documentation/current/manual
