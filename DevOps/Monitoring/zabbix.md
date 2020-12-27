@@ -10,6 +10,8 @@ categories:
 - Monitoring
 tags:
 - Zabbix
+- Nagios
+- Icinga2
 description: Installation of Zabbix on Debian 10 Buster
 
 ---
@@ -193,7 +195,7 @@ service `zabbix-agent` for `firewalld`.
 
 ## Critique Zabbix 4.0.4
 
-While the installation of [Zabbix] is easy ans straight forward and a lot of
+While the installation of [Zabbix] is easy and straight forward and a lot of
 data can be collected easily with templates and nice graphs can be made
 visible, [Zabbix] 4.0.4 (and likely others) suffers from architecture
 deficits, probably resulting from the very flexible data model.
@@ -250,16 +252,18 @@ preconfigured [Zabbix] installation as some cluster administration stacks
 provide.
 
 A word on [Zabbix] deployment. In case a preconfigured [Zabbix] server needs to
-be deployed to many sites or has to be set up for certain hardware entity, like
-a rack or chassis (as a cluster entity for example), the [Zabbix] server
-configuration lies mostly in its database and not in from of configuration
-files. Therefore, if the configuration was only performed via the web
-interface, the content of the database has to be duplicated and host values
-would need to be removed from the database for the new hardware entities. This
-also would make [Zabbix] updates very difficult. The solution or an easy
-solution to this problem is not known to me, but seems like a major problem.
-Other monitor systems like icinga2 or nagios which is configured via files can
-easily be distributed via git, puppet or other means.
+be deployed to many sites or if it has to be set up for a certain hardware
+entity, like a rack or chassis (as a cluster entity for example), the [Zabbix]
+server configuration lies mostly in its database and not in from of
+configuration files. This means [Zabbix] has no separation of configuration and
+process data. Therefore, if the configuration was only performed via the web
+interface, the content of the database has to be duplicated and host
+values/process data would need to be removed from the database for new hardware
+entities. This also would make [Zabbix] updates very difficult. The solution or
+an easy solution to this problem is not known to me, but seems like a major
+problem. Other monitor systems like [Icinga2] or [Nagios] which are configured
+via files can easily be distributed/cloned via git, puppet or other means, as
+they separate process data from configuration data.
 
 ## History
 
@@ -273,3 +277,5 @@ easily be distributed via git, puppet or other means.
 [zabbix]: https://www.zabbix.com/
 [documentation]:  https://www.zabbix.com/documentation/current/manual
 [row-size-too-large]: https://mariadb.com/kb/en/troubleshooting-row-size-too-large-errors-with-innodb/
+[icinga2]: https://icinga.com/
+[nagios]: https://www.nagios.org/
