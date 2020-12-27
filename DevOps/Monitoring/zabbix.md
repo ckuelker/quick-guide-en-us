@@ -1,8 +1,8 @@
 ---
 title: Zabbix
 author: Christian Külker
-date: 2020-12-18
-version: 0.1.1
+date: 2020-12-27
+version: 0.1.2
 type: doc
 disclaimer: True
 TOC: True
@@ -191,10 +191,81 @@ service `zabbix-agent` for `firewalld`.
 - [documentation]
 - [row-size-too-large]
 
+## Critique Zabbix 4.0.4
+
+While the installation of [Zabbix] is easy ans straight forward and a lot of
+data can be collected easily with templates and nice graphs can be made
+visible, [Zabbix] 4.0.4 (and likely others) suffers from architecture
+deficits, probably resulting from the very flexible data model.
+
+- Automatic setup of Zabbix server templates differs from other servers
+- Host groups do not allow to apply automatic template assignments
+- Template assignments have to be done on a per host basis
+- Not working/supported templates distributed (MySQL)
+- Not working/supported templates can be chosen
+- When chosen a not supported template [Zabbix] will not complain
+- Working data queries are not always displayed, but only problems: seeing no
+  problems, do not mean that there is no problem, as some [Zabbix] problems are
+  discarded silently: this is a no go for a monitoring system (this forbids to
+  use [Zabbix] as the only monitoring system for an installation)
+- No easy default graph setup. All graphs have to be chosen for each host
+- No default dashboard/ overview over working services/data collection
+- Encryption not default setup
+- Discovered hosts can not be added via web interface
+- Maps are not updated automatically (and not added/updated from database)
+- Difficult to add templates/ data queries (for inexperienced people)
+- Number of unsupported items are displayed in dashboard, but no link and
+  difficult to understand which item is not supported
+- When adding a template to a host, not a button like "update" (as displayed
+  under the form) but the link "add" inside the form has to be clicked: this
+  breaks usability and is not intuitive. A button would be preferable.
+- Naming of boxes are not intuitive: box 1 "Linked templates" and box 2 "Link
+  new template". Changing box 2 will update box 1. A different design with only
+  1 box would be better. Also the "add" link works as a **button** that do not
+  add something, but link a template. How confusing can it be?
+- Some hosts added to host groups are shown in the inventory, but others are
+  not. This points to the fact that some concepts are not understandable via
+  the web interface and that some data dependency concepts are implicit and can
+  only be understood via a manual
+- Most functions of the web interface have no default query, but need a manual
+  query. While this clearly has the advantage of flexibility, junior admins
+  would probably do not know what to query in the first place.
+- Default query of Audit Report says 'no data'
+- Default query of Action log Report says 'no data'
+- No host specific reports
+- When clicking a top level tab like "Monitoring" the sub level tab is updated,
+  but not the page content and a second click on the sub level tab has to be
+  performed. This is clearly a bug
+- ...
+
+Therefore one get the impression that the web interface in its fresh installed
+form is not programmed with the vision in mind to monitor computer systems but
+to query a database in as many as possible ways.
+
+However, there are good preconfigured [Zabbix] instances that have a plethora
+of graphs, dash boards and other aggregated data points from which a system
+administrator can understand the situation (an not only the problems) of an
+installation/cluster. As a consequence, there is a huge added value, for a
+preconfigured [Zabbix] installation as some cluster administration stacks
+provide.
+
+A word on [Zabbix] deployment. In case a preconfigured [Zabbix] server needs to
+be deployed to many sites or has to be set up for certain hardware entity, like
+a rack or chassis (as a cluster entity for example), the [Zabbix] server
+configuration lies mostly in its database and not in from of configuration
+files. Therefore, if the configuration was only performed via the web
+interface, the content of the database has to be duplicated and host values
+would need to be removed from the database for the new hardware entities. This
+also would make [Zabbix] updates very difficult. The solution or an easy
+solution to this problem is not known to me, but seems like a major problem.
+Other monitor systems like icinga2 or nagios which is configured via files can
+easily be distributed via git, puppet or other means.
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2020-12-27 | Critique Zabbix 4.0.4                                |
 | 0.1.1   | 2020-12-18 | Add hint for client configuration                    |
 | 0.1.0   | 2020-12-15 | Initial release                                      |
 
