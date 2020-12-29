@@ -2,15 +2,20 @@
 title: Radicale
 author: Christian Külker
 date: 2020-12-29
-version: 0.1.1
+version: 0.1.2
 type: doc
 disclaimer: True
 TOC: True
 categories:
 - Daemons
 tags:
+- Apache2
+- Evolution
+- Nginx
 - Radicale
-description: Radicale
+- Thunderbird
+- Debian Package Build
+description: A simple calendar, to do list, memo and contact server
 
 ---
 
@@ -34,6 +39,7 @@ The [Radicale] software stack layers are as follows:
 
 - Layer 3 is optional
 - The provider of layer 3,4,5 and 6 can be changed
+- Alternative to [nginx] is [apache2]
 
 ## Radicale Installation Methods
 
@@ -115,14 +121,18 @@ for 2.1.11 do not work for 3.0.x.
 
 # Links
 
+- [Apache2]
 - [CalDAV]
 - [CardDAV]
 - [Evolution]
+- [Nginx]
 - [Radicale]
 
+[Apache2]: https://httpd.apache.org/
 [CalDAV]: https://en.wikipedia.org/wiki/CalDAV
 [CardDAV]: https://en.wikipedia.org/wiki/CardDAV
 [Evolution]: https://wiki.gnome.org/Apps/Evolution
+[Nginx]: https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/
 [package]: https://packages.debian.org/radicale
 [pip]: https://radicale.org/3.0.html
 [Radicale]: https://radicale.org/
@@ -133,6 +143,7 @@ for 2.1.11 do not work for 3.0.x.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2020-12-29 | Update front matter, links, Sid package version      |
 | 0.1.1   | 2020-12-29 | Update build process                                 |
 | 0.1.0   | 2020-11-02 | Initial release                                      |
 
