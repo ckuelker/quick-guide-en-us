@@ -12,7 +12,7 @@ tags:
 - Xorg
 commands:
 - xrandr
-description: Xorg
+description: Corner case configurations for Xorg
 
 ---
 
