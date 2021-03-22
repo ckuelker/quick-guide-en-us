@@ -9,7 +9,7 @@ TOC: True
 categories:
 - X
 - tags:
-- - Xorg
+  - Xorg
 - description: Xorg
 
 ---
