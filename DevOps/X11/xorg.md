@@ -8,9 +8,11 @@ disclaimer: True
 TOC: True
 categories:
 - X
-- tags:
-  - Xorg
-- description: Xorg
+tags:
+- Xorg
+commands:
+- xrandr
+description: Xorg
 
 ---
 
