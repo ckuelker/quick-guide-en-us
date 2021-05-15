@@ -64,7 +64,7 @@ Qt5, but lacks basic functionality (see conclusion later).
 
 ### Prerequisites
 
-As prerequisites all packages as in in the section `Building KDdiff3 1.8.4 On
+As prerequisites all packages as in the section `Building KDdiff3 1.8.4 On
 Debian 10 Buster` have been installed.
 
 ## Compiling
@@ -117,8 +117,7 @@ understand what will be changed during the build process.
 
 ```shell
 cd /srv/src
-wget https://deac-riga.dl.sourceforge.net/project/kdiff3/kdiff3/0.9.98/\
-kdiff3-0.9.98.tar.gz
+wget https://deac-riga.dl.sourceforge.net/project/kdiff3/kdiff3/0.9.98/kdiff3-0.9.98.tar.gz
 cd /srv/source
 tar xvzf ../src/kdiff3-0.9.98.tar.gz
 cp -a /srv/source/kdiff3-0.9.98 /srv/build/kdiff3-0.9.98
@@ -165,7 +164,7 @@ Supported compilers:
 ```shell
 aptitude install gettext qtbase5-dev extra-cmake-modules libboost-dev \
 libkf5i18n-dev libkf5coreaddons-dev libkf5iconthemes-dev libkf5parts-dev \
-libkf5doctools-dev libkf5crash-dev cmake gcc
+libkf5doctools-dev libkf5crash-dev cmake gcc build-essential
 ```
 
 ### Compiling
@@ -181,8 +180,9 @@ As root:
 ```shell
 export BUILD_USER=USER_ID
 export BUILD_GROUP=GROUP_ID
-mkdir -p /srv/{build,source,src,kdiff3-1.8.4}
-chown $BUILD_USER:$BUILD_GROUP /srv/{build,source,src,kdiff3-1.8.4}
+mkdir -p /srv/{build,source,src}/kdiff3-1.8.4
+mkdir -p /srv/kdiff3-1.8.4/share
+chown -R $BUILD_USER:$BUILD_GROUP /srv/{build,source,src}/kdiff3-1.8.4
 ```
 
 On Debian 10 Buster an old version of `cmake` is used: 3.13.4, which do **not**
@@ -251,6 +251,13 @@ software 'innovation' were the application now supports Qt5 instead of Qt4 and
 a "better" build system but a decrease of features and in this case lacks
 fundamental features, like comparing binary files or handle symbolic links.
 Sometimes software is like wine, the older one is better.
+
+## Update on kdiff3-1.8.5
+
+The compilation is similar to kdiff3-1.8.4, some problems are solved, like the
+vanishing border. However links let the application crash. So the former
+conclusion is still valid.
+
 
 ## Links
 
