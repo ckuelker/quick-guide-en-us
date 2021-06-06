@@ -1,8 +1,8 @@
 ---
 title: Iperf
 author: Christian Külker
-date: 2021-06-05
-version: 0.1.0
+date: 2021-06-06
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
@@ -44,6 +44,8 @@ are not available:
 - -x: Exclude C(connection) D(data) M(multicast) S(settings) V(server) reports
 - -y: Report as a Comma-Separated Values
 - -C: Compatibility mode allows for use with older version of [iPerf]
+
+The [iperf2] has a nice brief [comparison table] which compares iperf2 and iperf3.
 
 ## Debian Versions
 
@@ -107,6 +109,49 @@ TCP window size: 85.0 KByte (default)
 [  3]  0.0-10.0 sec  1.09 GBytes   939 Mbits/sec
 ```
 
+### MSS Iperf2 Example
+
+Maximum Segment Size (-m argument) display:
+
+The Maximum Segment Size (MSS) is the largest amount of data (often measured in
+bytes) that a computer can transfer in a single, unfragmented TCP segment.
+
+It can be calculated as follows:
+
+- `MSS = MTU - TCP + IP headers`
+- The `TCP + IP headers` are equal to 40 bytes.
+- The Maximum Transmission Unit (MTU) is the greatest amount of data that
+  can be transferred in a frame.
+
+Some default MTU sizes for different network topologies:
+
+- Ethernet - 1500 bytes: used in a LAN
+- PPPoE - 1492 bytes: used on ADSL links
+
+Generally speaking, higher MTU (and MSS) brings higher bandwidth efficiency
+
+Server:
+
+```shell
+iperf -s
+```
+
+Client side:
+
+```shell
+iperf -c 192.167.168.32 -m
+------------------------------------------------------------
+Client connecting to 192.168.168.32, TCP port 5001
+TCP window size: 16.0 KByte (default)
+------------------------------------------------------------
+[ 3] local 192.168.168.33 port 42384 connected with 192.168.168.32 port 5001
+[ 3]   0.0-10.2 sec   1.27 MBytes   1.04 Mbits/sec
+[ 3] MSS size 1448 bytes (MTU 1500 bytes, ethernet)
+```
+
+Here the MSS is not equal to `1500 - 40` but to `1500 - 40 - 12 (Timestamps
+option) = 1448`
+
 ### Simple Iperf3 Example
 
 This is a simple [TCP] client server bandwidth test.
@@ -157,6 +202,8 @@ Connecting to host 192.168.168.32, port 5201
 - [TCP]
 - [UDP]
 
+
+[comparison table]: https://iperf2.sourceforge.io/IperfCompare.html
 [documentation]: https://iperf.fr/iperf-doc.php
 [home ESnet]: https://iperf.fr/
 [home]: http://software.es.net/iperf/
@@ -176,6 +223,7 @@ Connecting to host 192.168.168.32, port 5201
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2021-06-06 | Add comparsion table link, MSS example               |
 | 0.1.0   | 2021-06-05 | Initial release                                      |
 
 
