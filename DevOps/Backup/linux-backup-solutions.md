@@ -1,8 +1,8 @@
 ---
 title: Linux Backup Solutions
 author: Christian Külker
-date: 2021-06-07
-version: 0.1.0
+date: 2021-06-08
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
@@ -141,7 +141,7 @@ If the target is to backup a partition (which might be questionable), so called
 snapshots can be used for certain file systems. The following list should be
 considered with caution as it do not claim that the mentioned file systems are
 stable. Sometimes the can be done via file system specific `fsck` tools,
-external commands or via a interim layer, like LVM.
+external commands or via an interim layer, like LVM.
 
 - btrfs
 - zfs
@@ -153,7 +153,8 @@ Software that can handle LVM:
 
 Software that sounds like a snapshot, but isn't:
 
-- [rsnapshot] - uses `rsync` and hard links
+- [rsnapshot] - uses `rsync` and hard links.  Debian-Edu (Skolelinux) use
+  [rsnapshot] for backups in school environments.
 
 ## Backup Software
 
@@ -171,12 +172,86 @@ understand the core principles of backups.
 | [Bacula]        | Buster |           | 7.4.4+dfsg-6+deb9u2 |
 | [Bareos]        | Buster | GUI       | 16.2.4-3+deb9u2     |
 | [Cpio]          | Buster | CLI       | 2.11+dfsg-6         |
+| [dirvish]       | Buster | CLI       | 1.2.1-1.3           |
+| [duplicity]     | n.a.   |           |
 | [rdiff-backup]  | Buster |           | 1.2.8-7             |
 | [rsbackup]      | Buster |           | 3.1-3+b1            |
 | [rsnapshot]     | Buster | CLI       | 1.4.2-1             |
+| [slbackup]      | Buster | CLI       | 0.0.12-8            |
 | [snapper]       | Buster | CLI       | 0.4.1-3             |
 | [Warewulf]      | n.a.   | CLI       |                     |
 | Tar             | Buster | CLI       | 1.29b-1.1           |
+
+## Details On Some Software
+
+### Amanda
+
+- [amanda]
+- Organization: full + incremental
+- Storage: tape: tar, dump,
+
+### Back In Time
+
+- [back in time]
+- Organization: snapshots
+- Storage: disk
+- Dependencies: rsync
+
+### BackupPC
+
+- [backuppc]
+- Organization: full + incremental (hardlink shared between servers)
+- Restore: tar, http, zip
+- Remote: rsync, tar (over ssh/rsh/nfs) or ftp, samba, rsyncd
+- Dependencies: Perl, Apache2
+
+Even though the acronym PC is used, it seems that this tool can be used not
+only for desktop or personal computers, but also for servers.
+
+    + easy install (Debian Sqeeze, App + Webserver)
+    + Webinterface easy to see
+
+    - Webinterface has bugs (not choosing of host)
+    - Webinterface no choice of target dir
+    - Webinterface no creation of host cfg
+    - Webinterface no comparison of files?
+
+### Dirvish
+
+- [dirvish]
+- Organization: rotating images (bank->vault->image)
+- Restore: rsync, scp, cpio, tar, ...
+- Storage: disk
+- Dependencies: rsync, Perl, ...
+
+### Duplicity
+
+- [duplicity]
+- Organization: full backup + incremental
+- Restore: GnuPG, rdiff, and tar.
+- Remote: scp/ssh, ftp, rsync, HSI, WebDAV, Tahoe-LAFS, and Amazon S3
+- Storage: encrypted tar format
+- Dependencies: Python, librsync, GnuPG,...
+
+### Rsnapshot
+
+- [rsnapshot]
+- Organization: full + incremental (daily, weekly)
+- Restore: cp
+- Dependencies: Perl, rsync or librsync?
+
+### Rdiff-backup
+
+- [rdiff-backup]
+- Organization: server/client full backup + incremental
+- Remote: ssh
+- Dependencies: librsync, phython
+
+### Slbackup
+
+- [slbackup]
+- Uses [rdiff-backup]
+- Used by Skolelinux/ Debian-Edu
 
 ## Links
 
@@ -193,9 +268,13 @@ understand the core principles of backups.
 - [bareos github]
 - [bareos documentation]
 - [cpio]
+- [dirvish]
+- [duplicity]
+- [duplicity gitlab]
 - [rdiff-backup]
 - [rsnapshot]
 - [rsbackup]
+- [slbackup]
 - [snapper]
 - [warewulf]
 - [warewulf wikipedia]
@@ -204,6 +283,7 @@ understand the core principles of backups.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2021-06-08 | Typos, Slbackup, Details, Dirvish, Duplicity         |
 | 0.1.0   | 2021-06-07 | Initial release                                      |
 
 [amanda]: http://www.amanda.org/
@@ -218,11 +298,15 @@ understand the core principles of backups.
 [bareos open source]: https://www.bareos.com/community/github/
 [bareos github]: https://github.com/bareos/
 [bareos documentation]: https://docs.bareos.org/
-[cpio]: http://www.gnu.org/software/cpio/
+[cpio]: http:///www.gnu.org/software/cpio/
+[dirvish]: http://www.dirvish.org/
+[duplicity]: http://duplicity.nongnu.org/
+[duplicity gitlab]: https://gitlab.com/duplicity/duplicity
 [rdiff-backup]: http://rdiff-backup.nongnu.org/
 [rsnapshot]: http://www.rsnapshot.org/
 [rsbackup]: http://www.greenend.org.uk/rjk/rsbackup/
 [snapper]: http://snapper.io/
+[slbackup]: https://salsa.debian.org/debian-edu-pkg-team/slbackup
 [warewulf]: https://warewulf.lbl.gov/
 [warewulf wikipedia]: https://en.wikipedia.org/wiki/Warewulf
 
