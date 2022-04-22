@@ -2,7 +2,7 @@
 title: Git
 author: Christian Külker
 date: 2022-04-22
-version: 0.1.1
+version: 0.1.2
 type: doc
 disclaimer: True
 TOC: True
@@ -23,14 +23,14 @@ tags:
 - gitolite
 description: Collection of git recipes
 
-...
+---
 
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
-| 0.1.1   | 2022-04-21 | Inflate: data stream error (unknown compression      |
-|         |            | method) or unable to unpack HASH header              |
+| 0.1.2   | 2022-04-22 | Front matter, history, syntax highlighting           |
+| 0.1.1   | 2022-04-21 | Data stream error, unknown compression method, unable to unpack HASH header |
 | 0.1.0   | 2022-04-13 | Initial release (Reconcile Divergent Branches)       |
 
 # Inflate: data stream error and unable to unpack HASH header
@@ -42,7 +42,7 @@ In case a git repository gets corrupted (due a corrupted file system for
 example) git shows an error message that seems to point to something else (at
 least in the first 2 lines).
 
-```
+```shell
 git clone USER@HOST:REPOSITORY.git
 Cloning into 'REPOSITORY'...
 remote: error: inflate: data stream error (unknown compression method)
@@ -62,7 +62,7 @@ Usually an `git fsck` local repository should be fine. If there is access to
 the remote repository execute an `git fsck` with the correct user rights.
 (Replace `HASH1` and `HASH2` with hashes to imagine the original message).
 
-```
+```shell
 git fsck
 error: inflate: data stream error (unknown compression method)
 error: unable to unpack header of ./objects/81/HASH1
@@ -74,7 +74,7 @@ dangling tree HASH2
 
 Some parameters to `fsck` will get more information.
 
-```
+```shell
 git --bare fsck-objects --full
 error: inflate: data stream error (unknown compression method)
 error: unable to unpack header of PATH1/repositories/REPOSITORY.git/objects/81/HASH1
@@ -84,7 +84,7 @@ missing tree 81HASH1
 dangling tree HASH2
 ```
 
-```
+```shell
 git fsck --full 81HASH1
 Checking object directories: 100% (256/256), done.
 Checking objects: 100% (285/285), done.
@@ -94,7 +94,7 @@ dangling commit HASH
 To actually understand what the `81HASH1` is referencing (replace `81HASH1`
 with the current hash):
 
-```
+```shell
 git ls-tree 81HASH1
 040000 tree HASH5    DIRECTORY
 120000 blob HASH6    FILE/LINK/OBJECT
@@ -105,7 +105,7 @@ This tells you that a DIRECTORY and a FILE/LINK/OBJECT is referenced by the
 
 If you use `git log` you can find more information.
 
-```
+```shell
 # Lets find the PATH
 find -name OBJECT
 PATH/OBJECT
@@ -127,7 +127,7 @@ rights, you might try a `git push -f`.
 if `git push -f` is even a relevant candidate for "repairing" this situation.
 However I will try anyways.)
 
-```
+```shell
 git push -f
 Counting objects: 845, done.
 Delta compression using up to 8 threads.
@@ -150,7 +150,7 @@ locally.
 As I have access to the server I was curious and run `md5sum` over
 the file `81/HASH1`.
 
-```
+```shell
 locate HASH1|xargs md5sum
 HASH2  /PATH1/repositories/REPOSITORY.git/objects/81/HASH1
 HASH2  /PATH2/repositories-backup/REPOSITORY.git/objects/81/HASH1
@@ -178,7 +178,7 @@ In case you have no backup, but some other copies of the repository (bare or
 working tree). This example copies a good version of `HASH1` from a local
 clone on the server to the central `gitolite` repository.
 
-```
+```shell
 cp /PATH3/REPOSITORY/.git/objects/81/HASH1 /PATH1/repositories/REPOSITORY.git/objects/81/HASH1
 ```
 
@@ -186,7 +186,7 @@ This _"solved"_ the issue. It is debatable if it really solved the issue. One
 should carefully examine the repository with the non-corrupted clone before
 concluding it. However cloning was possible again.
 
-```
+```shell
 git clone USER@HOST:REPOSITORY.git
 Cloning into 'REPOSITORY'...
 remote: Enumerating objects: 884, done.
@@ -204,7 +204,7 @@ Out of curiosity I made some other tests on the remote machine. First I tested
 the local clone on the remote machine (after reverting the repository to the
 bad state):
 
-```
+```shell
 cd PATH3/REPOSITORY
 md5sum .git/objects/81/HASH1
 HASH3 .git/objects/81/HASH1
@@ -232,7 +232,7 @@ So this operation do indeed not change `HASH1`. However the `push -f` worked.
 Doing a commit and a `push -f ` from the local clone to the remote server did
 __not__ work however.
 
-```
+```shell
 git push -f
 Counting objects: 845, done.
 Delta compression using up to 8 threads.
@@ -260,7 +260,7 @@ and works well on blobs. Trees are difficult to restore. The information
 retrieval method with `git log --raw --all --full-history -- PATH/OBJECT` might
 give information about a blob that can be restored from previous versions.
 
-```
+```shell
 git log --raw --all --full-history -- PATH/OBJECT
 commit HASH6
 Author: FIRSTNAME LASTNAME (SOMETHING) <USER@HOST>
@@ -274,13 +274,13 @@ Date:   Tue Aug 24 03:35:45 2021 +0200
 Recreate the `OBJECT` either by checkout old version and use editor or by
 other means.
 
-```
+```shell
 git hash-object -w PATH/NEW_OBJECT
 ```
 
 However it can be that the object is not OK:
 
-```
+```shell
 git log --raw --all --full-history -- PATH/LINK
 error: inflate: data stream error (unknown compression method)
 error: unable to unpack 81HASH1 header
