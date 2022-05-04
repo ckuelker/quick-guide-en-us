@@ -12,9 +12,11 @@ commands:
 - ls
 tags:
 - Pflogsumm
-description: As many communication servers, to know if the service performs at an expected level, a statistic overview comes in handy to evaluate service health.
+description:
+  As many communication servers, to know if the service performs at an expected
+  level, a statistic overview comes in handy to evaluate service health.
 
-...
+---
 
 # Overview
 
