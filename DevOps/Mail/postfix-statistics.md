@@ -9,9 +9,13 @@ TOC: True
 categories:
 - Mail
 commands:
-- ls
+- pflogsumm
+- mailx
+- hostname
 tags:
 - Pflogsumm
+- Poststats
+- Mailx
 description:
   As many communication servers, to know if the service performs at an expected
   level, a statistic overview comes in handy to evaluate service health.
@@ -23,10 +27,31 @@ description:
 This document aggregates methods of creating mail server statistics. Starting
 with version 0.1.0 it gives information about `pflogsumm.pl`.
 
+A list of software that has mail statistic features.
+
+| Name             | Cov. | URL                                             |
+| ---------------- |----- | ----------------------------------------------- |
+| pflogsum         | Yes  | https://jimsun.linxnet.com/postfix_contrib.html |
+| lightmeter       | No   | https://gitlab.com/lightmeter/controlcenter/    |
+| Postscreen-Stats | No   | https://github.com/jvehent/Postscreen-Stats     |
+| PostConf         | No   | https://www.postconf.com/docs/spamrep/          |
+| AWStats          | No   | https://awstats.sourceforge.io/                 |
+| Mailgraph        | No   | https://mailgraph.schweikert.ch/                |
+| MRTG w. scripts  | No   | http://taz.net.au/postfix/mrtg/                 |
+| Logrep           | No   | https://sourceforge.net/projects/logrep/        |
+
+A list of software that has no mail statistic features.
+
+| Name             | Cov. | URL                                             |
+| ---------------- |----- | ----------------------------------------------- |
+| Poststats        | No   | https://github.com/jpylypiw/poststats           |
+
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-05-05 | Add poststats, list of software, links, front matter |
 | 0.1.0   | 2022-05-04 | Initial release with `pflogsumm.pl`                  |
 
 # Pflogsumm.pl
@@ -98,4 +123,16 @@ Then add a line to cron
 10 4 * * 0 /usr/local/sbin/postfix-statistics-pdflogsumm-week
 ~~~
 
+# Poststats
 
+Unlike the name the `postats` tool (GPLv3), despite the name is postfix monitor
+with a web interface and mail sending capability triggered via cron. Since it
+seems not providing a statistic it will not covered in this document.
+
+## Links
+
+- [https://github.com/jpylypiw/poststats](https://github.com/jpylypiw/poststats)
+
+# Links
+
+- [https://www.postfix.org/addon.html](https://www.postfix.org/addon.html)
