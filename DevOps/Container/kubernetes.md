@@ -6,6 +6,7 @@ version: 0.1.0
 type: doc
 disclaimer: True
 TOC: True
+PDF: False
 categories:
 - Container
 tags:
@@ -13,6 +14,8 @@ tags:
 description: Kubernetes
 
 ---
+
+## Introduction
 
 The word Kubernetes ([κυβερνήτης] originates from Greek and means "helmsman" or
 "pilot" or "governor", and is the etymological root of cybernetics)
@@ -31,7 +34,7 @@ load.
 with less security in separation of instances. The advantage is that only one
 OS needs to be managed, with the cost that only similar applications can be
 run.  It would for example be difficult (or impossible) to run 32 bit big
-endian applications together with 64 bit small endian and arm64 applications.
+endian applications together with 64 bit small endian and `arm64` applications.
 Among many advantages containerized servers might suffer from less secure
 applications as the libraries are application depended and are often not
 administered by experienced system administrators but software engineers.
@@ -45,6 +48,13 @@ Some advantages of containerized servers are:
 - Applications are somewhat OS independent
 - Resource isolation
 - Resource utilization
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-05-09 | +history; PDF: False (no Greek in Noto Sans CJK JP)  |
+| 0.1.0   | 2022-05-09 | Initial release                                      |
 
 [κυβερνήτης]: https://en.wikipedia.org/wiki/Kubernetes
 
