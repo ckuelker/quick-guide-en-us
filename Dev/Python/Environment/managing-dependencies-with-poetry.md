@@ -1,8 +1,8 @@
 ---
 title: Managing Dependencies With Poetry
 author: Christian Külker
-date: 2020-09-05
-version: 0.1.1
+date: 2022-05-09
+version: 0.1.2
 type: doc
 disclaimer: True
 TOC: True
@@ -65,7 +65,7 @@ authors = [
 ]
 readme = 'README.md'  # Markdown files are supported
 repository = "https://github.com/ckuelker/python-packaging-tutorial-example-package"
-homepage = "https://github.com/ckuelker/python-packaging-tutorial-example-package
+homepage = "https://github.com/ckuelker/python-packaging-tutorial-example-package"
 keywords = ['packaging', 'tutorial']
 
 [tool.poetry.dependencies]
@@ -75,7 +75,7 @@ toml = "^0.9"
 requests = { version = "^2.13", extras = [ "security" ] }
 # Python specific dependencies with prereleases allowed
 pathlib2 = { version = "^2.2", python = "~2.7", allow-prereleases = true }
-# Very "securre" Git dependencies
+# Very "secure" Git dependencies
 cleo = { git = "https://github.com/sdispater/cleo.git", branch = "master" }
 
 # Optional dependencies (extras)
@@ -234,6 +234,7 @@ But the colorful console characters are looking very cheerfully.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2022-05-09 | Fix missing quotes in toml section                   |
 | 0.1.1   | 2020-09-05 | Fix heading levels, fix and add more links           |
 | 0.1.0   | 2020-05-18 | Initial release                                      |
 
