@@ -1,8 +1,8 @@
 ---
 title: Radicale
 author: Christian Külker
-date: 2020-12-29
-version: 0.1.2
+date: 2022-05-09 
+version: 0.1.3
 type: doc
 disclaimer: True
 TOC: True
@@ -119,7 +119,7 @@ for 2.1.11 do not work for 3.0.x.
 - Newer version of Thunderbird already include a calender, no plugin needed
 - [Evolution]
 
-# Links
+## Links
 
 - [Apache2]
 - [CalDAV]
@@ -143,6 +143,7 @@ for 2.1.11 do not work for 3.0.x.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2022-05-09 | Change level of section 'Links'                      |
 | 0.1.2   | 2020-12-29 | Update front matter, links, Sid package version      |
 | 0.1.1   | 2020-12-29 | Update build process                                 |
 | 0.1.0   | 2020-11-02 | Initial release                                      |
