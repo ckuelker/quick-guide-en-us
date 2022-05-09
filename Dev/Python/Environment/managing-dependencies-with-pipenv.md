@@ -1,11 +1,12 @@
 ---
 title: Managing Dependencies With Pipenv
 author: Christian Külker
-date: 2020-05-18
-version: 0.1.0
+date: 2022-05-09
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
+PDF: False
 categories:
 - Python
 - Environment
@@ -23,10 +24,20 @@ description: Managing Python dependencies virtually with pipenv
 
 ---
 
+## Introduction
+
 Python is used for a many different purposes and how you want to manage your
 dependencies may change based on how you decide to publish the software. This
 document show some tools for different kind of software: applications and
 libraries.
+
+### History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-05-09 | PDF: False (no ⠼ (U+283C), 🐍 (U+1F40D) in font      |
+|         |            | WenQuanYi Micro Hei Mon//OT:script=lat)              |
+| 0.1.0   | 2020-05-18 | Initial release                                      |
 
 ## Managing Application Dependencies
 
