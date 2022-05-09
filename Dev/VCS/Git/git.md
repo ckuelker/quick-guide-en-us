@@ -1,8 +1,8 @@
 ---
 title: Git
 author: Christian Külker
-date: 2022-04-22
-version: 0.1.2
+date: 2022-05-09
+version: 0.1.3
 type: doc
 disclaimer: True
 TOC: True
@@ -29,11 +29,12 @@ description: Collection of git recipes
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2022-05-09 | Change section levels                                |
 | 0.1.2   | 2022-04-22 | Front matter, history, syntax highlighting           |
 | 0.1.1   | 2022-04-21 | Data stream error, unknown compression method, unable to unpack HASH header |
 | 0.1.0   | 2022-04-13 | Initial release (Reconcile Divergent Branches)       |
 
-# Inflate: data stream error and unable to unpack HASH header
+## Inflate: data stream error and unable to unpack HASH header
 
 __WARNING__: This section include hacks. Do this on your own risk and make
 plenty backups.
@@ -167,12 +168,12 @@ occurred prior to migration. Only a local copy of the repository on the server
 had a different hash, `HASH3`. That was a clone of the repository while it was
 not corrupted.
 
-## Backup Method
+### Backup Method
 
 If you have a non corrupted version of the repository as a backup, now it
 is time to restore the repository from backup.
 
-## Copy Method
+### Copy Method
 
 In case you have no backup, but some other copies of the repository (bare or
 working tree). This example copies a good version of `HASH1` from a local
@@ -198,7 +199,7 @@ Resolving deltas: 100% (375/375), done.
 Checking out files: 100% (126/126), done.
 ```
 
-## Push -f Method
+### Push -f Method
 
 Out of curiosity I made some other tests on the remote machine. First I tested
 the local clone on the remote machine (after reverting the repository to the
@@ -252,7 +253,7 @@ So this probably mean that `push -f` is not reliable to tell if the
 repository is broken or not, and nor does it repair it if execution
 is succeeding.
 
-## Repair a Blob with `hash-object` Method
+### Repair a Blob with `hash-object` Method
 
 This idea comes from
 [git.kernel.org](https://git.kernel.org/pub/scm/git/git.git/tree/Documentation/howto/recover-corrupted-blob-object.txt?id=HEAD)
@@ -287,7 +288,7 @@ error: unable to unpack 81HASH1 header
 fatal: loose object 81HASH1 (stored in ./objects/81/HASH1) is corrupt
 ```
 
-## Further Not Tested Possible Methods
+### Further Not Tested Possible Methods
 
 Other possible solutions to repair a remote repository might be
 to use the following (but were not performed):
@@ -299,7 +300,7 @@ to use the following (but were not performed):
   on the fly. One can see something like `error: pack-objects died of signal
   91171/66888)` that something ended prematurely.
 
-## Summary:
+### Summary:
 
 To solve the issue with a corrupt repository, either use a good backup
 (preferably) or copy a correct object over the corrupt object (if you are
@@ -312,7 +313,7 @@ reliable, due to the fact that the restoring method relies on the knowledge of
 the content of the (to be restored) object itself or the luck to find a minimal
 changed prior commit that is not corrupted.
 
-# Reconcile Divergent Branches
+## Reconcile Divergent Branches
 
 From git 2.27.0 onwards the user is confronted with a similar message from git,
 when using `git pull`.
