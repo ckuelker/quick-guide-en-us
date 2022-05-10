@@ -2,6 +2,7 @@
 title: Compiling Perl From Source
 type: doc
 author: Christian Külker
+version: 0.1.1
 date: 2016-06-27
 disclaimer: True
 categories:
@@ -9,16 +10,16 @@ categories:
 tags:
  - Tar
  - Environment
- - DebianBuster
-description: Compiling Perl From Source is easier then most people think
+ - Debian 10 Buster
+description: Compiling Perl from source is easier than most people think
 
 ---
 
 ## Introduction
 
-> Compiling Perl From Source is easier then most people think.
+> Compiling Perl from source is easier than most people think.
 
-## Compiling Perl from Source
+## Compiling Perl From Source
 
 ```bash
 mkdir -p /srv/perl-5.20.0/src
@@ -80,5 +81,11 @@ Complete documentation for Perl, including FAQ lists, should be found on
 this system using "man perl" or "perldoc perl".  If you have access to the
 Internet, point your browser at http://www.perl.org/, the Perl Home Page.
 ```
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-05-10 | Description, typos, history                          |
+| 0.1.0   | 2016-06-27 | Initial release                                      |
 
 
