@@ -1,8 +1,8 @@
 ---
 title: Managing Dependencies With Pipenv
 author: Christian Külker
-date: 2022-05-09
-version: 0.1.1
+date: 2022-05-10
+version: 0.1.2
 type: doc
 disclaimer: True
 TOC: True
@@ -35,6 +35,7 @@ libraries.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2022-05-09 | Fix json syntax highlighting                         |
 | 0.1.1   | 2022-05-09 | PDF: False (no ⠼ (U+283C), 🐍 (U+1F40D) in font      |
 |         |            | WenQuanYi Micro Hei Mon//OT:script=lat)              |
 | 0.1.0   | 2020-05-18 | Initial release                                      |
@@ -146,7 +147,7 @@ python_version = "3.7"
 
 And Pipfile.lock (sha256 hashes are truncated in this output!)
 
-```jason
+```json
 
     "_meta": {
         "hash": {
