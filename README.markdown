@@ -1,7 +1,8 @@
 ---
-title:  Quick Guide README
+title: Quick Guide README
 author: Christian Külker
-date:   2020-04-20
+version: 0.1.3
+date: 2022-05-14
 
 ---
 
@@ -18,11 +19,29 @@ format of this repository is [Markdown].
 ![Git repo size](https://img.shields.io/github/repo-size/ckuelker/quick-guide.svg)
 ![Last commit](https://img.shields.io/github/last-commit/ckuelker/quick-guide.svg)
 
-# Changes
+## History
 
-| Version | Date       | Author           | Notes                             |
-| ------- | ---------- | ---------------- | --------------------------------- |
-| 0.1.0   | 2020-04-20 | Christian Külker | initial release                   |
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2022-05-14 | .gitignore, +ntpd.md, +iperf.md +Simple MSS Example, |
+|         |            | +linux-backup-solutions.md, +postfix-statistics.md;  |
+|         |            | update: git.md, radicale.md, kubernetes.md,          |
+|         |            | managing-dependencies-with-pipenv.md,                |
+|         |            | managing-dependencies-with-poetry.md,                |
+|         |            | compiling-perl-from-source.md                        |
+| 0.1.2   | 2021-05-28 | Add kubernetes.md, goaccess.md, icinga2.md, swap.md, |
+|         |            | iperf.md, graphite-carbon-whisper-schematics         |
+| 0.1.1   | 2021-05-15 | Add CC-BY-SA-4.0 license, bump copyright to 2021,    |
+|         |            | +xorg.md, +kdiff3.md, +radicale.md, +grc.md,         |
+|         |            | +rust/hello-world.md, +bmon.md, +zabbix.md,          |
+|         |            | +smem.md, +nginx.md, +fio.md, +infiniband.md,        |
+|         |            | +perltidy.md, +favion.md, hdd.md, +cpuinfo.md,       |
+|         |            | +vasp.md, +hpcc.md, +spec2006.md, +linpack.md,       |
+|         |            | +taskset.md, +yafuflash.md, +ipmitool.md, +tftpd.md, |
+|         |            | +openhpc-installation-and-usage.md                   |
+|         |            |                                                      |
+| 0.1.0   | 2020-04-20 | Initial release                                      |
+
 
 # Author
 
@@ -30,13 +49,23 @@ format of this repository is [Markdown].
 
 # License And Copyright
 
-    Copyright (C) 2020 by Christian Kuelker
+    Copyright (C) 2020, 2021, 2022 by Christian Kuelker
 
-Permission is granted to copy, distribute and/or modify this document under the
-terms of the GNU Free Documentation License, Version 1.3 or any later version
-published by the Free Software Foundation; with no Invariant Sections, no
-Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
-in the section entitled "GNU Free Documentation License".
+## Creative Commons Attribution Share Alike License 4.0
+
+Permission is granted to copy, distribute and/or modify this documents under
+the terms of the Creative Commons Attribution Share Alike License, Version
+[4.0](https://creativecommons.org/licenses/by-sa/4.0/) published by the
+Creative Commons Corporation global nonprofit organization ("Creative
+Commons").
+
+## GNU Free Documentation License, Version 1.3
+
+Permission is granted to copy, distribute and/or modify this documents under
+the terms of the GNU Free Documentation License, Version 1.3 or any later
+version published by the Free Software Foundation; with no Invariant Sections,
+no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is
+included in the file [License.markdown](License.markdown).
 
 # DISCLAIMER OF WARRANTY
 
@@ -63,3 +92,4 @@ in the section entitled "GNU Free Documentation License".
 
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
 [quick-guide]: https://github.com/ckuelker/quick-guide
+
