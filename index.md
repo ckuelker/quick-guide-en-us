@@ -2,7 +2,8 @@
 title: Quick Guide
 type: title
 author: Christian Külker
-date: 2020-04-20
+date: 2022-05-16
+version 0.1.2
 cards: True
 keywords:
     - Quick Guide
@@ -10,17 +11,24 @@ categories:
     - Quick guide
 tags:
     - Markdown
-description: The Quick Guide provides documents to various topics to get task done fast without much reading
+description:
+  The Quick Guide provides documents to various topics to get task done fast
+  without much reading
 
 ---
 
-The goal of [quick-guide] is to collect information about tasks and provide a
-guide that can reproduce the task quickly. The main format of this repository
-is [Markdown].
+The goal of [quick-guide] is to collect information about IT related tasks and
+provide instructions that can reproduce the task quickly without large chunks
+of text. The main format of this repository is [Markdown] and the preferred
+language English (US).
+
+## History Of This Page
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-05-16 | Improve mission statement                            |
+| 0.1.0   | 2020-04-20 | Initial release                                      |
 
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
 [quick-guide]: https://github.com/ckuelker/quick-guide-en-us
-
-
-
 
