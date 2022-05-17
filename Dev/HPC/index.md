@@ -4,7 +4,7 @@ linkTitle: HPC
 type: doc
 cards: True
 
-...
+---
 
 ## HPC
 
