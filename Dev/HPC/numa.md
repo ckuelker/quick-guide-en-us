@@ -158,9 +158,9 @@ attached to each CPU.
 ## Compiling And Installing numactl From Source
 
 ```bash
-server@domain.tld #> aptitude install autoconf automake
-server@domain.tld $> git clone https://github.com/numactl/numactl.git
-server@domain.tld $> cd numctl
+aptitude install autoconf automake
+git clone https://github.com/numactl/numactl.git
+cd numctl
 ./autogen.sh
 ./configure
 make
