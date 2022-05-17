@@ -338,7 +338,8 @@ du -h file.image;du --apparent -h file.image
 4.1M    file.image
 1.0G    file.image
 df -h|grep mnt
-/dev/loop0              1021M  9.2M 1012M   1% /tmp/SPARSE/mnt```
+/dev/loop0              1021M  9.2M 1012M   1% /tmp/SPARSE/mnt
+```
 
 ```bash
 # Unmount the file system
