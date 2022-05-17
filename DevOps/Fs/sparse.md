@@ -24,7 +24,7 @@ tags:
 - Disk Images
 description: Sparse files
 
-...
+---
 
 __Sparse files__ are files that allocate data to disk space  and summarize
 empty space (null bytes blocks) in the meta data, making the use of the file
