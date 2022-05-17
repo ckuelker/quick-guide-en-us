@@ -4,7 +4,7 @@ linkTitle: Quick Guide
 type: title
 author: Christian Külker
 date: 2022-05-17
-version: 0.1.3
+version: 0.1.2
 cards: True
 keywords:
     - Quick Guide
