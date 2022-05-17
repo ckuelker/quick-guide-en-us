@@ -1,5 +1,6 @@
 ---
-title: Quick Guide
+title: Quick Guide EN US
+linkTitle: Quick Guide
 type: title
 author: Christian Külker
 date: 2022-05-17
