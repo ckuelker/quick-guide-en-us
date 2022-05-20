@@ -1,8 +1,8 @@
 ---
 title: Sparse Files
 author: Christian Külker
-date: 2022-03-21
-version: 0.1.0
+date: 2022-05-20
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
@@ -46,7 +46,7 @@ file with different tools as well as measure them.
 Reading sparse file will convert transparently to the application empty meta
 data to empty blocks filled with zero bytes. This is the opposite when writing.
 On Linux most modern file systems support sparse files. That includes NTFS
-but not HFS+.
+but not `HFS+`.
 
 A very common usage for sparse files are disk images. A disk image is a large
 file containing data. Often the data is a formatted file system. Usually new
@@ -132,10 +132,10 @@ du -h file.image
 du -h file.image;du -h --apparent file.image
 0       file.image
 128M    file.image
-# Shows first current size (0) and apparent size (128M)
+  # Shows first current size (0) and apparent size (128M)
 ls -hls file.image
 0 -rw-r--r-- 1 root root 128M Mar 21 14:09 file.image
-# The same for a used sparse file
+  # The same for a used sparse file
 ls -hls file.image
 4.1M -rw-r--r-- 1 root root 1.0G Mar 21 13:20 file.image
 ```
@@ -149,13 +149,13 @@ Some `du` use `--apparent-size` instead of `--apparent`.
 Converting files to sparse files works only on supported file systems.
 
 ```bash
-## make a non sparse file
+  # make a non sparse file
 cp unknown.image non-sparse.image --sparse=never
 du -h non-sparse.image
 128M    non-sparse.image
-## convert a non sparse file to a sparse file
+  # convert a non sparse file to a sparse file
 fallocate -d non-sparse.image
-## This step is not need, but would remined about the feature
+  # This step is not need, but would remind about the feature
 mv non-sparse.image sparse.image
 du -h sparse.image
 0    sparse.image
@@ -175,7 +175,7 @@ a non sparse file to a sparse file while copying. When using `rsync` the `-S`
 or `--sparse` option need to be set.
 
 ```bash
-cp old.image new.image # sparse-ness of files is the same
+cp old.image new.image # sparseness of files is the same
 cp --sparse=always old.image new.image # old.image could be non-sparse
 rsync -S old.image new.image
 ```
@@ -277,7 +277,7 @@ The command to grow a file system depends on the file system. For `xfs` it is
 `xfs_growfs` for `reiserfs` it is `resize_reiserfs`.
 
 ```bash
-# Create a 128 MB image
+  # Create a 128 MB image
 truncate -s 128M file.image
 du -h file.image;du --apparent -h file.image
 0       file.image
@@ -285,7 +285,7 @@ du -h file.image;du --apparent -h file.image
 ```
 
 ```bash
-# Make a XFS file system
+  # Make a XFS file system
 mkfs.xfs file.image
 meta-data=file.image             isize=512    agcount=4, agsize=8192 blks
          =                       sectsz=512   attr=2, projid32bit=1
@@ -302,7 +302,7 @@ du -h file.image;du --apparent -h file.image
 ```
 
 ```bash
-# Enlarge the XFS file system from 128MB to 1GB
+  # Enlarge the XFS file system from 128MB to 1GB
 dd if=/dev/zero of=file.image bs=1 count=0 seek=1G
 0+0 records in
 0+0 records out
@@ -313,7 +313,7 @@ du -h file.image;du --apparent -h file.image
 ```
 
 ```bash
-# Mount XFS file system (a mountpoint will be created in /tmp/SPARSE)
+  # Mount XFS file system (a mount point will be created in /tmp/SPARSE)
 mkdir mnt
 mount -o loop file.image mnt
 df -h|grep mnt
@@ -321,7 +321,7 @@ df -h|grep mnt
 ```
 
 ```bash
-# Grow the XFS file system
+  # Grow the XFS file system
 xfs_growfs mnt
 meta-data=/dev/loop0             isize=512    agcount=4, agsize=8192 blks
          =                       sectsz=512   attr=2, projid32bit=1
@@ -342,7 +342,7 @@ df -h|grep mnt
 ```
 
 ```bash
-# Unmount the file system
+  # Unmount the file system
 umount mnt
 du -h file.image;du --apparent -h file.image
 4.1M    file.image
@@ -361,7 +361,7 @@ du -h file.image;du --apparent -h file.image
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-05-20 | Improve shell blocks, typos                          |
 | 0.1.0   | 2022-03-21 | Initial release                                      |
-
 
 
