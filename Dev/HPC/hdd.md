@@ -1,6 +1,6 @@
 ---
-title: Simple Hdd Benchmarks
-linkTitle: Hdd
+title: Simple HDD/SSD Benchmarks
+linkTitle: HDD/SDD
 author: Christian Külker
 date: 2017-10-25
 version: 0.1.0
@@ -11,15 +11,29 @@ categories:
 - HPC
 - Benchmark
 tags:
-- Hdd
+- HDD
+- SDD
 - hdparm
 - iozone
 - Gnome Disk Utility
 - smartctl
 - SATA
-description: Simple Hdd Benchmarks With Linux Tools
+description: Simple HDD/SSD benchmarks with Linux tools
 
 ---
+
+## Introduction
+
+This document introduces some utilities and test to help to understand
+the performance of Hard Disk Drives (HDD), Solid State Drives (SSD), and
+others.
+
+### History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-05-24 | +Introduction, +History                              |
+| 0.1.0   | 2017-10-25 | Initial release                                      |
 
 ## Tools
 
@@ -34,13 +48,13 @@ iozone
 
 ## Hints
 
-Make sure the device (SATA) of the host system is the best that the disk can
-support. See `smartctl` for more info: SATA Version is:  SATA 3.1, 6.0 Gb/s
-(current: 3.0 Gb/s)
+Make sure the device interface (SATA/SAS/mSATA/M.2/NVMe) of the host system is
+the best that the disk can support. See `smartctl` for more info: SATA Version
+is:  SATA 3.1, 6.0 Gb/s (2017: 3.0 Gb/s)
 
 ## Gnome Disk Utility
 
-```shell
+```bash
 aptitude install gnome-disk-utility
 /usr/bin/gnome-disks
 ```
@@ -62,7 +76,7 @@ Make screenshot
 
 ## hdparm
 
-```shell
+```bash
 for i in {1..10}; do hdparm -t /dev/sdb > hdparm-t-$i.log;done
 for i in {1..10}; do hdparm -t /dev/sdb > hdparm-T-$i.log;done
 ```
@@ -71,7 +85,7 @@ Use a spread sheet and `psppire` to analyse.
 
 ## smartctl
 
-```shell
+```bash
 smartctl -a /dev/sdb > smartctl-a.log
 smartctl -i /dev/sdb > smartctl-i.log
 smartctl -x /dev/sdb > smartctl-x.log
@@ -79,11 +93,11 @@ smartctl -x /dev/sdb > smartctl-x.log
 
 ## Further Reading
 
-https://wiki.archlinux.org/index.php/Benchmarking
+- <https://wiki.archlinux.org/index.php/Benchmarking>
 
 ### smartctl
 
-https://www.thomas-krenn.com/de/wiki/SMART_Tests_mit_smartctl
-https://www.thomas-krenn.com/de/wiki/Analyse_einer_fehlerhaften_Festplatte_mit_smartctl
+- <https://www.thomas-krenn.com/de/wiki/SMART_Tests_mit_smartctl>
+- <https://www.thomas-krenn.com/de/wiki/Analyse_einer_fehlerhaften_Festplatte_mit_smartctl>
 
 
