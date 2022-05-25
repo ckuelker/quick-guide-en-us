@@ -1,8 +1,8 @@
 ---
 title: Managing Dependencies With Poetry
 author: Christian Külker
-date: 2022-05-09
-version: 0.1.2
+date: 2022-05-25
+version: 0.1.3
 type: doc
 disclaimer: True
 TOC: True
@@ -36,7 +36,7 @@ to be afraid of conflicting dependencies? Isn't that the reason to use it in
 the first place. For me this reads more like prose not poetry. Welcome to the
 new era of package "managers"!
 
-```shell
+```bash
 $ python3 -m pip install --user poetry
 [...]
 Successfully installed attrs-19.3.0 cachecontrol-0.12.6 cachy-0.3.0 \
@@ -71,14 +71,14 @@ keywords = ['packaging', 'tutorial']
 [tool.poetry.dependencies]
 python = "~2.7 || ^3.2"  # Compatible python versions must be declared here
 toml = "^0.9"
-# Dependencies with extras
+### Dependencies with extras
 requests = { version = "^2.13", extras = [ "security" ] }
-# Python specific dependencies with prereleases allowed
+### Python specific dependencies with prereleases allowed
 pathlib2 = { version = "^2.2", python = "~2.7", allow-prereleases = true }
-# Very "secure" Git dependencies
+### Very "secure" Git dependencies
 cleo = { git = "https://github.com/sdispater/cleo.git", branch = "master" }
 
-# Optional dependencies (extras)
+### Optional dependencies (extras)
 pendulum = { version = "^1.4", optional = true }
 
 [tool.poetry.dev-dependencies]
@@ -91,7 +91,7 @@ my-script = 'my_package:main'
 
 ## Installing the dependencies
 
-```shell
+```bash
 poetry install
 Updating dependencies
 Resolving dependencies... (21.7s)
@@ -120,7 +120,7 @@ Package operations: 9 installs, 5 updates, 0 removals
 This creates a big `poetry.lock` file. Unlike working with `setup.py` working
 with [test.pypi.org] is not as straight forward.
 
-```shell
+```bash
 $ poetry build
 Building example-pkg-ckuelker (0.0.1)
 
@@ -130,7 +130,7 @@ No file/folder found for package example-pkg-ckuelker
 
 Removing the name from the username creates the package.
 
-```shell
+```bash
 $ poetry build
 Building example-pkg (0.0.1)
  - Building sdist
@@ -146,7 +146,7 @@ dist
 
 However this do not conform to the [test.pypi.org] format:
 
-```shell
+```bash
 $ tree
 dist
 ├── example_pkg_ckuelker-0.0.1-py3-none-any.whl
@@ -156,7 +156,7 @@ dist
 Renaming the directory from `example_pkg` to `example_pkg_ckuelker` did the
 trick:
 
-```shell
+```bash
 $ poetry build
 Building example-pkg_ckuelker (0.0.1)
  - Building sdist
@@ -176,7 +176,7 @@ tutorials.
 
 An alternative is to create a symbolic link.
 
-```shell
+```bash
 ln -s example_pkg example_pkg_YOUR_USERNAME
 ```
 
@@ -200,7 +200,7 @@ However, the project is correct when pointing on problems of
 `pipenv installing oslo.utils==1.4.0`. Meanwhile also [poetry] has
 its problems (and has bad error messages).
 
-```shell
+```bash
 poetry add oslo.utils=1.4.0
 
 [InvalidCharInStringError]
@@ -211,7 +211,7 @@ Which is not related to `oslo`, just a " (quote character)  was missing in line
 11 of `pyproject.toml`. Who would have thought that? Actually it added `oslo`
 fine with the " (quote character) fixed:
 
-```shell
+```bash
 poetry add oslo.utils=1.4.0
 
 Updating dependencies
@@ -234,6 +234,7 @@ But the colorful console characters are looking very cheerfully.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2022-05-25 | Change comments, replace shell with bash             |
 | 0.1.2   | 2022-05-09 | Fix missing quotes in toml section                   |
 | 0.1.1   | 2020-09-05 | Fix heading levels, fix and add more links           |
 | 0.1.0   | 2020-05-18 | Initial release                                      |
