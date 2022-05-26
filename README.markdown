@@ -1,8 +1,8 @@
 ---
 title: Quick Guide README
 author: Christian Külker
-version: 0.1.3
-date: 2022-05-14
+version: 0.1.4
+date: 2022-05-26
 
 ---
 
@@ -23,6 +23,11 @@ format of this repository is [Markdown].
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2022-05-26 | index.md, +DevOps/Fs/sparse.md, README.markdown      |
+|         |            | update: Dev/HPC/{index,numa,fio}.md,                 |
+|         |            | Dev/Perl/Style-Guide/perltidy.md, Dev/HPC/hdd.md,    |
+|         |            | ...Environment/managing-dependencies-with-poetry.md, |
+|         |            | Dev/Python/Package/packaging-python-projects.md      |
 | 0.1.3   | 2022-05-14 | .gitignore, +ntpd.md, +iperf.md +Simple MSS Example, |
 |         |            | +linux-backup-solutions.md, +postfix-statistics.md;  |
 |         |            | update: git.md, radicale.md, kubernetes.md,          |
@@ -65,7 +70,7 @@ Permission is granted to copy, distribute and/or modify this documents under
 the terms of the GNU Free Documentation License, Version 1.3 or any later
 version published by the Free Software Foundation; with no Invariant Sections,
 no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is
-included in the file [License.markdown](License.markdown).
+included in the file [License.markdown](LICENSE.markdown).
 
 # DISCLAIMER OF WARRANTY
 
