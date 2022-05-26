@@ -2,7 +2,7 @@
 title: Packaging Python Projects
 author: Christian Külker
 date: 2020-05-16
-version: 0.1.0
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
@@ -61,13 +61,13 @@ in your token section of your test account.
 
 We create the project structure:
 
-```shell
-$ mkdir -p packaging_tutorial/example_pkg/tests
-$ touch packaging_tutorial/example_pkg/__init__.py
-$ touch packaging_tutorial/{LICENSE,README.md,setup.py}
-$ cd packaging_tutorial
-$ echo -e "# Example Package\n\nThis is a simple example package.">README.md
-$ vim setup.py
+```bash
+mkdir -p packaging_tutorial/example_pkg/tests
+touch packaging_tutorial/example_pkg/__init__.py
+touch packaging_tutorial/{LICENSE,README.md,setup.py}
+cd packaging_tutorial
+echo -e "# Example Package\n\nThis is a simple example package.">README.md
+vim setup.py
 ```
 
 The contents of `setup.py`, replace `YOUR-USERNAME-HERE` with your user name.
@@ -105,16 +105,16 @@ Even though it is recommended to install the latest version of `setuptool` and
 `wheel`, if you like the to maintain the security management supported by your
 Linux distribution, you probably will prefer the package manager.
 
-```shell
-# aptitude install python3-setuptools python3-wheel twine python3-pip
+```bash
+aptitude install python3-setuptools python3-wheel twine python3-pip
 ```
 
 ### Build The Project
 
 Build distribution
 
-```shell
-$ python3 setup.py sdist bdist_wheel
+```bash
+python3 setup.py sdist bdist_wheel
 running sdist
 running egg_info
 creating example_pkg_ckuelker.egg-info
@@ -183,7 +183,7 @@ dist
 
 Altogether the project tree looks like this.
 
-```shell
+```bash
 $ tree
 .
 ├── build
@@ -212,8 +212,8 @@ $ tree
 Upload the distribution (using username `__token__` and the token for
 password):
 
-```shell
-% python3 -m twine upload --repository testpypi dist/*
+```bash
+python3 -m twine upload --repository testpypi dist/*
 Enter your username: __token__
 /usr/lib/python3/dist-packages/twine/utils.py:238: UserWarning: Failed to open
 keyring: org.freedesktop.DBus.Error.NoReply: Did not receive a reply. Possible
@@ -236,15 +236,15 @@ The package should be visible at
 
 It can be installed via `virtualenv` and `pip` (in this case python2):
 
-```shell
-$ virtualenv /tmp/python-packaging-tutorial-example-package
+```bash
+virtualenv /tmp/python-packaging-tutorial-example-package
 Running virtualenv with interpreter /usr/bin/python2
 New python executable in /tmp/python-packaging-tutorial-example-package/bin/\
 python2
 Also creating executable in /tmp/python-packaging-tutorial-example-package/\
 bin/python
 Installing setuptools, pkg_resources, pip, wheel...done.
-$ source /tmp/python-packaging-tutorial-example-package/bin/activate
+source /tmp/python-packaging-tutorial-example-package/bin/activate
 ```
 
 For `zsh` you know that the environment is active when your `zsh` prompt is
@@ -252,8 +252,8 @@ messed up as it prints (DIR) in front of your prompt.
 
 Or you use `virtalenv` with python3
 
-```shell
-$ virtualenv -p /usr/bin/python3 /tmp/python-packaging-tutorial-example-package
+```bash
+virtualenv -p /usr/bin/python3 /tmp/python-packaging-tutorial-example-package
 Already using interpreter /usr/bin/python3
 Using base prefix '/usr'
 New python executable in /tmp/python-packaging-tutorial-example-package/bin/\
@@ -261,7 +261,7 @@ python3
 Also creating executable in /tmp/python-packaging-tutorial-example-package/\
 bin/python
 Installing setuptools, pkg_resources, pip, wheel...done.
-$ source /tmp/python-packaging-tutorial-example-package/bin/activate
+source /tmp/python-packaging-tutorial-example-package/bin/activate
 ```
 
 Why `virtualenv` is complaining about 'Already ...' is unclear, as it certainly
@@ -269,8 +269,8 @@ did use python2 before. Does this software have some attitude issues?
 
 Installing the new test software:
 
-```shell
-$ python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps \
+```bash
+python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps \
 example-pkg-YOUR-USERNAME-HERE
 Looking in indexes: https://test.pypi.org/simple/
 Collecting example-pkg-ckuelker
@@ -283,7 +283,7 @@ Successfully installed example-pkg-ckuelker-0.0.1
 
 Testing the installation with the command line.
 
-```shell
+```bash
 python3
 import example_pkg
 ```
@@ -307,8 +307,8 @@ example project section above.
 
 ## Excursus On Python3 vs PyPy
 
-```shell
-# aptitude search setuptools
+```bash
+aptitude search setuptools
 p   pypy-setuptools                    - PyPy Distutils Enhancements
 p   pypy-setuptools-scm                - blessed package to manage your
                                          versions by scm tags for PyPy
@@ -333,8 +333,8 @@ From a distance Debian offers 2 packages: `python3-setuptools` and
 `pypy-setuptools`. However it seems they are the same.
 
 
-```shell
-# aptitude show pypy-setuptools
+```bash
+aptitude show pypy-setuptools
 Package: pypy-setuptools
 Version: 40.8.0-1
 State: not installed
@@ -351,8 +351,8 @@ Description: PyPy Distutils Enhancements
 Homepage: https://pypi.python.org/pypi/setuptools
 ```
 
-```shell
-# aptitude show python3-setuptools
+```bash
+aptitude show python3-setuptools
 Package: python3-setuptools
 Version: 40.8.0-1
 State: installed
@@ -369,6 +369,13 @@ Description: Python3 Distutils Enhancements
 Extensions to the python-distutils for large or complex distributions.
 Homepage: https://pypi.python.org/pypi/setuptools
 ```
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-05-26 | +History, Change shell to bash                       |
+| 0.1.0   | 2020-05-16 | Initial release                                      |
 
 [packaging tutorial]: https://packaging.python.org/tutorials/packaging-projects
 [setuptools]: https://packaging.python.org/key_projects/#setuptools
