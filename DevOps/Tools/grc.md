@@ -1,8 +1,8 @@
 ---
 title: Grc
 author: Christian Külker
-date: 2020-12-17
-version: 0.1.0
+date: 2022-05-27
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
@@ -10,6 +10,9 @@ categories:
 - Tools
 tags:
 - Grc
+commands:
+- tail
+- grc
 description: Make logfiles colorful
 
 ---
@@ -18,15 +21,16 @@ The Python tool [grc] is very useful to catch problems in logfiles by
 highlighting certain keywords and sections. It generic colourize text and can
 be used to colourize logfiles and output of commands. It comes with a set of
 pre configured expressions and it can be configured via additional regular
-expressions. 
+expressions.
 
-The current version as of Debian 10 Buster is `1.11.3-1` and it is developed on
-[github] under the GPLv2.
-
+- The Debian 9.13 Stretch version is `1.9-1`
+- The Debian 10 Buster version is    `1.11.3-1`
+- The Debian 11 Bullseye version is  `1.11.3-1.1`
+- It is developed on [github] under the GPLv2.
 
 ## Installation
 
-```shell
+```bash
 aptitude install grc
 ```
 
@@ -43,7 +47,7 @@ grc ps aux
 
 Simple:
 
-```shell
+```bash
 grc tail -f /var/log/apache2/error.log
 ```
 
@@ -51,13 +55,13 @@ Advanced:
 
 Without [grc]:
 
-```shell
+```bash
 tail -f myfile.log | perl -pe 's/SEVERE/\e[1;31m$&\e[0m/g'
 ```
 
 And with [grc] for the first time:
 
-```shell
+```bash
 mkdir ~/.grc
 echo "regexp=SERVERE" > ~/.grc/myfile
 echo "color=red" >>  ~/.grc/myfile
@@ -66,15 +70,25 @@ grc -c myfile tail -f myfile.log
 
 And with [grc] for the second time and all times:
 
-```shell
+```bash
 grc -c myfile tail -f myfile.log
 ```
 
-The [github] `README.markdown` has more info on this.
+- The `README.markdown` document on [github] has more info on this.
 
+- For other uses of coloring logfiles see [tail and multitail](tail.md).
 
 ## Links
 
 [grc]: http://kassiopeia.juls.savba.sk/~garabik/software/grc.html
 [github]: https://github.com/garabik/grc
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-05-27 | Update for Debian 11 Bullseye, 9.13 Stretch, change  |
+|         |            | shell to bash, +History, Link to tail, +commands     |
+| 0.1.0   | 2020-12-17 | Initial release                                      |
+
 
