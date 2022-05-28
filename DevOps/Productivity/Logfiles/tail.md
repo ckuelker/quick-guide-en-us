@@ -1,8 +1,8 @@
 ---
 title: Tail
 author: Christian Külker
-date: 2022-05-27
-version: 0.1.0
+date: 2022-05-28
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
@@ -85,3 +85,14 @@ header of a `syslog` line can be easily distinguished from the rest.
 ```bash
 aptitude install grc
 ```
+- See [grc](grc.md) for advanced usage of `grc`
+- Repository: <https://github.com/garabik/grc>
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-05-28 | Link to grc & grc repository, +History, mv ../Tools  |
+| 0.1.0   | 2022-05-27 | Initial release                                      |
+
+
