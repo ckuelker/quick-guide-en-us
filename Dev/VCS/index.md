@@ -2,8 +2,8 @@
 title: Version/ Revison Control Systems
 linkTitle: VCS-RCS
 author: Christian Külker
-date: 2021-05-20
-version: 0.1.0
+date: 2022-05-30
+version: 0.1.1
 type: doc
 disclaimer: True
 PDF: True
@@ -22,7 +22,8 @@ tags:
 - VCS
 - GNU-RCS
 description: Version or Revision Control Systems are used to manage source code
-...
+
+---
 
 **Version control** [🡆 VC] is used to manage information changes. This
 information comes in form of documents, computer programs, software sources,
@@ -54,4 +55,12 @@ time only recently [🡆 Git] or [🡆 Mercurial] made [🡆 DVCS]/DRCS popular.
 [🡆 Monotone]: https://en.wikipedia.org/wiki/Monotone_(software)
 [🡆 Darcs]: https://en.wikipedia.org/wiki/Darcs
 [🡆 Mercurial]: https://en.wikipedia.org/wiki/Mercurial
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-05-29 | Fix front matter YAML, +history                      |
+| 0.1.0   | 2021-05-20 | Initial release                                      |
+
 
