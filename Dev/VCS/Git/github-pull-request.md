@@ -2,8 +2,8 @@
 title: Github Pull Request
 linkTitle: Github-Pull-Request
 author: Christian Külker
-date: 2020-06-08
-version: 0.1.0
+date: 2022-05-31
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
@@ -17,7 +17,8 @@ tags:
 - branch
 - fork
 description: How to make a github.com pull request
-...
+
+---
 
 Participation in git repositories often is done via a pull request, because not
 all people have write access to the main repository. A pull request solves this
@@ -27,13 +28,13 @@ issue. This section is about how to make a pull request on `github.com`.
 2. Go to the web page projects repository, press fork button
 3. Clone **your** fork of the repository
 
-```shell
+```bash
 user@host:~$ git clone git@github.com:USER/REPOSITORY.git
 ```
 
 4. Enter the REPOSITORY
 
-```shell
+```bash
 user@host:~$ cd REPOSITORY
 ```
 
@@ -41,7 +42,7 @@ user@host:~$ cd REPOSITORY
 look for the other branches, so that your new name do not conflict. For
 example.
 
-```shell
+```bash
 user@host:~$ git checkout master
 user@host:~$ git branch -a
 * master
@@ -53,32 +54,32 @@ remotes/origin/master
 
 6. Crate a new self descriptive branch with a `BRANCHNAME`
 
-```shell
+```bash
 git branch BRANCHNAME
 ```
 
 7. Switch to the new branch
 
-```shell
+```bash
 git checkout BRACHNAME
 ```
 
 The short form of the last 2 steps, create a self descriptive branch of
 intended change.
 
-```shell
+```bash
 user@host:~$ git checkout -b BRANCHNAME
 ```
 
 For example
 
-```shell
+```bash
 user@host:~$ git checkout -b fix/typo-overview-security.md-identification-against
 ```
 
 Make sure you are at your branch (example from above)
 
-```shell
+```bash
 user@host:~$ git branch -a
 * fix/typo-overview-security.md-identification-against
   master
@@ -90,7 +91,7 @@ user@host:~$ git branch -a
 
 8. Create very few commits with **good** commit messages
 
-```shell
+```bash
 user@host:~$ sed -i -e 's%A%B%' file.md
 user@host:~$ git commit -m 'typo (A -> B)' file.md
 ```
@@ -101,7 +102,7 @@ user@host:~$ git commit -m 'typo (A -> B)' file.md
 
 When using just `git push` you will get an error message like this
 
-```shell
+```bash
 user@host:~$ git push
 fatal: The current branch BRANCHNAME has no upstream branch. To push the
 current branch and set the remote as upstream, use
@@ -111,13 +112,13 @@ current branch and set the remote as upstream, use
 
 However you can just push it with a one time statement
 
-```shell
+```bash
 user@host:~$ git push origin BRANCHNAME
 ```
 
 Example
 
-```shell
+```bash
 user@host:~$ git push origin fix/typo-overview-security.md-identification-against
 Counting objects: 6, done.
 Delta compression using up to 8 threads.
@@ -145,13 +146,13 @@ URL and press the green button "Compare & pull request". Add a message.
 
 ## Understanding The Remote Origin
 
-```shell
+```bash
 user@host:~$ git remote show origin
 ```
 
 Example
 
-```shell
+```bash
 user@host:~$ git remote show origin
 * remote origin
   Fetch URL: git@github.com:ckuelker/cwa-testresult-server
@@ -176,23 +177,23 @@ Sometimes while working on the pull request one realize that the name of the
 branch is not fit for the purpose, needs an addition. Usually the `-d` option
 is used.
 
-```shell
+```bash
 user@host:~$ git branch -d BRANCHNAME
 ```
 
 However if the branch is not merged `-D` needs to be used.
 
-```shell
+```bash
 user@host:~$ git branch -D BRANCHNAME
 ```
 
 ## Keeping Up-To-Date
 
-See [managing forks](github-manageing-forks.html) for details. 
-
+See [managing forks](github-manageing-forks.html) for details.
 
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-05-31 | Fix front matter, shell->bash                        |
 | 0.1.0   | 2020-06-08 | Initial release                                      |
