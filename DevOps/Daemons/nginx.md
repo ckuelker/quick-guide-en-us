@@ -1,8 +1,8 @@
 ---
 title: Basic Things With Nginx
 author: Christian Külker
-date: 2020-05-27
-version: 0.5
+date: 2022-06-01
+version: 0.6
 type: doc
 disclaimer: True
 TOC: True
@@ -36,8 +36,8 @@ ware, [Apache2] is the choice.
 
 Under Debian Wheezy, Jessie, Stretch and Buster (and probably others):
 
-```shell
-# aptitude install nginx
+```bash
+aptitude install nginx
 ```
 
 [Nginx] is already serving pages. More precisely one page. A welcome page. Look
@@ -52,8 +52,6 @@ at
 The configuration under Debian is similar to [Apache2] in regard to the file
 location. First you crate a file under ``/etc/nginx/sites-available`` and
 then you make a link to ``/etc/nginx/sites-anabled``.
-
-### Configuration Space
 
 ```
     .
@@ -89,7 +87,7 @@ In the latter case look at:
     http://127.0.0.1/dragon/
 ```
 
-### How To Add A Server Block
+### Server Block
 
 When using `nginx` a server block is similar to a virtual host under [Apache2].
 
@@ -100,10 +98,10 @@ domain in this is example is called `D1`, however you should imagine something
 like `example.com`.
 
 
-```shell
-# mkdir -p /opt/www/domain/D1/html
-# vim /opt/www/domain/D1/html/index.html
-# vim /etc/nginx/sites-available/exmaple.com
+```bash
+mkdir -p /opt/www/domain/D1/html
+vim /opt/www/domain/D1/html/index.html
+vim /etc/nginx/sites-available/exmaple.com
 ```
 
 ```nginx
@@ -122,11 +120,11 @@ server {
 }
 ```
 
-```shell
-# ln -s /etc/nginx/sites-available/D1 \
+```bash
+ln -s /etc/nginx/sites-available/D1 \
 /etc/nginx/sites-enabled/D1
-# nginx -t
-# systemctl restart nginx
+nginx -t
+systemctl restart nginx
 ```
 
 After `certbot` run was successful this is converted to:
@@ -158,7 +156,7 @@ server {
 
 [=>](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-debian-9)
 
-## How To Add One More Site With Different Port?
+## Add +1 Site With Different Port?
 
 Copy the following into the file ``/etc/nginx/sites-available/wizzards``
 
@@ -178,16 +176,16 @@ server {
 
 Then make a link and restart [Nginx]
 
-```shell
-# cd /etc/nginx/sites-eanabled
-# ln -s /etc/nginx/sites-available/wizards .
-# service nginx restart
+```bash
+cd /etc/nginx/sites-eanabled
+ln -s /etc/nginx/sites-available/wizards .
+service nginx restart
 ```
 
 Of course you have to create the directory:
 
-```shell
-# mkdir /var/www/wizards
+```bash
+mkdir /var/www/wizards
 ```
 
 And copy HTML content into it. Not wizards.
@@ -198,18 +196,18 @@ Now look at:
     http://127.0.0.1:8080/
 ```
 
-### How To Disable TLSv1.0 TLSv1.1
+### Disable TLSv1.0 TLSv1.1
 
 When looking at
 
 https://www.ssllabs.com/ssltest/analyze.html?d=www.DOMAIN.de
 
-It seems that TLSv1.0 and TLSv1.1 are better to be disabled.
+It seems that `TLSv1.0` and `TLSv1.1` are better to be disabled.
 
 Check with:
 
-```shell
-# nmap --script ssl-enum-ciphers -p 443 81.169.254.165|grep TLSv
+```bash
+nmap --script ssl-enum-ciphers -p 443 81.169.254.165|grep TLSv
 |   TLSv1.0:
 |   TLSv1.1:
 |   TLSv1.2:
@@ -217,8 +215,8 @@ Check with:
 
 Change
 
-```shell
-# vim /etc/nginx/nginx.conf
+```bash
+ vim /etc/nginx/nginx.conf
 ```
 
 ```
@@ -230,8 +228,8 @@ Restart [Nginx]
 
 Check again with:
 
-```shell
-# nmap --script ssl-enum-ciphers -p 443 81.169.254.165|grep TLSv
+```bash
+nmap --script ssl-enum-ciphers -p 443 81.169.254.165|grep TLSv
 |   TLSv1.2:
 ```
 
@@ -241,7 +239,7 @@ __HOWEVER__ if you use `certbot` than it will use its own TLS configuration:
 
 There seems no way to specify with `certbot` what TLS version to allow.
 
-## How To Deliver Pages as Reverse Proxy
+## Reverse Proxy
 
 This seems more common this day to build some kind of web application that
 delivers parts of the content over a certain port.
@@ -255,7 +253,7 @@ delivers parts of the content over a certain port.
      }
 ```
 
-## How to Serve A Language Dependent Index Page
+## I18n Index Page
 
 For some users this is convenient. Other user who are not using their own
 browser or who do not understand how to switch the language of their browser
@@ -288,7 +286,7 @@ server {
 
 ```
 
-## Serving Multiple Domains With One Server Directive
+## Multiple Domains With One Server Directive
 
 The section title could also be called 'How to serve multiple virtual domains
 with [Certbot] and [Nginx]'. Usually it is very easy to serve virtual domains
@@ -416,7 +414,7 @@ server {
 
 ```
 
-## Serving A Static HTML Mirror
+## Static HTML Mirror
 
 To mirror static HTML files in an ideal world [Nginx] would work out of the box.
 However sometime the pages to served might come from a non static page. In this
@@ -457,6 +455,7 @@ server {
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.6     | 2022-06-01 | shell->bash, improve headings                        |
 | 0.5     | 2020-05-27 | Serving static HTML mirror                           |
 | 0.4     | 2020-05-23 | Certbot root with $host                              |
 | 0.3     | 2020-01-31 | TLSv1 TLSv1.1                                        |
