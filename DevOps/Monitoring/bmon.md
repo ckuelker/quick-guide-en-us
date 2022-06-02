@@ -1,8 +1,8 @@
 ---
 title: Bmon
 author: Christian Külker
-date: 2020-06-12
-version: 0.1.0
+date: 2022-06-03
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
@@ -21,8 +21,8 @@ text output, that can be used for scripting.
 
 ## Installation
 
-```shell
-# aptitude install bmon
+```bash
+aptitude install bmon
 ```
 
 Will install `bmon`, `libconfuse-common` and `libconfuse1`.
@@ -31,13 +31,20 @@ Will install `bmon`, `libconfuse-common` and `libconfuse1`.
 
 ![bmon](bmon-0.1.0.png)
 
-```shell
-$ bmon
+```bash
+bmon
 ```
 
 ## Links
 
 - [bmon] redirects to [github]
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-06-03 | Change shell->bash, +history                         |
+| 0.1.0   | 2020-06-12 | Initial release                                      |
 
 [bmon]: http://www.infradead.org/~tgr/bmon/
 [github]: https://github.com/tgraf/bmon/
