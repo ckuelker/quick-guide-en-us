@@ -1,8 +1,8 @@
 ---
 title: Postfix Statistics
 author: Christian Külker
-date: 2022-05-09
-version: 0.1.2
+date: 2022-06-04
+version: 0.1.3
 type: doc
 disclaimer: True
 TOC: True
@@ -51,6 +51,7 @@ A list of software that has no mail statistic features.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2022-06-04 | Change shell->bash, cron, links                      |
 | 0.1.2   | 2022-05-09 | Change level of sections (one down)                  |
 | 0.1.1   | 2022-05-05 | Add poststats, list of software, links, front matter |
 | 0.1.0   | 2022-05-04 | Initial release with `pflogsumm.pl`                  |
@@ -60,23 +61,22 @@ A list of software that has no mail statistic features.
 When searching for "postfix mail statistic" the first 10 results are referring
 to a Perl script that analyses the Postfix log files. `pflogsumm.pl` is a
 script written by James S. Seymour and copyrighted 1998-2004 under the `GPL
-v2+` license and lives on
-[https://jimsun.linxnet.com/postfix_contrib.html](https://jimsun.linxnet.com/postfix_contrib.html)
-as of this writing (2022-05-04).
+v2+` license and lives on <https://jimsun.linxnet.com/postfix_contrib.html> as
+of this writing (2022-05-04).
 
 The `pflogsumm` scripts aims just an overview of past mail server activities to
 give an administrator a 'head-up' in case of troubles.
 
 ### Installation
 
-```shell
+```bash
 aptitude install pflogsumm
 ```
 
 ### Configuration
 
-While some contributions, for example by [Falko
-Timme](https://www.howtoforge.com/postfix-monitoring-with-mailgraph-and-pflogsumm-on-debian-lenny),
+While some contributions, for example by
+[Falko Timme](https://www.howtoforge.com/postfix-monitoring-with-mailgraph-and-pflogsumm-on-debian-lenny),
 are suggesting to configure `logrotate` to have a dedicated log over 24 hours,
 I got the impression that `pflogsumm` can do this already by itself via a time
 stamp query and keywords like `yesterday`. I would agree, in case of using the
@@ -91,38 +91,37 @@ justified.
 As `pflogsumm` has a lot of command line options it might be advisable to
 create a script to execute it.
 
-For a daily (yesterday) summary:
+For a daily (yesterday) summary to be executed after 24:00 every day (0:10):
 
-~~~
+```bash
 #!/bin/bash
-# To be executed after 24:00 every day (0:10)
 /usr/sbin/pflogsumm -d yesterday --iso-date-time /var/log/mail.log 2>&1 |\
 /usr/bin/mailx -s "`hostname --fqdn` daily mail statistic" postmaster
-~~~
+```
 
 Then add a line to cron:
 
-~~~
+```cron
 10 0 * * * /usr/local/sbin/postfix-statistics-pdflogsumm-yesterday
-~~~
+```
 
 For a weekly summary, for Debian 10 and 11 `logrotate` is configured for some
 `locale` to start the week on Sunday 00:00.  So you would need to execute the
 script 10 before the end of the week on the current log file or 10 minutes
-after the week started on the last log file. We use the latter:
+after the week started on the last log file. We use the latter to be executed
+after 24:00 on every Sunday (4:10):
 
-~~~
+```bash
 #!/bin/bash
-# To be executed after 24:00 on every Sunday (4:10)
 /usr/sbin/pflogsumm --iso-date-time /var/log/mail.log.1 2>&1 |\
 /usr/bin/mailx -s "`hostname --fqdn` weekly mail statistic" postmaster
-~~~
+```
 
 Then add a line to cron
 
-~~~
+```cron
 10 4 * * 0 /usr/local/sbin/postfix-statistics-pdflogsumm-week
-~~~
+```
 
 ## Poststats
 
@@ -132,8 +131,9 @@ seems not providing a statistic it will not covered in this document.
 
 ### Links
 
-- [https://github.com/jpylypiw/poststats](https://github.com/jpylypiw/poststats)
+- <https://github.com/jpylypiw/poststats>
 
 ## Links
 
-- [https://www.postfix.org/addon.html](https://www.postfix.org/addon.html)
+- <https://www.postfix.org/addon.html>
+
