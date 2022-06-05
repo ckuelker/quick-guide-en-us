@@ -2,8 +2,8 @@
 title: Icinga2
 subtitle: Installation and Configuration of Icinga2, Icingaweb2 and Graphite on Debian 10 Buster
 author: Christian Külker
-date: 2021-05-23
-version: 0.1.2
+date: 2022-06-05
+version: 0.1.3
 type: doc
 disclaimer: True
 TOC: True
@@ -104,22 +104,22 @@ like [Grafana].
 This will install **icinga2** on Debian 10 Buster with a web interface
 **icingaweb2** under **nginx** with **mariadb**.
 
-```shell
-# aptitude update
-# aptitude install icinga2
+```bash
+aptitude update
+aptitude install icinga2
 ```
 
 This will install version 2.10.3-2 and source and the following dependencies:
 
-```
+~~~
 icinga2 icinga2-bin icinga2-common icinga2-doc monitoring-plugins-basic
 monitoring-plugins-common
-```
+~~~
 
 [Icinga2] uses [Nagios] plugins
 
-```shell
-# aptitude install nagios-nrpe-plugin nagios-plugins-contrib
+```bash
+aptitude install nagios-nrpe-plugin nagios-plugins-contrib
 ```
 
 Using monitoring plugins enables **icinga2** to query external services.
@@ -127,7 +127,7 @@ The location for that tools is: `/usr/lib/nagios/plugins`
 
 Check if the **icinga2** daemon is started
 
-```shell
+```bash
 ps -e|grep icinga
 13368 ?        00:00:01 icinga2
 13402 ?        00:00:00 icinga2
@@ -135,8 +135,8 @@ ps -e|grep icinga
 
 If you believe in `systemd`
 
-```shell
-# systemctl status icinga2
+```bash
+systemctl status icinga2
 ● icinga2.service - Icinga host/service/network monitoring system
    Loaded: loaded (/lib/systemd/system/icinga2.service; enabled; vendor preset:
            enabled)
@@ -157,8 +157,8 @@ If you believe in `systemd`
 
 So far the following packages have been installed.
 
-```shell
-$ dpkg -l |egrep -e 'icinga|monitoring-plugins'
+```bash
+dpkg -l |egrep -e 'icinga|monitoring-plugins'
 ii  icinga2                    2.10.3-2  amd64  host and network monitoring ...
 ii  icinga2-bin                2.10.3-2  amd64  host and network monitoring ...
 ii  icinga2-common             2.10.3-2  all    host and network monitoring ...
@@ -169,8 +169,8 @@ ii  monitoring-plugins-common  2.2-6     amd64  Common files for plugins fo ...
 
 Understand which features are enabled:
 
-```shell
-# icinga2 feature list
+```bash
+icinga2 feature list
 Disabled features: api command compatlog debuglog elasticsearch gelf graphite \
 influxdb livestatus opentsdb perfdata statusdata syslog
 Enabled features: checker mainlog notification
@@ -178,8 +178,8 @@ Enabled features: checker mainlog notification
 
 Test if the configuration is OK:
 
-```shell
-# icinga2 daemon -C
+```bash
+icinga2 daemon -C
 [2020-06-09 ...] information/cli: Icinga application loader (version: r2.10.3-1)
 [2020-06-09 ...] information/cli: Loading configuration file(s).
 [2020-06-09 ...] information/ConfigItem: Committing config item(s).
@@ -208,15 +208,15 @@ Test if the configuration is OK:
 
 ##  DNS Cache Installation
 
-```shell
-# aptitude install unscd
+```bash
+aptitude install unscd
 ```
 
 ## Vim Add-Ons
 
-```shell
-# aptitude install vim-icinga2 vim-addon-manager
-# vim-addon-manager -w install icinga2
+```bash
+aptitude install vim-icinga2 vim-addon-manager
+vim-addon-manager -w install icinga2
 Info: installing removed add-on 'icinga2' to /var/lib/vim/addons
 ```
 
@@ -224,21 +224,21 @@ Info: installing removed add-on 'icinga2' to /var/lib/vim/addons
 
 First install a database
 
-```shell
-# aptitude install mariadb-server
+```bash
+aptitude install mariadb-server
 ```
 
-```shell
-# aptitude install icingaweb2 icingacli php-fpm libapache2-mod-rpaf
+```bash
+aptitude install icingaweb2 icingacli php-fpm libapache2-mod-rpaf
 ```
 
 To configure [Icingaweb2] Interface the `FQDN` of `localhost` and a valid
 mail address need to specified.
 
-```shell
+```bash
 export FQDN=host.example.org
 export EMAIL=user@example.org
-# cat << EOF > /etc/apache2/sites-available/icinga.conf
+cat << EOF > /etc/apache2/sites-available/icinga.conf
 <VirtualHost *:80>
 
     ServerName $FQDN
@@ -285,22 +285,22 @@ export EMAIL=user@example.org
 EOF
 ```
 
-```shell
-# a2ensite icinga.conf
+```bash
+a2ensite icinga.conf
 Enabling site icinga.
 To activate the new configuration, you need to run:
   systemctl reload apache2
-# apache2ctl configtest
+apache2ctl configtest
 Syntax OK
-# systemctl reload apache2
+systemctl reload apache2
 ```
 
 ## Database
 
 First install database (see previous section) and then install `icinga2` access.
 
-```shell
-# aptitude install icinga2-ido-mysql
+```bash
+aptitude install icinga2-ido-mysql
 ```
 
 ```
@@ -368,20 +368,21 @@ First install database (see previous section) and then install `icinga2` access.
 ```
 
 Enable `icinga` features and modules. The `icingacli module enable monitoring`
-enables the monitoring. This is needed to display the dashboard in [Icingaweb2].
+enables the monitoring. This is needed to display the dashboard in
+[Icingaweb2].
 
-```shell
-# icinga2 feature enable command ido-mysql
+```bash
+icinga2 feature enable command ido-mysql
 Enabling feature command. Make sure to restart Icinga 2 for these changes to
 take effect.
 Enabling feature ido-mysql. Make sure to restart Icinga 2 for these changes
 to take effect.
-# icingacli module enable monitoring
-# /etc/init.d/icinga2 restart
+icingacli module enable monitoring
+/etc/init.d/icinga2 restart
 ```
 
-```shell
-# mysql_secure_installation
+```bash
+mysql_secure_installation
 
 NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
       SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
@@ -446,9 +447,9 @@ Thanks for using MariaDB!
 
 Create `icingaweb2` database
 
-```shell
-# export PASSWORD_DB_ICINGAWEB2="CHANGE_ME_001"
-# mysql -Bse "
+```bash
+export PASSWORD_DB_ICINGAWEB2="CHANGE_ME_001"
+mysql -Bse "
 CREATE DATABASE icingaweb2;
 GRANT ALL ON icingaweb2.* TO 'icingaweb2'@'localhost'
 IDENTIFIED BY '$PASSWORD_DB_ICINGAWEB2';
@@ -458,29 +459,29 @@ FLUSH PRIVILEGES;
 
 Create tables
 
-```shell
+```bash
 mysql icingaweb2 < /usr/share/icingaweb2/etc/schema/mysql.schema.sql
 ```
 
-```shell
-# export ICINGA_WEB_ADMIN_USER="admin"
-# export ICINGA_WEB_ADMIN_PWD="CHANGE_ME_002"
-# export export PASSWORD_DB_ICINAG2="CHANGE_ME_003"
+```bash
+export ICINGA_WEB_ADMIN_USER="admin"
+export ICINGA_WEB_ADMIN_PWD="CHANGE_ME_002"
+export export PASSWORD_DB_ICINAG2="CHANGE_ME_003"
 
-# cat << EOF > /etc/icingaweb2/roles.ini
+cat << EOF > /etc/icingaweb2/roles.ini
 [Administrators]
 users = "$ICINGA_WEB_ADMIN_USER"
 permissions = "*"
 groups = "Administrators"
 EOF
 
-# cat << EOF > /etc/icingaweb2/groups.ini
+cat << EOF > /etc/icingaweb2/groups.ini
 [icingaweb2]
 backend = "db"
 resource = "icingaweb_db"
 EOF
 
-# cat << EOF > /etc/icingaweb2/config.ini
+cat << EOF > /etc/icingaweb2/config.ini
 [global]
 show_stacktraces = "1"
 config_backend = "db"
@@ -493,13 +494,13 @@ application = "icingaweb2"
 facility = "user"
 EOF
 
-# cat << EOF > /etc/icingaweb2/authentication.ini
+cat << EOF > /etc/icingaweb2/authentication.ini
 [icingaweb2]
 backend = "db"
 resource = "icingaweb_db"
 EOF
 
-# cat << EOF > /etc/icingaweb2/resources.ini
+cat << EOF > /etc/icingaweb2/resources.ini
 [icingaweb_db]
 type = "db"
 db = "mysql"
@@ -526,20 +527,20 @@ use_ssl = "0"
 EOF
 ```
 
-```shell
-# mkdir /etc/icingaweb2/modules/monitoring/
-# cat << EOF > /etc/icingaweb2/modules/monitoring/config.ini
+```bash
+mkdir /etc/icingaweb2/modules/monitoring/
+cat << EOF > /etc/icingaweb2/modules/monitoring/config.ini
 [security]
 protected_customvars = "*pw*,*pass*,community"
 EOF
 
-# cat << EOF > /etc/icingaweb2/modules/monitoring/commandtransports.ini
+cat << EOF > /etc/icingaweb2/modules/monitoring/commandtransports.ini
 [icinga2]
 transport = "local"
 path = "/var/run/icinga2/cmd/icinga2.cmd"
 EOF
 
-# cat << EOF > /etc/icingaweb2/modules/monitoring/backends.ini
+cat << EOF > /etc/icingaweb2/modules/monitoring/backends.ini
 [icinga]
 type = "ido"
 resource = "icinga_ido"
@@ -548,38 +549,39 @@ EOF
 
 Create admin
 
-```shell
-# HASH_ICINGA_WEB_ADMIN_PASSWORD=$(openssl passwd -1 "$ICINGA_WEB_ADMIN_PWD")
+```bash
+HASH_ICINGA_WEB_ADMIN_PASSWORD=$(openssl passwd -1 "$ICINGA_WEB_ADMIN_PWD")
 ```
 
-```shell
-# mysql icingaweb2 -Bse "
+```bash
+mysql icingaweb2 -Bse "
     INSERT INTO icingaweb_user
         (name, active, password_hash)
         VALUES ('$ICINGA_WEB_ADMIN_USER', 1, '$HASH_ICINGA_WEB_ADMIN_PASSWORD');
 "
 ```
+
 Or update the entry, if exist:
 
-```shell
-# mysql icingaweb2 -Bse "
+```bash
+mysql icingaweb2 -Bse "
     UPDATE icingaweb_user SET password_hash = '$HASH_ICINGA_WEB_ADMIN_PASSWORD'
     WHERE name = '$ICINGA_WEB_ADMIN_USER';
 "
 ```
 
 
-```shell
-# a2dissite 000-default.conf
-# systemctl reload apache2
+```bash
+a2dissite 000-default.conf
+systemctl reload apache2
 ```
 
-Visit the URL http://ICINGAHOST/dashboard
+Visit the URL `http://ICINGAHOST/dashboard`
 
 ## Configuration of Services
 
-```shell
-# cat << EOF > /etc/icinga2/zones.d/main/services.conf
+```bash
+cat << EOF > /etc/icinga2/zones.d/main/services.conf
 // Ping Check
 apply Service "Ping" {
   check_command = "ping4"
@@ -675,8 +677,8 @@ Even though `icinga2` might be configured for local usage, if remote clients
 are used, it is mandatory to re-configure the main host again, but at different
 locations. The "wizard" helps.
 
-```shell
-# icinga2 node wizard
+```bash
+icinga2 node wizard
 Welcome to the Icinga 2 Setup Wizard!
 
 We will guide you through all required configuration details.
@@ -714,18 +716,18 @@ Now restart your Icinga 2 daemon to finish the installation!
 Restart the main and generate a ticket to set up a client.
 For the ticket the FQDN of the client is used.
 
-```shell
-# systemctl restart icinga2
+```bash
+systemctl restart icinga2
 ```
 
 #### Add The Client To The Configuration
 
-```shell
-# export ICINGA2_CLIENT_NAME=client@example.org
-# export ICINGA2_CLIENT_IP=1.2.3.4
+```bash
+export ICINGA2_CLIENT_NAME=client@example.org
+export ICINGA2_CLIENT_IP=1.2.3.4
 
-# mkdir -p /etc/icinga2/zones.d/main/
-# cat << EOF > /etc/icinga2/zones.d/main/$ICINGA2_CLIENT_NAME.conf
+mkdir -p /etc/icinga2/zones.d/main/
+cat << EOF > /etc/icinga2/zones.d/main/$ICINGA2_CLIENT_NAME.conf
 // Endpoints & Zones
 object Endpoint "$ICINGA2_CLIENT_NAME" {
 }
@@ -744,15 +746,15 @@ object Host "$ICINGA2_CLIENT_NAME" {
 }
 EOF
 
-# icinga2 pki ticket --cn $ICINGA2_CLIENT_NAME
+icinga2 pki ticket --cn $ICINGA2_CLIENT_NAME
 9cd17c26c491033d6a8fc465d0e5d2668f038654
 ```
 
 ### On The Client
 
-```shell
-# aptitude install icinga2
-# icinga2 node wizard
+```bash
+aptitude install icinga2
+icinga2 node wizard
 Welcome to the Icinga 2 Setup Wizard!
 
 We will guide you through all required configuration details.
@@ -807,7 +809,7 @@ Disabling the inclusion of the conf.d directory...
 Done.
 
 Now restart your Icinga 2 daemon to finish the installation!
-# /etc/init.d/icinga2 restart
+/etc/init.d/icinga2 restart
 [ ok ] Restarting icinga2 (via systemctl): icinga2.service.
 ```
 
@@ -820,11 +822,11 @@ installation on Debian 10 Buster main server.
 
 * [Graphite source](https://github.com/graphite-project/graphite-web/)
 
-```shell
-# icingacli module list
+```bash
+icingacli module list
 MODULE         VERSION   STATE     DESCRIPTION
 monitoring     2.6.2     enabled   Icinga monitoring module
-# install python3-psycopg2 graphite-carbon graphite-web  uwsgi \
+install python3-psycopg2 graphite-carbon graphite-web  uwsgi \
 uwsgi-plugin-python3 libapache2-mod-proxy-uwsgi libapache2-mod-uwsgi \
 python3-memcache python3-mysqldb
 
@@ -842,10 +844,10 @@ python3-memcache python3-mysqldb
 │                                                                           │
 └───────────────────────────────────────────────────────────────────────────┘
 
-# icinga2 feature enable graphite
+icinga2 feature enable graphite
 Enabling feature graphite. Make sure to restart Icinga 2 for these changes to
 take effect.
-# cat << EOF > /etc/icinga2/features-available/graphite.conf
+cat << EOF > /etc/icinga2/features-available/graphite.conf
 object GraphiteWriter "graphite" {
   host = "127.0.0.1"
   port = 2003
@@ -857,8 +859,8 @@ EOF
 Run `graphite-manage check` to see if there is no error. This is an example
 with error
 
-```shell
-# graphite-manage check
+```bash
+graphite-manage check
 /usr/lib/python3/dist-packages/graphite/settings.py:334: UserWarning:
 SECRET_KEY is set to an unsafe default. This should be set in local_settings.py
 for better security
@@ -867,20 +869,20 @@ for better security
 System check identified no issues (0 silenced).
 ```
 
-Set SECRET_KEY to a long random string to avoid this message.
+Set `SECRET_KEY` to a long random string to avoid this message.
 
-```shell
+```bash
 aptitude install pwgen
 export FILENAME=/etc/graphite/local_settings.py
-# IF POSSIBE CHANGE SOME VALUES OF THIS EXPRESSION
+ # IF POSSIBE CHANGE SOME VALUES OF THIS EXPRESSION
 echo SECRET_KEY = '`pwgen -N 1 $((32 + RANDOM % 64 ))`' >> $FILENAME
 ```
 
 Create Graphite database. This step was also required for Debian 9 Stretch, but
 the command is now different.
 
-```shell
-# graphite-manage migrate
+```bash
+graphite-manage migrate
 Operations to perform:
   Apply all migrations: account, admin, auth, contenttypes, dashboard, events,\
   sessions, tagging, tags, url_shortener
@@ -910,8 +912,8 @@ Running migrations:
 Check if the database is created. `graphite-manage dumpdata` should not give an
 error like:
 
-```shell
-# graphite-manage dumpdata
+```bash
+graphite-manage dumpdata
 CommandError: Unable to serialize database: no such table: account_variable
 ```
 
@@ -925,20 +927,20 @@ package is however available in sid. Merging two Debian releases (Buster + Sid)
 is not recommended. However version 1.1.0-1 seems to fit Buster. The packages
 mostly installs to `/usr/share/icingaweb2/modules/`.
 
-```shell
-# mkdir /srv/packages
-# cd /srv/packages
-# export PACKAGE=icingaweb2-module-graphite_1.1.0-1_all.deb
-# export URL=ftp.de.debian.org/debian/pool/main/i/icingaweb2-module-graphite
-# export PROTO=http://
-# wget $PROTO$URL/$PACKAGE
-# apt install /srv/packages/$PACKAGE
-# icingacli module enable graphite
-# icingacli module list
+```bash
+mkdir /srv/packages
+cd /srv/packages
+export PACKAGE=icingaweb2-module-graphite_1.1.0-1_all.deb
+export URL=ftp.de.debian.org/debian/pool/main/i/icingaweb2-module-graphite
+export PROTO=http://
+wget $PROTO$URL/$PACKAGE
+apt install /srv/packages/$PACKAGE
+icingacli module enable graphite
+icingacli module list
 MODULE         VERSION   STATE     DESCRIPTION
 graphite       1.1.0     enabled   Icinga Graphite module
 monitoring     2.6.2     enabled   Icinga monitoring module
-# /etc/init.d/icinga2 restart
+/etc/init.d/icinga2 restart
 ```
 
 Now [Icingaweb2] has a new entry on the right 'Graphite' side. To give access
@@ -951,7 +953,7 @@ URL) and either set user/ password or insecure option, or edit the file
 More modules on the
 [QA page](https://qa.debian.org/developer.php?login=david.kunz%40dknet.ch)
 
-```shell
+```bash
 ls -la /var/spool/icinga2/perfdata/
 total 12
 drwxrwx--- 2 nagios nagios 4096 Jun 14 20:55 .
@@ -962,15 +964,15 @@ drwxr-x--- 4 nagios nagios 4096 Jun 13 16:05 ..
 
 ### Carbon
 
-```shell
-# cat << EOF >> /etc/carbon/carbon.conf
+```bash
+cat << EOF >> /etc/carbon/carbon.conf
 MAX_CREATES_PER_MINUTE = inf
 ENABLE_UDP_LISTENER = True
 EOF
 vim /etc/carbon/storage-schemas.conf
 vim /etc/carbon/storage-aggregation.conf
 systemctl restart carbon-cache
-# /etc/init.d/icinga2 restart
+/etc/init.d/icinga2 restart
 ```
 
 ### Graphite Web Interface
@@ -982,8 +984,8 @@ for `localhost` `127.0.0.1:8080` this should be safe, however to improve this
 other steps might be added: A firewall that blocks 8080, SSL and `httaccess`.
 (Both left as an exercise to the reader)
 
-```shell
-# cat << EOF > /etc/uwsgi/apps-available/graphite.ini
+```bash
+cat << EOF > /etc/uwsgi/apps-available/graphite.ini
 [uwsgi]
 uid = _graphite
 gid = _graphite
@@ -998,8 +1000,8 @@ socket = 127.0.0.1:7999
 touch-reload = /usr/lib/python3/dist-packages/graphite/wsgi.py
 EOF
 ln -s /etc/uwsgi/apps-available/graphite.ini /etc/uwsgi/apps-enabled/graphite.ini
-# systemctl restart uwsgi
-# cat << EOF > /etc/apache2/sites-available/graphite-web.conf
+systemctl restart uwsgi
+cat << EOF > /etc/apache2/sites-available/graphite-web.conf
 Listen 8080
 <VirtualHost *:8080>
         Alias /static/ /usr/share/graphite-web/static/
@@ -1029,15 +1031,15 @@ Listen 8080
         ProxyTimeout 300
 </VirtualHost>
 EOF
-# a2enmod uwsgi proxy proxy_uwsgi
-# a2ensite graphite-web
-# systemctl restart apache2
-# NOT NEEDED: a2enmod wsgi
-# cp /usr/share/graphite-web/apache2-graphite.conf \
+a2enmod uwsgi proxy proxy_uwsgi
+a2ensite graphite-web
+systemctl restart apache2
+ # NOT NEEDED: a2enmod wsgi
+cp /usr/share/graphite-web/apache2-graphite.conf \
 /etc/apache2/sites-available/graphite.conf
-# sed -i -e 's%:80>%:8080>%' /etc/apache2/sites-available/graphite.conf
-# a2ensite graphite
-# systemctl restart apache2
+sed -i -e 's%:80>%:8080>%' /etc/apache2/sites-available/graphite.conf
+a2ensite graphite
+systemctl restart apache2
 ```
 
 Visit `http://localhost:8080/`
@@ -1067,7 +1069,7 @@ install it from source, and therefore makes it practical impossible to use
 
 ## How To Change Main Server Host Name
 
-```shell
+```bash
 echo "vmon" > /etc/hostname
 echo "vmon.example.org" > /etc/mailname
 vim /etc/icinga/constants.conf /etc/icinga/zones.conf
@@ -1126,6 +1128,8 @@ systemctl restart icinga2
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2022-06-05 | Change shell to bash                                 |
 | 0.1.2   | 2021-05-23 | Links                                                |
 | 0.1.1   | 2020-06-06 | Formatting for Quick-Guide                           |
 | 0.1.0   | 2020-02-14 | Initial release                                      |
+
