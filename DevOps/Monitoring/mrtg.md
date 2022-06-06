@@ -2,8 +2,8 @@
 title: MRTG on Raspberry Pi
 linkTitle: MRTG
 author: Christian Külker
-date: 2021-05-18
-version: 0.1.5
+date: 2022-06-06
+version: 0.1.6
 type: doc
 disclaimer: True
 TOC: True
@@ -17,13 +17,15 @@ tags:
 - Apache
 - Nginx
 - SNMP
-description: Monitoring SNMP network devices and draw pretty pictures showing how much traffic has passed through each interface.
+description:
+    Monitoring SNMP network devices and draw pretty pictures showing how much
+    traffic has passed through each interface.
 
 ---
 
 ## Introduction
 
-This article is about a software called Multi Router Traffic Grapher (MRTG)
+This article is about a software called "Multi Router Traffic Grapher" (MRTG)
 that can monitor the load of network interfaces and other values on one ore
 more computers.  While this article tries to be as explicative as possible due
 to the nature of the subject it is targeting experienced Linux users or system
@@ -57,8 +59,10 @@ might consider [Apache2], if you need certain features.
 
 The installation is straight forward:
 
-    aptitude update
-    aptitude install nginx
+```bash
+aptitude update
+aptitude install nginx
+```
 
 Copy the following into the file `/etc/nginx/sites-available/mrtg`
 
@@ -78,9 +82,11 @@ server {
 
 Then make a link and restart **Nginx**
 
-    cd /etc/nginx/sites-eanabled
-    ln -s /etc/nginx/sites-available/mrtg .
-    service nginx restart
+```bash
+cd /etc/nginx/sites-eanabled
+ln -s /etc/nginx/sites-available/mrtg .
+service nginx restart
+```
 
 #### Configuration of Apache2 for MRTG
 
@@ -113,31 +119,39 @@ This kind of configuration can be enabled by `a2enconf mrtg`.
 
 Install the **[SNMP]** server and tools.
 
+```bash
     aptitude install snmp snmpd
+```
 
 Check if the server is running with one (!) of the following commands.
 
+```bash
      ps ax|grep snmp|grep -v grep
      service snmpd status
+```
 
 The first command should give something like:
 
-    29529 ?        S      0:00 /usr/sbin/snmpd -Lsd -Lf /dev/null -u snmp \
-    -g snmp -I -smux mteTrigger mteTriggerConf -p /run/snmpd.pid
+~~~
+29529 ?        S      0:00 /usr/sbin/snmpd -Lsd -Lf /dev/null -u snmp \
+-g snmp -I -smux mteTrigger mteTriggerConf -p /run/snmpd.pid
+~~~
 
 Test the server. The following command should give some output
 
-    snmpwalk -v1 -cpublic localhost
+```bash
+snmpwalk -v1 -cpublic localhost
 
-    iso.3.6.1.2.1.1.1.0 = STRING: "Linux pi 4.4.9-v7+ #884 SMP Fri \
-    May 6 17:28:59 BST 2016 armv7l"
-    iso.3.6.1.2.1.1.2.0 = OID: iso.3.6.1.4.1.8072.3.2.10
-    iso.3.6.1.2.1.1.3.0 = Timeticks: (38719) 0:06:27.19
-    iso.3.6.1.2.1.1.4.0 = STRING: "Me <me@example.org>"
-    iso.3.6.1.2.1.1.5.0 = STRING: "pi"
-    iso.3.6.1.2.1.1.6.0 = STRING: "Sitting on the Dock of the Bay"
-    iso.3.6.1.2.1.1.7.0 = INTEGER: 72
+iso.3.6.1.2.1.1.1.0 = STRING: "Linux pi 4.4.9-v7+ #884 SMP Fri \
+May 6 17:28:59 BST 2016 armv7l"
+iso.3.6.1.2.1.1.2.0 = OID: iso.3.6.1.4.1.8072.3.2.10
+iso.3.6.1.2.1.1.3.0 = Timeticks: (38719) 0:06:27.19
+iso.3.6.1.2.1.1.4.0 = STRING: "Me <me@example.org>"
+iso.3.6.1.2.1.1.5.0 = STRING: "pi"
+iso.3.6.1.2.1.1.6.0 = STRING: "Sitting on the Dock of the Bay"
+iso.3.6.1.2.1.1.7.0 = INTEGER: 72
     ...
+```
 
 As it can be seen from this output some values in ``/etc/snmp/snmpd.conf`` are
 wrong. The e-mail address and the location "Sitting on the Dock of the Bay".
@@ -151,11 +165,16 @@ example, the following `-V systemonly` has to be removed from `rocommunity
 public  default` for [IPv4] in `/etc/snmp/snmpd.conf` and the `snmpd` service
 has to be restarted. If one uses [IPv6] a different line need to be changed.
 
-```shell
-# before
+**before:**
+
+```bash
 snmpwalk  -v 2c -c public localhost |wc -l
 47
-# after
+```
+
+**after:**
+
+```bash
 snmpwalk  -v 2c -c public localhost |wc -l
 8936
 ```
@@ -164,7 +183,7 @@ snmpwalk  -v 2c -c public localhost |wc -l
 
 The installation of [MRTG] is easy:
 
-```shell
+```bash
 aptitude install mrtg
 ```
 
@@ -177,7 +196,7 @@ For Debian 10 Buster [MRTG] uses cron in `/etc/cron.d/mrtg` and updates the
 graphs every 5 minutes and write log entries to `/var/log/mrtg/mrtg.log`. You
 should check the log file for errors in case the configuration is updated.
 
-```shell
+```bash
 cp -a /etc/mrtg.cfg /etc/mrtg.cfg.`date +'%F'`
 ```
 
@@ -275,13 +294,18 @@ Target[hobbit]: .1.3.6.1.4.1.2021.4.6.0&.1.3.6.1.4.1.2021.4.6.0:public@localhost
 The full example for the measurement of free main memory on a Debian 10 Buster
 Linux Raspberry Pi 4 with 4 GB main memory looks like this:
 
+
+__Global Configuration:__
+
 ~~~
-# --- [ Global configuration ] ------------------------------------------------
 WorkDir: /var/www/mrtg
 WriteExpires: Yes
 EnableIPv6: no
+~~~
 
-# --- [ Free Main Memory ] ----------------------------------------------------
+__Free Main Memory:__
+
+~~~
 Title[localhost-free]: Localhost free main memory
 PageTop[localhost-free]: <H1>Localhost - Memory Free</H1>
 Target[localhost-free]: .1.3.6.1.4.1.2021.4.6.0&.1.3.6.1.4.1.2021.4.6.0:\
@@ -298,21 +322,21 @@ The value for __MaxBytes__ can be queried with [SNMP]: (A working configuration
 for `snmpd` is assumed here - if this does not give a value, either the `snmpd`
 configuration need set up correctly or it is a different hardware)
 
-```shell
+```bash
 snmpget -v 2c localhost -c public .1.3.6.1.4.1.2021.4.5.0
 iso.3.6.1.4.1.2021.4.5.0 = INTEGER: 3918772
 ```
 
 Then the configuration needs to be activated
 
-```shell
+```bash
 LANG=C indexmaker /etc/mrtg.cfg > /var/www/mrtg/index.html
 ```
 
 Then the configuration needs to be executed twice, as first run throws errors
 due to an empty database.
 
-```shell
+```bash
 LANG=C /usr/bin/mrtg  /etc/mrtg.cfg
 LANG=C /usr/bin/mrtg  /etc/mrtg.cfg
 ```
@@ -326,14 +350,14 @@ Since one interface, the ``wlan0``, do not deliver a speed value, to be able to
 use it with [MRTG], it is necessary to set a value with the ``-zero-speed=``
 parameter
 
-```shell
+```bash
 LANG=C cfgmaker --zero-speed=100000000 public@127.0.0.1  > /etc/mrtg.cfg
 ```
 
 [MRTG] has a limited capability to scan hardware and create a configuration for
 it.
 
-```shell
+```bash
 LANG=C cfgmaker public@127.0.0.1 --ifref=descr --output /etc/mrtg.cfg
 ```
 
@@ -341,7 +365,7 @@ This basically generates 3 interface graphs for `lo`, `eth0` and `wlan` on the
 Raspberry Pi 4. Some commented out. The `eth0` section looks like:
 
 ~~~
-### Interface 2 >> Descr: 'eth0' | Name: 'eth0' | Ip: '192.168.168.35' | \
+#### Interface 2 >> Descr: 'eth0' | Name: 'eth0' | Ip: '192.168.168.35' | \
 Eth: 'dc-a6-32-78-c1-d5' ###
 
 Target[127.0.0.1_2]: 2:public@127.0.0.1:
@@ -414,26 +438,25 @@ recommended. A quick and dirty approach is to use the `indexmaker` script.
 This creates a page with one graph per target and a link to the sub-page of
 the target.
 
-    mkdir -p /var/www/mrtg
-    LANG=C indexmaker /etc/mrtg.cfg > /var/www/mrtg/index.html
+```bash
+mkdir -p /var/www/mrtg
+LANG=C indexmaker /etc/mrtg.cfg > /var/www/mrtg/index.html
+```
 
 ## Updating The Data For The Web Page
 
 Manually:
 
-    LANG=C mrtg
+```bash
+LANG=C mrtg
+```
 
 Of course this is already configured with `crond`.
 
 ## Access The New Installed MRTG
 
 Point your web browser to the IP of your [MRTG] machine.
-
-    http://<IP-TO-MRTG-HOST>/
-
-Or
-
-    http://<IP-TO-MRTG-HOST>/PATH
+`http://<IP-TO-MRTG-HOST>/` or `http://<IP-TO-MRTG-HOST>/PATH`.
 
 ## Testing And Debugging
 
@@ -442,7 +465,7 @@ Or
 For many functionality of [MRTG] a working and well configured `snmpd` is
 mandatory. Version 1 can be tested with:
 
-```shell
+```bash
 snmpstatus -c public -v1 localhost
 ```
 
@@ -464,13 +487,13 @@ Interfaces: 0, Recv/Trans packets: 0/0 | IP: 0/0
 
 Version 2c can be tested with
 
-```shell
+```bash
 snmpstatus -c public -v2c localhost
 ```
 
 This would considered a success:
 
-```shell
+```bash
 [UDP: [127.0.0.1]:161->[0.0.0.0]:49633]=>[Linux monitor 5.4.79-v7l+ #1373 SMP \
 Mon Nov 23 13:27:40 GMT 2020 armv7l] Up: 0:03:16.30
 Interfaces: 0, Recv/Trans packets: 0/0 | IP: 0/0
@@ -478,7 +501,7 @@ Interfaces: 0, Recv/Trans packets: 0/0 | IP: 0/0
 
 To query the kernel on Debian 10 Buster on Raspberry PI 4 do
 
-```shell
+```bash
 snmpget -v2c -cpublic localhost iso.3.6.1.2.1.1.1.0
 iso.3.6.1.2.1.1.1.0 = STRING: "Linux monitor 5.4.79-v7l+ #1373 SMP Mon Nov \
 23 13:27:40 GMT 2020 armv7l"
@@ -486,8 +509,8 @@ iso.3.6.1.2.1.1.1.0 = STRING: "Linux monitor 5.4.79-v7l+ #1373 SMP Mon Nov \
 
 There are different approaches to query the memory, one is:
 
-```shell
-# UCD-SNMP-MIB::memTotalReal
+```bash
+ # UCD-SNMP-MIB::memTotalReal
 snmpget -v2c -cpublic localhost .1.3.6.1.4.1.2021.4.5.0
 iso.3.6.1.4.1.2021.4.5.0 = INTEGER: 3918772
 ```
@@ -496,7 +519,7 @@ iso.3.6.1.4.1.2021.4.5.0 = INTEGER: 3918772
 
 The cron job defined and runs [MRTG] as follows:
 
-```shell
+```bash
 if [ -x /usr/bin/mrtg ] && [ -r /etc/mrtg.cfg ] && \
 [ -d "$(grep '^[[:space:]]*[^#]*[[:space:]]*WorkDir' /etc/mrtg.cfg | \
 awk '{ print $NF }')" ]; then mkdir -p /var/log/mrtg ; \
@@ -509,7 +532,7 @@ minutes.
 
 ### Running MRTG With Different Log Information
 
-```shell
+```bash
 LANG=C /usr/bin/mrtg -debug cfg /etc/mrtg.cfg
 ```
 ### Debugging SNMP
@@ -517,7 +540,7 @@ LANG=C /usr/bin/mrtg -debug cfg /etc/mrtg.cfg
 This helps to debug `snmpget` and other [SNMP] operations as well as some
 script debugging.
 
-```shell
+```bash
 LANG=C /usr/bin/mrtg -debug snpo /etc/mrtg.cfg
 ```
 
@@ -602,6 +625,7 @@ __Cons__
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.6   | 2022-06-06 | Change shell to bash                                 |
 | 0.1.5   | 2021-05-18 | Updates for Raspberry PI 4                           |
 | 0.1.4   | 2021-01-02 | Updates for Debian 10 Buster                         |
 | 0.1.3   | 2020-06-06 | Formatting for Quick-Guide                           |
@@ -619,5 +643,4 @@ __Cons__
 [OID]: https://en.wikipedia.org/wiki/Object_identifier
 [satsignal]: https://www.satsignal.eu/raspberry-pi/monitoring.html
 [SNMP]: https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol
-
 
