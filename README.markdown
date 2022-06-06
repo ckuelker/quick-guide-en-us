@@ -1,8 +1,8 @@
 ---
 title: Quick Guide README
 author: Christian Külker
-version: 0.1.4
-date: 2022-05-26
+version: 0.1.5
+date: 2022-06-06
 
 ---
 
@@ -23,6 +23,14 @@ format of this repository is [Markdown].
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.5   | 2022-06-06 | +DevOps/Productivity/Logfiles/tail.md,               |
+|         |            | DevOps/Monitoring/mrtg.md,                           |
+|         |            | DevOps/Monitoring/icinga2.md,                        |
+|         |            | DevOps/Mail/postfix-statistics.md,                   |
+|         |            | DevOps/Monitoring/bmon.md, DevOps/HPC/index.md,      |
+|         |            | DevOps/Daemons/nginx.md, Dev/VCS/index.md,           |
+|         |            | Dev/VCS/Git/github-pull-request.md,                  |
+|         |            | Dev/VCS/Git/git.md, DevOps/Memory/swap.md            |
 | 0.1.4   | 2022-05-26 | index.md, +DevOps/Fs/sparse.md, README.markdown      |
 |         |            | update: Dev/HPC/{index,numa,fio}.md,                 |
 |         |            | Dev/Perl/Style-Guide/perltidy.md, Dev/HPC/hdd.md,    |
