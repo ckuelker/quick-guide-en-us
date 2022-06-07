@@ -1,8 +1,8 @@
 ---
 title: Zabbix
 author: Christian Külker
-date: 2020-12-27
-version: 0.1.2
+date: 2022-06-07 
+version: 0.1.3
 type: doc
 disclaimer: True
 TOC: True
@@ -38,6 +38,8 @@ software.
 
 ### Zabbix client
 
+A `zabbix` client is called __agent__ in `zabbix` lingo.
+
 - `zabbix-agent`
 - `zabbix-cli`
 - `zabbix-frontend-php`
@@ -68,20 +70,20 @@ versions on Debian 10 Buster from the [Zabbix] web site.
 
 Install the [Zabbix] server with MySQL (MariaDB) support.
 
-```shell
+```bash
 aptitude install zabbix-server-mysql
 ```
 
 Secure the database server (if not already done). The questions are
 self-explanatory.
 
-```shell
+```bash
 mysql_secure_installation
 ```
 
 Create the database
 
-```shell
+```bash
 mysql --defaults-extra-file=/etc/mysql/debian.cnf
 CREATE DATABASE zabbix CHARACTER SET utf8 COLLATE utf8_bin;
 CREATE USER 'zabbix'@'localhost' IDENTIFIED BY 'CHANGE_ME';
@@ -97,7 +99,7 @@ the table to fit into the mariadb 10.3 dynamic table format.  (see
 Add the following two lines at the beginning of:
 `/usr/share/zabbix-server-mysql/schema.sql.gz`
 
-```
+```sql
 SET GLOBAL innodb_default_row_format='dynamic';
 SET SESSION innodb_strict_mode=ON;
 ```
@@ -108,7 +110,7 @@ And at about line 1280 change all `varchar()` definition within the table
 
 Populate the database
 
-```shell
+```bash
 cd /usr/share/zabbix-server-mysql
 zcat schema.sql images.sql data.sql|mysql zabbix --user=zabbix \
 --password=CHANGE_ME
@@ -117,12 +119,12 @@ zcat schema.sql images.sql data.sql|mysql zabbix --user=zabbix \
 Add user database and password to `/etc/zabbix/zabbix_server.conf` and change
 user and permission of this file.
 
-```shell
+```bash
 chown zabbix /etc/zabbix/zabbix_server.conf
 chnod 640 /etc/zabbix/zabbix_server.conf
 ```
 
-```shell
+```bash
 echo "DBName=zabbix" >> /etc/zabbix/zabbix_server.conf
 echo "DBUser=zabbix" >> /etc/zabbix/zabbix_server.conf
 echo "DBPassword=CHANGE_ME" >> /etc/zabbix/zabbix_server.conf
@@ -141,13 +143,13 @@ Remember to specify a PHP date.timezone in
 #### Securing Zabbix 4.0.4 PHP Front End
 
 To restrict the directories allowed to be read by your [Zabbix] PHP front end,
-setting a PHP open_basedir directive is suggested.
+setting a PHP `open_basedir` directive is suggested.
 
 Put this example in your
 `/etc/apache2/conf-available/zabbix-frontend-php.conf`, near the other
 php_values: (in **one** line, without the backslash)
 
-```
+```php
 php_admin_value open_basedir /usr/share/zabbix/:/var/lib/zabbix:/etc/zabbix:\
 /usr/share/javascript:/usr/share/fonts
 ```
@@ -156,7 +158,7 @@ php_admin_value open_basedir /usr/share/zabbix/:/var/lib/zabbix:/etc/zabbix:\
 
 A one line command to set the `Admin` password.
 
-```shell
+```bash
 PW=`/usr/bin/pwgen -y -N 1 $((8 + RANDOM % 12 ))|/usr/bin/perl -pe 'chomp'`;\
 echo "$PW";\
 echo "update users set passwd=md5('$PW') where alias='Admin';"|mysql zabbix
@@ -164,7 +166,7 @@ echo "update users set passwd=md5('$PW') where alias='Admin';"|mysql zabbix
 
 A one line command to set the `guest` password.
 
-```shell
+```bash
 PW=`/usr/bin/pwgen -y -N 1 $((8 + RANDOM % 12 ))|/usr/bin/perl -pe 'chomp'`;\
 echo "$PW";\
 echo "update users set passwd=md5('$PW') where alias='guest';"|mysql zabbix
@@ -175,7 +177,7 @@ echo "update users set passwd=md5('$PW') where alias='guest';"|mysql zabbix
 The client in the [Zabbix] world is called `agent`. Installation is straight
 forward.
 
-```shell
+```bash
 aptitude install zabbix-agent
 ```
 
@@ -186,6 +188,12 @@ inside the client configuration `/etc/zabbix/zabbix_agentd.conf`.
 
 In case you use a firewall you have to open port `tcp/10050`. There is also the
 service `zabbix-agent` for `firewalld`.
+
+There are different ways to add a client to the [Zabbix] server. One method is
+to log into the web front end and select 'Configuration', 'Hosts' and  press
+the blue button `Create host` in the upper right corner. Add a template via
+'Configuration' -> 'Host' -> click on host name under name column ->
+'Templates' (of that host).
 
 ## Links
 
@@ -269,6 +277,7 @@ they separate process data from configuration data.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2022-06-07 | Client explanation, shell->bash                      |
 | 0.1.2   | 2020-12-27 | Critique Zabbix 4.0.4                                |
 | 0.1.1   | 2020-12-18 | Add hint for client configuration                    |
 | 0.1.0   | 2020-12-15 | Initial release                                      |
@@ -279,3 +288,4 @@ they separate process data from configuration data.
 [row-size-too-large]: https://mariadb.com/kb/en/troubleshooting-row-size-too-large-errors-with-innodb/
 [icinga2]: https://icinga.com/
 [nagios]: https://www.nagios.org/
+
