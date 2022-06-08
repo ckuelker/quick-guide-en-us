@@ -1,8 +1,8 @@
 ---
 title: Infiniband
 author: Christian Külker
-date: 2020-09-05
-version: 0.1.1
+date: 2022-06-08 
+version: 0.1.2
 type: doc
 disclaimer: True
 TOC: True
@@ -57,16 +57,16 @@ host adapters.
 
 ## Install The Software
 
-```shell
-# aptitude install opensm infiband-diags perftest ibutils
+```bash
+aptitude install opensm infiband-diags perftest ibutils
 ```
 
 ## Test Software Installation
 
 Test if the host adapter is present
 
-```shell
-# lspci -v | grep Mellanox
+```bash
+lspci -v | grep Mellanox
 06:00.0 InfiniBand: Mellanox Technologies MT25208 InfiniHost III Ex (Tavor
 compatibility mode) (rev 20)
 ```
@@ -76,16 +76,16 @@ In case it is not present or in doubt, sue `dmesg|grep ib`.
 
 Check if kernel modules are loaded:
 
-```shell
-# lsmod|grep mlx
+```bash
+lsmod|grep mlx
 mlx4_core              67736  0
 ```
 
 Load Mellanox module:
 
-```shell
-# modprobe mlx4_ib
-# lsmod|grep mlx4_ib
+```bash
+modprobe mlx4_ib
+lsmod|grep mlx4_ib
 mlx4_ib                33590  0
 ib_mad                 30017  1 mlx4_ib
 ib_core                40999  2 mlx4_ib,ib_mad
@@ -101,12 +101,12 @@ scsi_mod              126565  2 sd_mod,libata
 
 Load Other IB Modules
 
-```shell
-# modprobe ib_sdp
+```bash
+modprobe ib_sdp
 FATAL: Module ib_sdp not found
 ```
 
-```shell
+```bash
 root@ts2:~# modprobe ib_srp
 root@ts2:~# lsmod |grep ib_srp
 ib_srp                 20480  0
@@ -118,7 +118,7 @@ scsi_mod              126565  5 ib_srp,scsi_transport_srp,scsi_tgt,sd_mod,
                                 libata
 ```
 
-```shell
+```bash
 root@ts2:~# modprobe ib_ipoib
 root@ts2:~# lsmod |grep ib_ipoib
 ib_ipoib               59777  0
@@ -128,7 +128,7 @@ ib_sa                  16103  3 ib_ipoib,ib_srp,ib_cm
 ib_core                40999  6 ib_ipoib,ib_srp,ib_cm,ib_sa,mlx4_ib,ib_mad
 ```
 
-```shell
+```bash
 root@ts2:~# modprobe ib_uverbs
 root@ts2:~# lsmod |grep ib_uverbs
 ib_uverbs              25658  0
@@ -136,7 +136,7 @@ ib_core                40999  7 ib_uverbs,ib_ipoib,ib_srp,ib_cm,ib_sa,mlx4_ib,
                                 ib_mad
 ```
 
-```shell
+```bash
 root@ts2:~# modprobe ib_umad
 root@ts2:~# lsmod |grep ib_umad
 ib_umad                 9879  0
@@ -146,7 +146,7 @@ ib_core                40999  8 ib_umad,ib_uverbs,ib_ipoib,ib_srp,ib_cm,ib_sa,
 ```
 
 
-```shell
+```bash
 root@ts2:~# modprobe rdma_ucm
 root@ts2:~# lsmod |grep rdma_ucm
 rdma_ucm                9205  0
@@ -160,8 +160,8 @@ ib_core                40999  11 rdma_ucm,rdma_cm,iw_cm,ib_umad,ib_uverbs,
 
 ### ts2
 
-```shell
-# ibstat -p
+```bash
+ibstat -p
 0x002590ffff2e4f6d
 ```
 
@@ -172,21 +172,21 @@ where subnet managers can be installed.
 
 Per default it is started on all ports, open `/etc/default/opensm`
 
-```shell
-# vim /etc/default/opensm
+```bash
+vim /etc/default/opensm
 ```
 
 ### Start Opensm
 
-```shell
-# /etc/init.d/opensm start
+```bash
+/etc/init.d/opensm start
 Starting opensm on 0x002590ffff2e4f6d:
 ```
 
 ### Verfy That Opensm Is Started
 
-```shell
-# tail -f /var/log/syslog
+```bash
+tail -f /var/log/syslog
 Sep 20 18:10:40 ts2 OpenSM[3527]: /var/log/opensm.0x002590ffff2e4f6d.log log
 file opened
 Sep 20 18:10:40 ts2 OpenSM[3527]: OpenSM 3.2.6_20090317#012
@@ -197,14 +197,14 @@ Sep 20 18:10:40 ts2 OpenSM[3527]: SM port is down#012
 If the above steps are done also on an other node the following message can  be
 seen:
 
-```shell
+```bash
 Sep 20 18:38:50 ts2 OpenSM[3527]: Entering MASTER state#012
 Sep 20 18:38:50 ts2 OpenSM[3527]: SUBNET UP#012
 ```
 
 ## Collect More Host Adapter Information
 
-```shell
+```bash
 ibstat
 CA 'mlx4_0'
     CA type: MT26428
@@ -226,7 +226,7 @@ CA 'mlx4_0'
 
 ## Check Extended Hosts On The Network
 
-```shell
+```bash
 ibhosts
 Ca      : 0x002590ffff2e4f6c ports 1 "MT25408 ConnectX Mellanox Technologies"
 Ca      : 0x002590ffff2e4f70 ports 1 "MT25408 ConnectX Mellanox Technologies"
@@ -237,12 +237,12 @@ Ca      : 0x002590ffff2e4f70 ports 1 "MT25408 ConnectX Mellanox Technologies"
 As the time of writing I had not a switch attached. Usually there is a
 long output.
 
-```shell
+```bash
 ibswitches
 ```
 
 
-```shell
+```bash
 iblinkinfo
 ```
 
@@ -259,13 +259,13 @@ use IPoverIB. iSCSIoverIB is not covered here.
 
 Check that the module is loaded:
 
-```shell
+```bash
 modprobe ib_ipoib |grep ib_ipoib
 ```
 
 This shows nothing but the following should be showing something
 
-```shell
+```bash
 ifconfig -a |grep ib
 ib0   Link encap:UNSPEC  HWaddr 80-00-00-48-FE-80-00-00-00-00-00-00-00-00-00-00
 ```
@@ -280,13 +280,13 @@ in the ipoib_release_notes.txt document in the ofed-docs package.
 
 Start on one node
 
-```shell
+```bash
 ibping -S
 ```
 
 Start on the other node
 
-```shell
+```bash
 ibping -G 0x002590ffff2e4f6d
 
 ```
@@ -298,13 +298,13 @@ Pong from ts2.(none) (Lid 1): time 0.302 ms
 
 ## Test A Port
 
-```shell
+```bash
 smpquery portinfo 24 24
 ```
 
 ## Create A Topology Map File
 
-```shell
+```bash
 osmtest -f c -i inventory.txt
 cat inventory.txt |grep -e '^lid' -e 'port_guid' -e 'desc'|sed 's/^lid/\nlid/'\
 > mapping.txt
@@ -314,13 +314,13 @@ cat inventory.txt |grep -e '^lid' -e 'port_guid' -e 'desc'|sed 's/^lid/\nlid/'\
 
 One one node (nodeABC) start
 
-```shell
+```bash
 ib_write_bw
 ```
 
 One a different node start
 
-```shell
+```bash
 ib_write_bw nodeABC
 
 ------------------------------------------------------------------
@@ -349,28 +349,28 @@ An other method is: (UNTESTED)
 
 On host A:
 
-```shell
-# rdma_bw -b
+```bash
+rdma_bw -b
 ```
 
 On host B:
 
-```shell
-# rdma_bw -b nodeABC
+```bash
+rdma_bw -b nodeABC
 ```
 
 ## Other Useful Commands
 
 
-```shell
+```bash
 ibnetdiscover
 ```
 
-```shell
+```bash
 opensm
 ```
 
-```shell
+```bash
 /usr/sbin/ibstatus
 ```
 
@@ -379,17 +379,17 @@ opensm
 There many ways to troubleshoot Infiniband and the topic it self can fill a
 book, a quick start point is to use `libdiagnet`.
 
-```shell
-# mkdir libdiagnet
-# cd libdiagnet
-# ibdiagnet -ls 10 -lw 4x -vlr > ibdiagnet.out
+```bash
+mkdir libdiagnet
+cd libdiagnet
+ibdiagnet -ls 10 -lw 4x -vlr > ibdiagnet.out
 ```
 
 Maybe you have to do this over again. In this case (1) reset the error
 counters.
 
-```shell
-# ibdiagnet –pc
+```bash
+ibdiagnet –pc
 ```
 
 And (2) stress the network with benchmark like Intel **IMB-MPI1** benchmark
@@ -397,14 +397,14 @@ over `mvapich` MPI or other network heavy load. Then (3) read out error
 counters again. After finish to run the test on all network nodes, run
 `ibdignet` again.
 
-```shell
+```bash
 ibdiagnet –P all=1
 ```
 
 ## Find Originally Programmed MAC Address
 
-```shell
-# ip addr|grep 'link/infiniband'|sed -s 's%.*link/infiniband \
+```bash
+ip addr|grep 'link/infiniband'|sed -s 's%.*link/infiniband \
   80:00:00:48:fe:80:00:00:00:00:00:00:\(.*\):00:01 brd.*%\1%'
 ```
 
@@ -421,7 +421,14 @@ flint
 spark
 ```
 
-## Further Reading
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2022-06-08 | shell->bash, +history                                |
+| 0.1.1   | 2020-09-05 |                                                      |
+| 0.1.0   | 2020-05-18 | Initial release                                      |
 
 [Deploying HPC Cluster with Mellanox]: https://www.mellanox.com/related-docs/solutions/deploying-hpc-cluster-with-mellanox-infiniband-interconnect-solutions-archive.pdf
 [Mellanix OFED Manual]: https://www.mellanox.com/related-docs/prod_software/Mellanox%20OFED%20Linux%20User%20Manual%201_5_3-3_0_0.pdf
+
