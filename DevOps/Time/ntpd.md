@@ -1,8 +1,8 @@
 ---
 title: Ntpd
 author: Christian Külker
-date: 2021-06-03
-version: 0.1.0
+date: 2022-06-11
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
@@ -55,27 +55,27 @@ propagate the time, but set the local clock.
   high stratum servers.
 
 - As of now the UTC time is not considered a secret. While it is possible
-  to add encryption to NTP, it comes with extended key management and as
+  to add encryption to `NTP`, it comes with extended key management and as
   such is more likely to fail. While security is considered a good quality,
-  for NTP it might introduce more problems than benefits. Consider carefully.
+  for `NTP` it might introduce more problems than benefits. Consider carefully.
 
-- Setup your own hierarchical NTP service for your local network.
+- Setup your own hierarchical `NTP` service for your local network.
 
-- While it is possible to run a NTP sever on a Raspberry Pi, consider a
+- While it is possible to run a `NTP` sever on a Raspberry Pi, consider a
   server with UPS and battery buffered real time clock. While the Raspberry
-  Pi  might work fine, he will loose the accuracy on power loss. For a time
+  Pi might work fine, he will loose the accuracy on power loss. For a time
   server a high uptime is appreciated.
 
 ## How To Set The Time via Ntpd Manually?
 
 When changing the real time clock battery, or for some other reasons (if the
 system has no buffered clock for example), the on board time differs much from
-the real time. Usually `ntpd` refused to set this. Howver it possible to force
+the real time. Usually `ntpd` refused to set this. However it possible to force
 `ntpd` to set from the network.
 
 The old and short way is:
 
-```shell
+```bash
 /etc/init.d/ntp stop
 ntpd -gq
 /etc/init.d/ntp start
@@ -85,7 +85,7 @@ The option `-g` is the same as `--panicgate` and allow a to set a time which is
 much different than the current time. While `-q` (or `--quit`) sets the time
 once and quit. The "modern" way is:
 
-```shell
+```bash
 systemctl stop ntp
 ntpd --panicgate --quit
 systemctl start ntp
@@ -93,5 +93,12 @@ systemctl start ntp
 
 If you do not have a network access use `date -s 'FORMAT'` to set the time.
 `FORMAT` can be for example `2021-06-03T14:22:12`.
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.0   | 2022-06-11 | Shell->bash, +history                                |
+| 0.1.0   | 2021-06-03 | Initial release                                      |
 
 
