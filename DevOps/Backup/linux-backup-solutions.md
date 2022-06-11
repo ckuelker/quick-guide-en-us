@@ -1,8 +1,8 @@
 ---
 title: Linux Backup Solutions
 author: Christian Külker
-date: 2021-06-08
-version: 0.1.1
+date: 2022-06-11
+version: 0.1.2
 type: doc
 disclaimer: True
 TOC: True
@@ -18,7 +18,9 @@ commands:
 - snapper
 tags:
 - Backup
-description: General information regarding backups and overview of selected Linux backup software
+description:
+  General information regarding backups and overview of selected Linux backup
+  software
 
 ---
 
@@ -61,9 +63,9 @@ there should be 3 copies of the data, stored on 2 different media types (of 2
 different computers) and 1 copy should not be on site.
 
 The reason why one should use at least 2 different computers is, that sometimes
-even hardware (not the media) might introduce errors to the backup.  A
-defective raid controller might not only crash the file systems of spinning
-hard disks attach to it but also that of SSDs, for example.
+even hardware (not the media) might introduce errors to the backup. A defective
+raid controller might not only crash the file systems of spinning hard disks
+attach to it but also that of SSDs, for example.
 
 ## Methods
 
@@ -113,7 +115,7 @@ For example, if you have mounted a directory of an external server via NFS
 to `/remote/server/dir` you can put this script under `/etc/cron.daily` to
 back up the `/etc` directory.
 
-```shell
+```bash
 #!/usr/bin/bash
 
 DIR=/remote/server/dir
@@ -141,7 +143,7 @@ If the target is to backup a partition (which might be questionable), so called
 snapshots can be used for certain file systems. The following list should be
 considered with caution as it do not claim that the mentioned file systems are
 stable. Sometimes the can be done via file system specific `fsck` tools,
-external commands or via an interim layer, like LVM.
+external commands or via an interim layer, like `LVM`.
 
 - btrfs
 - zfs
@@ -163,24 +165,24 @@ administrators to understand the underlying problems of backups, there are free
 open source software already provided to Linux than can be used, if one
 understand the core principles of backups.
 
-| Package         | Debian | Interface | Debian Version      |
-| --------------- | ------ | --------- | ------------------- |
-| [Amanda]        | Buster | CLI       | 1:3.3.9-5           |
-| [Areca Backup]  | n.a.   |           |                     |
-| [BackupPC]      | Buster | GUI       | 3.3.1-4             |
-| [Back In Time]  | Buster | GUI       | 1.1.12-2            |
-| [Bacula]        | Buster |           | 7.4.4+dfsg-6+deb9u2 |
-| [Bareos]        | Buster | GUI       | 16.2.4-3+deb9u2     |
-| [Cpio]          | Buster | CLI       | 2.11+dfsg-6         |
-| [dirvish]       | Buster | CLI       | 1.2.1-1.3           |
-| [duplicity]     | n.a.   |           |
-| [rdiff-backup]  | Buster |           | 1.2.8-7             |
-| [rsbackup]      | Buster |           | 3.1-3+b1            |
-| [rsnapshot]     | Buster | CLI       | 1.4.2-1             |
-| [slbackup]      | Buster | CLI       | 0.0.12-8            |
-| [snapper]       | Buster | CLI       | 0.4.1-3             |
-| [Warewulf]      | n.a.   | CLI       |                     |
-| Tar             | Buster | CLI       | 1.29b-1.1           |
+| Package         | Debian   | Interface | Debian Buster       |  Bullseye   |
+| --------------- | -------- | --------- | ------------------- | ----------- |
+| [Amanda]        |          | CLI       | 1:3.3.9-5           | 1:3.5.1-7   |
+| [Areca Backup]  | n.a.     |           |                     |             |
+| [BackupPC]      |          | GUI       | 3.3.1-4             | 4.4.0-3     |
+| [Back In Time]  |          | GUI       | 1.1.12-2            | 1.2.1-3     |
+| [Bacula]        |          |           | 7.4.4+dfsg-6+deb9u2 | 9.6.7-3     |
+| [Bareos]        | Buster   | GUI       | 16.2.4-3+deb9u2     |             |
+| [Cpio]          |          | CLI       | 2.11+dfsg-6         | 2.13+dfsg-4 |
+| [dirvish]       | Buster   | CLI       | 1.2.1-1.3           | 1.2.1-2.1   |
+| [duplicity]     | Bullseye |           |                     | 0.8.17-1+b1 |
+| [rdiff-backup]  |          |           | 1.2.8-7             | 2.0.5-2     |
+| [rsbackup]      |          |           | 3.1-3+b1            | 6.0-2+b2    |
+| [rsnapshot]     | Buster   | CLI       | 1.4.2-1             |             |
+| [slbackup]      |          | CLI       | 0.0.12-8            | 0.0.12-13   |
+| [snapper]       |          | CLI       | 0.4.1-3             | 0.8.15-1    |
+| [Warewulf]      | n.a.     | CLI       |                     |             |
+| Tar             |          | CLI       | 1.29b-1.1           | 1.34+dfsg-1 |
 
 ## Details On Some Software
 
@@ -283,6 +285,7 @@ only for desktop or personal computers, but also for servers.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2022-06-11 | Shell -> bash, Bullseye                              |
 | 0.1.1   | 2021-06-08 | Typos, Slbackup, Details, Dirvish, Duplicity         |
 | 0.1.0   | 2021-06-07 | Initial release                                      |
 
