@@ -1,8 +1,8 @@
 ---
 title: Linux Backup Solutions
 author: Christian Külker
-date: 2022-06-11
-version: 0.1.2
+date: 2022-06-12
+version: 0.1.3
 type: doc
 disclaimer: True
 TOC: True
@@ -162,7 +162,7 @@ Software that sounds like a snapshot, but isn't:
 
 While it is advisable to create once own backup systems for young system
 administrators to understand the underlying problems of backups, there are free
-open source software already provided to Linux than can be used, if one
+open source software already provided to Linux that can be used, if one
 understand the core principles of backups.
 
 | Package         | Debian   | Interface | Debian Buster       |  Bullseye   |
@@ -172,17 +172,25 @@ understand the core principles of backups.
 | [BackupPC]      |          | GUI       | 3.3.1-4             | 4.4.0-3     |
 | [Back In Time]  |          | GUI       | 1.1.12-2            | 1.2.1-3     |
 | [Bacula]        |          |           | 7.4.4+dfsg-6+deb9u2 | 9.6.7-3     |
-| [Bareos]        | Buster   | GUI       | 16.2.4-3+deb9u2     |             |
+| [Bareos]        | Buster   | GUI       | 16.2.4-3+deb9u2     | 1)          |
 | [Cpio]          |          | CLI       | 2.11+dfsg-6         | 2.13+dfsg-4 |
-| [dirvish]       | Buster   | CLI       | 1.2.1-1.3           | 1.2.1-2.1   |
+| [dirvish]       |          | CLI       | 1.2.1-1.3           | 1.2.1-2.1   |
 | [duplicity]     | Bullseye |           |                     | 0.8.17-1+b1 |
 | [rdiff-backup]  |          |           | 1.2.8-7             | 2.0.5-2     |
 | [rsbackup]      |          |           | 3.1-3+b1            | 6.0-2+b2    |
-| [rsnapshot]     | Buster   | CLI       | 1.4.2-1             |             |
+| [rsnapshot]     | Buster   | CLI       | 1.4.2-1             | 2)          |
 | [slbackup]      |          | CLI       | 0.0.12-8            | 0.0.12-13   |
 | [snapper]       |          | CLI       | 0.4.1-3             | 0.8.15-1    |
 | [Warewulf]      | n.a.     | CLI       |                     |             |
 | Tar             |          | CLI       | 1.29b-1.1           | 1.34+dfsg-1 |
+
+1) Removed at 2021-12-01 due to maintainer [inactivity and 9 RC
+bugs](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1000906#5). See
+also [tracker](https://tracker.debian.org/pkg/bareos)
+
+2) Was removed at [2021-04-11](https://tracker.debian.org/pkg/rsnapshot)
+due to bug [#986709](https://bugs.debian.org/986709) that tells that the
+upstream maintainer do not intent continue to maintain it.
 
 ## Details On Some Software
 
@@ -285,6 +293,7 @@ only for desktop or personal computers, but also for servers.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2022-06-12 | Add reason of package removal from Bullseye          |
 | 0.1.2   | 2022-06-11 | Shell -> bash, Bullseye                              |
 | 0.1.1   | 2021-06-08 | Typos, Slbackup, Details, Dirvish, Duplicity         |
 | 0.1.0   | 2021-06-07 | Initial release                                      |
