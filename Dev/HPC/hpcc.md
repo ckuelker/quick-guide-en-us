@@ -2,7 +2,8 @@
 linkTitle: HPCC
 title: HPC Challenge
 author: Christian Külker
-date: 2016-03-20
+date: 2022-06-13
+version: 0.1.2
 type: doc
 disclaimer: True
 TOC: True
@@ -30,7 +31,7 @@ The **HPCC** consists of seven tests:
 
 ## Download Version 1.4.3
 
-```shell
+```bash
 cd /srv/src
 wget http://icl.cs.utk.edu/projectsfiles/hpcc/download/hpcc-1.4.3.tar.gz
 cd /srv/build
@@ -39,7 +40,7 @@ tar xvzf ../src/pcc-1.4.3.tar.gz
 
 ## Download Version 1.5.0
 
-```shell
+```bash
 cd /srv/src
 wget http://icl.cs.utk.edu/projectsfiles/hpcc/download/hpcc-1.5.0.tar.gz
 cd /srv/build
@@ -51,7 +52,7 @@ tar xvzf ../src/pcc-1.5.0.tar.gz
 To compile the code under a fictive architecture **ArchitectureE52697v2** the
 Makefile needs to be copied and edited.
 
-```shell
+```bash
 cd /srv/build/hpcc-1.4.5
 module load mkl/intel
 module load intel/15.0
@@ -66,11 +67,10 @@ make ArchitectureE52697v2
 * [HPC Challange Benchmark - Home](https://icl.utk.edu/hpcc/)
 * [Source Code - Source Forge](https://sourceforge.net/projects/hpcc/)
 
-## Changes
+## History
 
-| Version | Date       | Author           | Notes                             |
-| ------- | ---------- | ---------------- | --------------------------------- |
-| 0.1.1   | 2016-03-20 | Christian Külker | version 1.5.0                     |
-| 0.1.0   | 2016-02-01 | Christian Külker | initial release                   |
-
-
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2022-06-13 | Shell->bash, changes->history                        |
+| 0.1.1   | 2016-03-20 | version 1.5.0                                        |
+| 0.1.0   | 2016-02-01 | Initial release                                      |
