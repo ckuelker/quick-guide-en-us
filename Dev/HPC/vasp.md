@@ -2,8 +2,8 @@
 title: VASP Benchmark
 linkTitle: VASP
 author: Christian Külker
-date: 2020-12-27
-version: 0.1.2
+date: 2022-06-14
+version: 0.1.3
 type: doc
 disclaimer: True
 TOC: True
@@ -30,13 +30,14 @@ molecular dynamics** (MD). This benchmark requires low latency networks to
 scale (Infiband over GbE). A free software stack
 (Open64/MVAPICH2/ACML/ScaLAPACK) performs comparably to the Intel stack.
 
-## Changes
+## History
 
-| Version | Date       | Author           | Notes                             |
-| ------- | ---------- | ---------------- | --------------------------------- |
-| 0.1.2   | 2020-12-27 | Christian Külker | Improve link section, line lenght |
-| 0.1.1   | 2020-05-03 | Christian Külker | Typos                             |
-| 0.1.0   | 2016-08-27 | Christian Külker | Initial release                   |
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2022-06-14 | Shell->bash, changes->history, typos                 |
+| 0.1.2   | 2020-12-27 | Improve link section, line length                    |
+| 0.1.1   | 2020-05-03 | Typos                                                |
+| 0.1.0   | 2016-08-27 | Initial release                                      |
 
 ## VASP on Bright Cluster Manager
 
@@ -44,7 +45,7 @@ scale (Infiband over GbE). A free software stack
 
 As root
 
-```shell
+```bash
 cd /root/ckuelker/bm/bin
 ./speedup
 ./init-intel-license
@@ -60,7 +61,7 @@ chown -R hpc:hpc vasp-007
 
 As user `hpc`:
 
-```shell
+```bash
 source /cm/shared/apps/intel-ics-2013/bin/compilervars.sh intel64
 source /cm/shared/apps/intel-ics-2013/bin/iccvars.sh intel64
 source /cm/shared/apps/intel-ics-2013/bin/ifortvars.sh intel64
@@ -70,14 +71,14 @@ source /cm/shared/apps/intel-ics-2013/composer_xe_2013.1.117/mkl/bin/mklvars.sh 
 
 ### Build The Benchmark
 
-```shell
+```bash
 cd /home/hpc/bm-vasp/src/Benchmarks/vasp-007
 ./build.sh
 ```
 
 ### Run The Benchmark
 
-```shell
+```bash
 cd /home/hpc/bm-vasp/src/Benchmarks/vasp-007
 ./run.sh
 ```
@@ -88,7 +89,7 @@ Eventually edit `run.sh` and change core number to be used.
 
 Optimization (changing compiler flags) in the make files:
 
-```shell
+```bash
 Benchmarks/vasp/src/vasp.5.lib/Makefile
 Benchmarks/vasp/src/wannier90-1.2/Makefile
 Benchmarks/vasp/src/vasp.5.2.12/makefile
@@ -99,7 +100,7 @@ Benchmarks/vasp/src/vasp.5.2.12/makefile
 The Intel cluster has 12 core per CPU, Intel(R) Xeon(R) CPU E5645 @ 2.40GHz.
 Assuming the source is in `~/bm/src/vasp.tar.gz`
 
-```shell
+```bash
 tar xvzf bm/src/vasp.tar.gz
 cd bm/src/vasp-5.2.12
 module load intel/cs-xe-2013--binary
@@ -120,7 +121,7 @@ make: *** No rule to make target `/lib/intel64/libfftw3xf_intel.a', needed by
 
 ### Solving
 
-```shell
+```bash
 mkdir -p  ~/bm/build/intel/fftw3xf
 cd /prod/compilers/intel/cs-xe-2013/binary/composer_xe_2013.1.117/mkl/\
 interfaces/fftw3xf
@@ -134,7 +135,7 @@ source env
 
 That do not work, try this
 
-```shell
+```bash
 cp src/vasp.5.2.12/makefile src/vasp.5.2.12/makefile.original
 sed -i -e 's%\$(MKL_PATH)/libfftw3xf_intel.a%~/bm/build/intel/fftw3xf/\
 libfftw3xf_intel.a%' src/vasp.5.2.12/makefile
@@ -156,7 +157,7 @@ They can be found at:
 
 `/prod/compilers/intel/cs-xe-2013/binary/composer_xe_2013.1.117/mkl/lib/intel64/`
 
-```shell
+```bash
 sed -i -e 's%/opt/intel/mkl/lib/intel64/libmkl_blacs_intelmpi_lp64.a%/prod/\
 compilers/intel/cs-xe-2013/binary/composer_xe_2013.1.117/mkl/lib/intel64/\
 libmkl_blacs_intelmpi_lp64.a%' src/vasp.5.2.12/makefile
