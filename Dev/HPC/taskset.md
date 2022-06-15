@@ -2,7 +2,8 @@
 title: Taskset
 type: doc
 author: Christian Külker
-date: 2020-05-01
+date: 2022-06-15
+version: 0.1.0
 disclaimer: True
 TOC: True
 keywords:
@@ -22,7 +23,7 @@ particular central processing unit, or a range of CPUs.
 
 ## Installation
 
-```shell
+```bash
 aptitude install util-linux
 ```
 
@@ -32,7 +33,7 @@ aptitude install util-linux
 
 Use the **PID** with the `-p` option to get the affinity mask.
 
-```shell
+```bash
 taskset -p 32677
 pid 32677's current affinity mask: ff
 ```
@@ -41,7 +42,7 @@ The mask is a bit mask. For this example the process has the affinity to run on
 all CPUs hex `0xff` = binary `11111111` = decimal 8 cores. That the system has
 8 cores can easy confirmed with [numctl](./numa.html)
 
-```shell
+```bash
 numactl --hardware
 available: 1 nodes (0)
 node 0 cpus: 0 1 2 3 4 5 6 7
@@ -54,7 +55,7 @@ node   0
 
 ## How To Change The CPU Affinity Of A Process?
 
-```shell
+```bash
 taskset -p  32677
 pid 32677's current affinity mask: ff
 taskset -p 0x0f 32677
@@ -67,13 +68,23 @@ pid 32677's current affinity mask: f
 ## How To Start A Process With CPU Affinity?
 
 This task is quite common in HPC, when starting a new process manually or via a
-scheduler one should know and understand how to pin a process to certain CPU's
+scheduler one should know and understand how to pin a process to certain CPUs.
 
-```shell
+```bash
 taskset 0xf0 long-running-command
 ```
 
-It is of course also possible to run a process on a **range** of CPU's with the
+It is of course also possible to run a process on a **range** of CPUs with the
 `-cp` option, but that usually makes only sense if the task switching has no
 penalty involved. Usually it is better to pin a process to one core unless the
 task is a wrapper that pins it sub process by itself to dedicated cores.
+
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-06-15 | History, shell->bash                                 |
+| 0.1.0   | 2020-05-01 | Initial release                                      |
+
+
