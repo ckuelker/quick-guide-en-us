@@ -1,8 +1,8 @@
 ---
 title: Iperf
 author: Christian Külker
-date: 2021-06-06
-version: 0.1.1
+date: 2022-06-17
+version: 0.1.2
 type: doc
 disclaimer: True
 TOC: True
@@ -15,7 +15,9 @@ commands:
 tags:
 - Iperf
 - Iperf3
-description: Iperf and Iperf3 are tools to measure network bandwidth and other network  parameters
+description:
+    Iperf and Iperf3 are tools to measure network bandwidth and other network
+    parameters
 
 ---
 
@@ -35,8 +37,8 @@ Report MSS/MTU size     | measure package loss
 Observe MSS/MTU size    | measure delay jitter
 Support TCP window size | use multicast
 
-[iperf3] and specially [iperf3.1] has additional features compared to [iperf2]. However the following features
-are not available:
+[iperf3] and specially [iperf3.1] has additional features compared to [iperf2].
+However the following features are not available:
 
 - -d/-r: Bidirectional testing
 - -I: Data transmitted from stdin
@@ -45,24 +47,26 @@ are not available:
 - -y: Report as a Comma-Separated Values
 - -C: Compatibility mode allows for use with older version of [iPerf]
 
-The [iperf2] has a nice brief [comparison table] which compares iperf2 and iperf3.
+The [iperf2] has a nice brief [comparison table] which compares iperf2 and
+iperf3.
 
 ## Debian Versions
 
-Debian      | iperf          | iperf3
------------ | -------------- | ------
-Stretch 9   | 2.0.9+dfsg1-1  | 3.1.3-1
-Buster 10   | 2.0.12+dfsg1-2 | 3.6-2
+Debian      | iperf           | iperf3
+----------- | --------------- | ------
+Bullseye 11 | 2.0.14a+dfsg1-1 | 3.9-1
+Buster 10   | 2.0.12+dfsg1-2  | 3.6-2
+Stretch 9   | 2.0.9+dfsg1-1   | 3.1.3-1
 
 ## Installation of Iperf 2.x
 
-```shell
+```bash
 aptitude install iperf
 ```
 
 ## Installation of Iperf 3.x
 
-```shell
+```bash
 aptitude install iperf3
 ```
 
@@ -92,13 +96,13 @@ This is a simple [TCP] client server bandwidth test.
 
 Server:
 
-```shell
+```bash
 iperf -s
 ```
 
 Client:
 
-```shell
+```bash
 iperf -c 192.168.168.32
 ------------------------------------------------------------
 Client connecting to 192.168.168.32, TCP port 5001
@@ -132,13 +136,13 @@ Generally speaking, higher MTU (and MSS) brings higher bandwidth efficiency
 
 Server:
 
-```shell
+```bash
 iperf -s
 ```
 
 Client side:
 
-```shell
+```bash
 iperf -c 192.167.168.32 -m
 ------------------------------------------------------------
 Client connecting to 192.168.168.32, TCP port 5001
@@ -158,13 +162,13 @@ This is a simple [TCP] client server bandwidth test.
 
 Server:
 
-```shell
+```bash
 iperf3 -s
 ```
 
 Client:
 
-```shell
+```bash
 iperf3 -c 192.168.168.32
 Connecting to host 192.168.168.32, port 5201
 [  5] local 192.168.168.33 port 53614 connected to 192.168.168.32 port 5201
@@ -223,9 +227,7 @@ Connecting to host 192.168.168.32, port 5201
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
-| 0.1.1   | 2021-06-06 | Add comparsion table link, MSS example               |
+| 0.1.2   | 2022-06-17 | Shell->bash, add Bullseye version, Typo              |
+| 0.1.1   | 2021-06-06 | Add comparison table link, MSS example               |
 | 0.1.0   | 2021-06-05 | Initial release                                      |
-
-
-
 
