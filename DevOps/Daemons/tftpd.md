@@ -30,25 +30,25 @@ TFTP daemon is sometimes the only method to copy a file onto the device.
 
 Check if already installed
 
-```shell
+```bash
 rpm -q tftp-server
 tftp-server-0.49-2.el5.centos
 ```
 
 Activate for some run-levels via xinetd
 
-```shell
+```bash
 /sbin/chkconfig --level 245 xinetd on
 /sbin/chkconfig --level 345 tftp on
 ```
 
 Setting the verbose level
 
-```shell
+```bash
 vim  /etc/xinet.d/tftp
 ```
 
-Add -vvv to 'server_args' that will help the initial debugging.
+Add `-vvv` to '`server_args`' that will help the initial debugging.
 
 ## HPA TFTP Server On Debian
 
@@ -58,19 +58,19 @@ other where quiet buggy. There is also the `tftpd` package under Debian. The
 configuration and supported protocols can differ between flavours of TFTP
 servers.
 
-```shell
+```bash
 aptitude install tftpd-hpa
 ```
 
 ### Install DHCPD
 
-```shell
+```bash
 aptitude install dhcp3-server
 ```
 
 ### Configure DHCPD
 
-```shell
+```bash
 cd /etc/dhcp3
 cp dhcpd.conf dhcpd.conf-original
 vim dhcpd.conf
@@ -92,7 +92,7 @@ option domain-name-servers 208.67.222.222, 208.67.220.220;
 
 The boot directory is at `/var/lib/tftpboot`
 
-```shell
+```bash
 mkdir -v /var/lib/tftpboot/pxelinux.cfg
 mkdir -vp /var/lib/tftpboot/centos6/i386 /var/lib/tftpboot/centos6/x86_64 
 rsync -av rsync.hrz.tu-chemnitz.de::ftp/pub/linux/centos/6/os/i386/images/\
@@ -105,7 +105,7 @@ vim /var/lib/tftpboot/pxelinux.cfg/default
 
 Add this content:
 
-```
+~~~
 DISPLAY boot.txt
 
 DEFAULT  centos6_x86_64_install
@@ -125,7 +125,14 @@ append initrd=/centos6/i386/initrd.img devfs=nomount
 
 PROMPT 1
 TIMEOUT 10
-```
+~~~
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-06-18 | History, shell->bash                                 |
+| 0.1.0   | 2016-06-22 | Initial release                                      |
 
 
 
