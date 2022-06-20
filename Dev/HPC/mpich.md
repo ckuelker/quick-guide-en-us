@@ -2,8 +2,8 @@
 title: Mpich
 linkTitle: Mpich
 author: Christian Külker
-date: 2022-06-18
-version: 0.1.0
+date: 2022-06-20
+version: 0.1.1
 locale: en_US
 lang: en
 type: doc
@@ -13,29 +13,52 @@ categories:
 - HPC
 commands:
 - make
+- configure
 tags:
 - mpich
 - mpich-4.1a1
+packages:
+- gfortran
+- automake
+- g++
+- make
+source:
+- mpich-4.1a1.tar.gz
 description: Installing and usage of Mpich
 
 ---
 
-## mpich-4.1a1
+## rpi/mpi/mpich/4.1a1
+
+Building and installing `mpich-4.1a1` on a Raspberry Pi 4. The build will be
+performed in `/opt/hpc/rpi/mpi/mpich/4.1a1/bld` and the installaton location
+will be `/opt/hpc/rpi/mpi/mpich/4.1a1` to control the version usage of `mpich`.
+
+As root
 
 ```bash
 aptitude install gfortran automake g++ make
-mkdir -p /tmp/hpc
-cd /tmp/hpc
-wget https://www.mpich.org/static/downloads/4.1a1/mpich-4.1a1.tar.gz
-tar xvzf mpich-4.1a1.tar.gz
-cd mpich-4.1a1
+mkdir -p /opt/hpc/src
+chown -R $USER.$USER /opt/hpc
+```
+
+As user
+
+```bash
+export VER=4.1a1
+cd /opt/hpc/src
+wget https://www.mpich.org/static/downloads/$VER/mpich-$VER.tar.gz
+export PFX=/opt/hpc/rpi/mpi/mpich/$VER
+mkdir -p $PFX/bld
+cd $PFX/bld
+tar xvzf /opt/hpc/src/mpich-$VER.tar.gz --strip-components=1
 ```
 
 On traditional `HPC` systems the device needs to match the network.  Without
 specification it might look like:
 
 ```bash
-./configure --prefix=/tmp/hpc
+./configure --prefix=$PFX
 ...
 *****************************************************
 ***
@@ -57,7 +80,7 @@ Configuration completed.
 With using the legacy ch3:sock device it looks like:
 
 ```bash
-./configure  --prefix=/tmp/hpc --with-device=ch3:sock
+./configure  --prefix=$PFX --with-device=ch3:sock
 ...
 *****************************************************
 ***
@@ -80,4 +103,5 @@ make install
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-06-20 | Change dir structure                                 |
 | 0.1.0   | 2022-06-18 | Initial release                                      |
