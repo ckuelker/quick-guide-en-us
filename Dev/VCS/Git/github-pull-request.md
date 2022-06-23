@@ -20,12 +20,25 @@ description: How to make a github.com pull request
 
 ---
 
-Participation in git repositories often is done via a pull request, because not
-all people have write access to the main repository. A pull request solves this
-issue. This section is about how to make a pull request on `github.com`.
+A common way participating in software projects managed with git is the so
+called 'pull request' on certain services like <https://github.com> (It is
+called 'merge request on <https://gitlab.com>). This technique is very popular
+with git, as people often have a one time commitment and no write access to the
+repository. A 'pull request' is therefore a one time __write__ exception to the
+repository. In traditional `VCS` a tar ball was send via mail for example and
+the repository maintainer would manually save the tar ball to the file system,
+extract the content and add the changes to the repository, review it, make a
+diff and decide if the changes would be included in the next repository commit
+to make a one time contribution possible. This was a labour intensive error
+prone process. Git and <https://github.com> use the concept of a 'pull
+request' and 'fork' to facilitate a half automatic method for one time write
+contribution. This section is about how to make a pull request (and fork) on
+<https://github.com> specific. As this is not a git feature as such, the web
+interface of <https://github.com> need to be used together with the command
+line.
 
-1. Log into `github.com`
-2. Go to the web page projects repository, press fork button
+1. Log into <https://github.com>
+2. Go to the web page projects repository, press the fork button
 3. Clone **your** fork of the repository
 
 ```bash
@@ -195,5 +208,6 @@ See [managing forks](github-manageing-forks.html) for details.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2022-06-23 | Improve introduction                                 |
 | 0.1.1   | 2022-05-31 | Fix front matter, shell->bash                        |
 | 0.1.0   | 2020-06-08 | Initial release                                      |
