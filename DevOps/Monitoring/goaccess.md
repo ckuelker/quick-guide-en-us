@@ -1,8 +1,8 @@
 ---
 title: Goaccess
 author: Christian Külker
-date: 2021-05-22
-version: 0.1.0
+date: 2022-06-28
+version: 0.1.1
 type: doc
 disclaimer: True
 TOC: True
@@ -25,14 +25,14 @@ report.
 - MIT license
 - Fast, real-time, millisecond/second updates
 - written in C
-- Only ncurses as a dependency
-- Many  web log formats (Apache, Nginx, Amazon S3, Elastic Load Balancing,
+- Only `ncurses` as a dependency
+- Many web log formats (Apache, Nginx, Amazon S3, Elastic Load Balancing,
   CloudFront, Caddy, for the latest version. A bit less for Debian Buster)
 - Beautiful terminal
 
 ## Installation
 
-```shell
+```bash
 aptitude install goaccess
 ```
 
@@ -45,7 +45,7 @@ Preferable this should be run inside `screen` or similar to maintain running,
 even if the ssh connection drops. A restart is not a problem.
 
 
-```shell
+```bash
 cd /var/log/nginx
 goaccess access.log
 +-----------------------------------------------------------+
@@ -123,31 +123,31 @@ Crate a static HTML report in a dedicated directory `TEST`:
 cd
 mkdir TEST
 cd TEST
-goaccess /var/log/nginx/access.log -o report.html --log-format=COMBINED 
+goaccess /var/log/nginx/access.log -o report.html --log-format=COMBINED
 ```
 
 This will generate the file `report.hml`. View this with you browser or
-create this in a directory serves by the web server.
+create this in a directory served by the web server.
 
-For Debian Buster this will be created with missing missing Unicode characters
-under Firefox. Other browsers display them.
+For Debian 10 Buster this will be created with missing missing Unicode
+characters under Firefox. Other browsers display them.
 
 ## Real Time HTML Report Usage
 
-This is just a short test and has some flaws that need to be addressed. 
+This is just a short test and has some flaws that need to be addressed.
 
 ```
 goaccess /var/log/nginx/access.log -o /web/server/root/report.html \
 --log-format=COMBINED --real-time-html
 ```
 
-This will generate a page under the web server root as well opens a socked for
-the update. A short test under Debian 10 Buster reveals some problems.  The
-main problem is that the page is not displayed with Firefox or Chromium.
-Chromium complained about insecure scripts. After waving the page was
-displayed. However as permanent solution this would not be acceptable. Firefox
-received the page with code 200 but failed to load the favicon.ico and 3
-fontawesome-webfonts.
+The above command will generate a page under the web server root as well opens
+a socked for the update. A short test under Debian 10 Buster reveals some
+problems. The main problem is that the page is not displayed with Firefox or
+Chromium. Chromium complained about insecure scripts. After waving, the page
+was displayed. However as permanent solution this would not be acceptable.
+Firefox received the page with code 200 but failed to load the `favicon.ico`
+and three `fontawesome` web fonts.
 
 ## Links
 
@@ -160,6 +160,7 @@ fontawesome-webfonts.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-06-28 | Grammar, formatting, minor improvements, shell->bash |
 | 0.1.0   | 2021-05-22 | Initial release                                      |
 
 
