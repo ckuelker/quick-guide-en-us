@@ -1,8 +1,9 @@
 ---
 title: Ipmitool
-type: doc
 author: Christian Külker
-date: 2020-05-03
+date: 2022-06-30
+version: 0.1.3
+type: doc
 keywords:
     - ipmitool
 categories:
@@ -21,28 +22,30 @@ description: Interaction with the Board Management Controller
 
 ---
 
-The command line tool `ipmitool` is used to interact with a Board Management
-Controller (BMC) via the **Intelligent Platform Management Interface** (IPMI).
-IPMI is an open standard for monitoring, logging and control of hardware that
-is implemented independent of the main CPU, BIOS, and OS via a side band
-access. On some platforms IPMI can also be used to manage hardware inventory
-information.
+The command line tool `ipmitool` is used to interact with a __Board Management
+Controller__ (`BMC`) via the **Intelligent Platform Management Interface**
+(`IPMI`).  `IPMI` is an open standard for monitoring, logging and control of
+hardware that is implemented independent of the main `CPU`, `BIOS`, and `OS`
+via a side band access. On some platforms `IPMI` can also be used to manage
+hardware inventory information.
 
-* SDR - Sensor Data Repository
-* SEL - System Event Log
-* FRU - Field Replaceable Unit
+* `SDR` - Sensor Data Repository
+* `SEL` - System Event Log
+* `FRU` - Field Replaceable Unit
 
-## Changes
+## History
 
-| Version | Date       | Author           | Notes                             |
-| ------- | ---------- | ---------------- | --------------------------------- |
-| 0.1.2   | 2020-05-03 | Christian Külker | Debug SOL                         |
-| 0.1.1   | 2020-05-02 | Christian Külker | Set MAC address raw               |
-| 0.1.0   | 2016-02-12 | Christian Külker | initial release                   |
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2022-06-30 | Formatting, changes->history, shell->bash            |
+| 0.1.2   | 2020-05-03 | Debug `SOL`                                          |
+| 0.1.1   | 2020-05-02 | Set MAC address raw                                  |
+| 0.1.0   | 2016-02-12 | Initial release                                      |
+ 
 
 ## Install
 
-```shell
+```bash
 aptitude install ipmitool
 ```
 
@@ -58,30 +61,31 @@ ipmi_watchdog
 
 ## Set DHCP
 
-```shell
+```bash
 ipmitool lan set 1 ipsrc dhcp
 ```
 
 ## Reset the BMC
 
-```shell
+```bash
 ipmitool mc reset cold
 ```
 
 Or
 
-```shell
+```bash
 ipmitool mc reset warm
 ```
 
 ## BMC Sensor List
 
-If the BMC supports it (that depends on the OEM) sensors can be listed. Some
-sensors might be on the BMC SOC, but most likely this sensors are made
-available to the BMC by various methods.  Usually the OEM defines if the value
-is in or out of specification. Some values are depending on the CPU OEM.
+If the `BMC` supports it (that depends on the `OEM`) sensors can be listed.
+Some sensors might be on the `BMC` SOC, but most likely this sensors are made
+available to the `BMC` by various methods.  Usually the `OEM` defines if the
+value is in or out of specification. Some values are depending on the `CPU`
+`OEM`.
 
-```shell
+```bash
 ipmitool -I open sdr list
 ACPI State       | 0x01              | ok
 LPC Reset        | 0x01              | ok
@@ -105,17 +109,17 @@ DDRCPU1          | 0.74 Volts        | ok
 
 ## Set The NAC Address
 
-Setting the MAC address if the BMC can be done via the OS.
+Setting the MAC address if the `BMC` can be done via the `OS`.
 
-```shell
+```bash
 ipmitool lan set <channel> macaddr <macaddr>
 ```
 
 Sometimes the MAC address can only be set by Vendor specific raw commands.
-Sometimes the BMC has 2 LAN interfaces. The number depends on the hardware and
-BMC firmware. The channel number needs usually to be specified.
+Sometimes the `BMC` has 2 `LAN` interfaces. The number depends on the hardware
+and `BMC` firmware. The channel number needs usually to be specified.
 
-```shell
+```bash
 ipmitool raw 0x0c 0x01 0x01 0xc2 0x00
 ipmitool lan set 1 macaddr aa:bb:cc:dd:ee:ff
 ipmitool lan print 1
@@ -127,23 +131,23 @@ ipmitool lan print 8
 
 ## Activate SOL
 
-To activate the **Serial Console Over LAN** (SOL). If the OEM configured the
-BMC in a secure way, a **user** and **password** is needed. However, since this
-is usually not changed, it can be a security problem.
+To activate the **Serial Console Over LAN** (`SOL`). If the `OEM` configured
+the `BMC` in a secure way, a **user** and **password** is needed. However,
+since this is usually not changed, it can be a security problem.
 
-```shell
+```bash
 ipmitool -I lanplus -H $REMOTEHOST -U $USER -P $PASSWORD sol activate
 ipmitool -I lanplus -H $REMOTEHOST -U $USER -P $PASSWORD -v sol info
 ```
 
 ## Debug SOL
 
-To debug the setup of **Serial Over Lan** (SOL) add the `-v` option to enable
+To debug the setup of **Serial Over Lan** (`SOL`) add the `-v` option to enable
 verbose output and in some case set the privilege level explicit with the `-L`
 option.
 
-```shell
-    ipmitool -v -L USER -I lanplus -H 172.20.50.102 -U admin -P admin sol activate
+```bash
+ipmitool -v -L USER -I lanplus -H 172.20.50.102 -U admin -P admin sol activate
 ```
 
 If his does not help use `namp`. See [ipmitool Fails with Authentication
@@ -152,20 +156,20 @@ Issues](http://h20564.www2.hpe.com/hpsc/doc/public/display?docId=emr_na-c0348117
 
 ## Raw Commands
 
-Sometimes the OEM implements undocumented features into the BMC firmware that
-can be reach via the **raw** option. As this commands are not standard it
-depends on the BMC what the out come will be. This is just an example.
+Sometimes the `OEM` implements undocumented features into the `BMC` firmware
+that can be reach via the **raw** option. As this commands are not standard it
+depends on the `BMC` what the out come will be. This is just an example.
 
-```shell
+```bash
 ipmitool raw 0x36 0xc
 ```
 
 ## Testing
 
-Some OEMs implement meaningful self tests. However dummy self tests that
+Some `OEMs` implement meaningful self tests. However dummy self tests that
 always passes have been seen in the wild.
 
-```shell
+```bash
 ipmitool mc selftest
 Selftest: passed
 ```
