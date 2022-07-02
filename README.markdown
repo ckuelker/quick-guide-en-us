@@ -1,8 +1,8 @@
 ---
 title: Quick Guide README
 author: Christian Külker
-version: 0.1.5
-date: 2022-06-06
+version: 0.1.6
+date: 2022-07-02
 
 ---
 
@@ -23,6 +23,21 @@ format of this repository is [Markdown].
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.6   | 2022-07-02 | DevOps/Hardware/Control/BMC/yafuflash.md,            |
+|         |            | DevOps/Hardware/Information/cpuinfo.md,              |
+|         |            | DevOps/Hardware/Control/BMC/ipmitool.md,             |
+|         |            | DevOps/Monitoring/smem.md, Dev/Diff/kdiff3.md,       |
+|         |            | DevOps/Monitoring/goaccess.md, Dev/HPC/mpich.md,     |
+|         |            | DevOps/Ftp/curlftps.md, DevOps/Daemons/tftpd.md,     |
+|         |            | Dev/VCS/Git/github-manageing-forks.md,               |
+|         |            | Dev/VCS/Git/github-pull-request.md, Dev/HPC/iperf.md |
+|         |            | Dev/VCS/Git/git-ssh-agent-conversation.md,           |
+|         |            | Dev/HPC/spec2006.md, Dev/HPC/taskset.md,             |
+|         |            | Dev/HPC/vasp.md, Dev/HPC/hpcc.md,                    |
+|         |            | DevOps/Backup/linux-backup-solutions.md,             |
+|         |            | DevOps/Time/ntpd.md, DevOps/Network/infiniband.md    |
+|         |            | Dev/Python/Best-Practice/python-best-practice.md,    |
+|         |            | DevOps/Monitoring/zabbix.md                          |
 | 0.1.5   | 2022-06-06 | +DevOps/Productivity/Logfiles/tail.md,               |
 |         |            | DevOps/Monitoring/mrtg.md,                           |
 |         |            | DevOps/Monitoring/icinga2.md,                        |
