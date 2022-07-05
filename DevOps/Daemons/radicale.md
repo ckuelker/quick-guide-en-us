@@ -1,8 +1,8 @@
 ---
 title: Radicale
 author: Christian Külker
-date: 2022-05-09 
-version: 0.1.3
+date: 2022-07-05
+version: 0.1.4
 type: doc
 disclaimer: True
 TOC: True
@@ -86,7 +86,7 @@ and `2.1.12-2` for Debian Sid.   There is no official Debian package for
 As far as known the following build dependencies should be met to build
 [radicale] `2.1.11`.
 
-```shell
+```bash
 aptitude install help2man dh-buildinfo devscripts cdbs python3-atomicwrites \
 python3-bcrypt python3-passlib python3-pytest python3-vobject quilt dh-python \
 python3-setuptools
@@ -97,7 +97,7 @@ python3-setuptools
 For [Radicale] `2.1.11` the process is straight forward on Debian 10 Buster
 after installing the dependencies.
 
-```shell
+```bash
 wget http://deb.debian.org/debian/pool/main/r/radicale/radicale_2.1.11.orig.tar.gz
 wget http://deb.debian.org/debian/pool/main/r/radicale/radicale_2.1.11-6.debian.tar.xz
 tar xvzf radicale_2.1.11.orig.tar.gz
@@ -143,6 +143,7 @@ for 2.1.11 do not work for 3.0.x.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2022-07-05 | Shell->Bash                                          |
 | 0.1.3   | 2022-05-09 | Change level of section 'Links'                      |
 | 0.1.2   | 2020-12-29 | Update front matter, links, Sid package version      |
 | 0.1.1   | 2020-12-29 | Update build process                                 |
