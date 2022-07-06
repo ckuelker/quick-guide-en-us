@@ -15,6 +15,9 @@ tags:
 - PyCodeStyle
 - McCabe
 - Perltidy
+commands:
+- aptitude
+- flake8
 description: Enforcing a style guide with flake8
 
 ---
@@ -26,7 +29,7 @@ checking.
 
 ## Installation
 
-```shell
+```bash
 aptitude install flake8
 ```
 
@@ -34,16 +37,23 @@ aptitude install flake8
 
 Debian Stretch
 
-```shell
+```bash
 flake8 --version
 3.2.1 (mccabe: 0.5.3, pyflakes: 1.3.0, pycodestyle: 2.2.0) CPython 3.5.3 on Linux
 ```
 
 Debian Buster
 
-```shell
+```bash
 flake8 --version
 3.6.0 (mccabe: 0.6.1, pycodestyle: 2.4.0, pyflakes: 2.0.0) CPython 3.7.3 on Linux
+```
+
+Debian Bullseye
+
+```bash
+flake8 --version
+3.8.4 (mccabe: 0.6.1, pycodestyle: 2.6.0, pyflakes: 2.2.0) CPython 3.9.2 on Linux
 ```
 
 ## Usage
@@ -53,13 +63,13 @@ files.
 
 ### Single File Usage
 
-```shell
+```bash
 python3 flake8 /PATH/TO/file.py
 ```
 
 ### Multiple File Usage
 
-```shell
+```bash
 python3 flake8 /PATH/TO/FILES/*.py
 ```
 
@@ -85,7 +95,7 @@ subset of useful command line options.
 
 To ignore whole files or directories
 
-```shell
+```bash
 flake8 --exclude path/to/file
 ```
 
@@ -96,13 +106,13 @@ the command line. (It is also possible to it in a configuration file)
 
 New exclude list:
 
-```shell
+```bash
 flake8 --ignore=E1,E23,W503 path/to/files/
 ```
 
 Extending the exclude list:
 
-```shell
+```bash
 flake8 --extend-ignore=E1,E23 path/to/files/
 ```
 
@@ -111,7 +121,7 @@ flake8 --extend-ignore=E1,E23 path/to/files/
 If the line is short enough it is possible to ignore one line with a special
 comment `# noqa`.
 
-```shell
+```bash
 example = lambda: 'example'  # noqa: E731
 ```
 
@@ -130,3 +140,11 @@ Perl the syntax philosophy "there is only one way" it is of course no
 wonder that **flake8** do not offer much to customize syntax, but one real
 advantage of **flake8** is, that it print out IDs referencing the rules, that
 can be used up to look up and find more information about specific rules.
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-07-06 | History, shell->bash, Debian 11 Bullseye             |
+| 0.1.0   | 2020-05-08 | Initial release                                      |
+
