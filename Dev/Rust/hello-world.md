@@ -1,15 +1,18 @@
 ---
 title: Rust Hello World
 author: Christian Külker
-date: 2020-09-05
-version: 0.1.0
+date: 2022-07-07
+version: 0.1.1
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Rust
 tags:
 - Hello-World
+commands:
+- aptitude
+- rustc
 description: The most simple straight forward 'hello world!' program for Rust
 
 ---
@@ -22,7 +25,7 @@ performance and safety, especially safe concurrency.
 The usual assumption is to install `rust` to use `rust`. However you have to
 install **`rustc`** to compile programs written in Rust.
 
-```shell
+```bash
 aptitude install rustc
 ```
 
@@ -33,11 +36,18 @@ cargo gdb libbabeltrace-ctf1 libbabeltrace1 libc6-dbg libdw1 libhttp-parser2.1
 libllvm7 libstd-rust-1.34 libstd-rust-dev rust-gdb
 ```
 
+For Debian 11 Bullseye the dependencies are:
+
+```
+cargo gdb libbabeltrace1 libc6-dbg libdebuginfod1 libsource-highlight-common
+libsource-highlight4v5 libstd-rust-1.48 libstd-rust-dev rust-gdb
+```
+
 ## Hello World
 
 The famous source code for 'Hello World!' in Rust is:
 
-```shell
+```bash
 echo 'fn main() {' > hello-world.rs
 echo '    println!("Hello World!");' >> hello-world.rs
 echo '}' >> hello-world.rs
@@ -53,13 +63,13 @@ fn main() {
 
 Compiling
 
-```shell
+```bash
 rustc hello-world.rs
 ```
 
 Executing
 
-```shell
+```bash
 ./hello-world
 Hello World!
 ```
@@ -68,7 +78,6 @@ Hello World!
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2022-07-07 | Debian 11 Bullseye, shell->bash, commands            |
 | 0.1.0   | 2020-09-05 | Initial release                                      |
-
-
 
