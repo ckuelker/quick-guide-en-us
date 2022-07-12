@@ -1,16 +1,20 @@
 ---
 title: Creating Virtual Environments
 author: Christian Külker
-date: 2020-05-16
+date: 2022-07-12
+version: 0.1.1
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Python
 - Environment
 commands:
 - virtualenv
 - venv
+- find
+- python3
+- source
 tags:
 - virtual environments
 - bash
@@ -25,7 +29,7 @@ tags:
 - carton
 - pip
 - cpanminus
-description: Creating virtual Python environments with virtualenv
+description: Creating virtual Python environments with venv and virtualenv
 
 ---
 
@@ -40,42 +44,42 @@ isolated (local) location, rather than being installed globally.
 
 Currently, there are two common tools for creating Python virtual environments:
 
-* venv (Python 3.4+) is part of Python since Python 3.3
-* virtualenv (Python 2.7+ and Python 3.3+)
+* [venv] (Python 3.4+) is part of Python since Python 3.3
+* [virtualenv] (Python 2.7+ and Python 3.3+)
 
 See [Pipenv] on how to manage multiple virtual environments. The recommended
 tool **pyvenv** for creating virtual environments for Python 3.3 and 3.4 is
-deprecated in Python 3.6. The use of [venv] is from Python 3.5  recommended for
+deprecated in Python 3.6. The use of [venv] is from Python 3.5 recommended for
 creating virtual environments.
 
 ## Basic Usage venv
 
 For **bash** or **zsh**:
 
-```shell
-$ python3 -m venv <DIR>
-$ source <DIR>/bin/activate
+```bash
+python3 -m venv <DIR>
+source <DIR>/bin/activate
 ```
 
 For **csh** or **tcsh**:
 
-```shell
-$ python3 -m venv <DIR>
-$ source <DIR>/bin/activate.csh
+```bash
+python3 -m venv <DIR>
+source <DIR>/bin/activate.csh
 ```
 
 ## Basic Usage virtualenv
 
-```shell
-$ virtualenv <DIR>
-$ source <DIR>/bin/activate
+```bash
+virtualenv <DIR>
+source <DIR>/bin/activate
 ```
 
 ### Example
 
 Without any other information it sets up a python2 environment
 
-```shell
+```bash
 virtualenv /tmp/test-virtualenv
 Running virtualenv with interpreter /usr/bin/python2
 New python executable in /tmp/test-virtualenv/bin/python2
@@ -87,8 +91,8 @@ find test-virtualenv |wc -l
 
 ## Basic Creation venv
 
-```shell
-$ python3 -m venv /path/to/new/virtual/environment
+```bash
+python3 -m venv /path/to/new/virtual/environment
 ```
 
 A common name for the target directory is `.venv`.
@@ -97,10 +101,10 @@ A common name for the target directory is `.venv`.
 
 This creates a horrible long list of files.
 
-```shell
-$ python3 -m venv /tmp/test-venv
-$ cd /tmp/test-venv
-$ find|wc -l
+```bash
+python3 -m venv /tmp/test-venv
+cd /tmp/test-venv
+find|wc -l
 448
 ```
 
@@ -120,6 +124,12 @@ wondering why virtual environments are suggested to be used so many times.
 | Manage Module Versions      | venv, virtualenv | local::lib, carton  |
 | Manage Module Installations | pip              | cpanminus           |
 
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.0   | 2022-07-12 | History, shell->bash                                 |
+| 0.1.0   | 2020-05-16 | Initial release                                      |
 
 [venv]: https://docs.python.org/3/library/venv.html
 [virtualenv]: http://virtualenv.pypa.io/
