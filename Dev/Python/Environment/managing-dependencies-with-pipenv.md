@@ -1,17 +1,19 @@
 ---
 title: Managing Dependencies With Pipenv
 author: Christian Külker
-date: 2022-05-10
-version: 0.1.2
+date: 2022-07-13
+version: 0.1.3
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 PDF: False
 categories:
 - Python
+- Python3
 - Environment
 commands:
 - pipenv
+- python3
 tags:
 - Pipfile
 - Pipfile.lock
@@ -31,15 +33,6 @@ dependencies may change based on how you decide to publish the software. This
 document show some tools for different kind of software: applications and
 libraries.
 
-### History
-
-| Version | Date       | Notes                                                |
-| ------- | ---------- | ---------------------------------------------------- |
-| 0.1.2   | 2022-05-09 | Fix json syntax highlighting                         |
-| 0.1.1   | 2022-05-09 | PDF: False (no ⠼ (U+283C), 🐍 (U+1F40D) in font      |
-|         |            | WenQuanYi Micro Hei Mon//OT:script=lat)              |
-| 0.1.0   | 2020-05-18 | Initial release                                      |
-
 ## Managing Application Dependencies
 
 With some [caveats] `pipenv`, mentioned in the [Python Packaging Guide] (from
@@ -54,8 +47,9 @@ place.
 
 ### Installing Pipenv
 
-```shell
-$ python3 -m pip install --user pipenv
+```bash
+python3 -m pip install --user pipenv
+
 Collecting pipenv
   Downloading https://files.pythonhosted.org/packages/13/b4/\
 3ffa55f77161cff9a5220f162670f7c5eb00df52e00939e203f601b0f579/\
@@ -85,19 +79,20 @@ warning, use --no-warn-script-location.
 Successfully installed pipenv-2018.11.26 virtualenv-clone-0.5.4
 ```
 
-This installs "successfully" `pipenv`. Interesting what kind of definition
+This installs "successfully" `pipenv`. Interesting is what kind of definition
 of "successfully" is used in this context.
 
-```shell
-$ pipenv
+```bash
+pipenv
 zsh: command not found: pipenv
 ```
 However as the "consider" suggests:
 
-```shell
-$ export PATH=/home/$USER/.local/bin:$PATH
-$ cd python-packaging-tutorial-example-package
-$ pipenv install requests
+```bash
+export PATH=/home/$USER/.local/bin:$PATH
+cd python-packaging-tutorial-example-package
+pipenv install requests
+
 Creating a virtualenv for this project…
 Pipfile: /home/$USER/g/github.com-ckuelker/\
 python-packaging-tutorial-example-package/Pipfile
@@ -145,7 +140,7 @@ requests = "*"
 python_version = "3.7"
 ```
 
-And Pipfile.lock (sha256 hashes are truncated in this output!)
+And `Pipfile.lock` (`sha256` hashes are truncated in this output!)
 
 ```json
 
@@ -207,12 +202,12 @@ And Pipfile.lock (sha256 hashes are truncated in this output!)
 }
 ```
 
-Where the dependencies to "certifi", "chardet", "idna", "requests" and
-"urllib3" come from is not quite clear. I might be wrong, but it seems a waste
-of resources to me.
+Where the dependencies to "`certifi`", "`chardet`", "`idna`", "`requests`" and
+"`urllib3`" come from is not quite clear. I might be wrong, but it seems a
+waste of resources to me.
 
 To better test this out your example project should have some dependencies. The
-project above just has ``setuptools`, `pkg_resources``, `pip` and  `wheel`. To
+project above just has `setuptools`, `pkg_resources`, `pip` and  `wheel`. To
 test this create a file `main.py` with you dependency: like `mydep`. Here some
 pseudo code.
 
@@ -226,9 +221,19 @@ print('the result of mydep actyion: ' + result)
 
 Run the code like.
 
-```shell
+```bash
 pipenv run python main.py
 ```
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2022-07-13 | Shell->bash, move history, formatting                |
+| 0.1.2   | 2022-05-10 | Fix json syntax highlighting                         |
+| 0.1.1   | 2022-05-09 | PDF: False (no ⠼ (U+283C), 🐍 (U+1F40D) in font      |
+|         |            | WenQuanYi Micro Hei Mon//OT:script=lat)              |
+| 0.1.0   | 2020-05-18 | Initial release                                      |
 
 [Python Packaging Guide]: https://packaging.python.org/
 [inspirations]: https://packaging.python.org/tutorials/managing-dependencies/
