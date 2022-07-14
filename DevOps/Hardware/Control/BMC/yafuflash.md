@@ -2,8 +2,8 @@
 title: YAFUFlash
 type: doc
 author: Christian Külker
-date: 2022-07-02
-version: 0.1.1
+date: 2022-07-14
+version: 0.1.2
 keywords:
  - YAFUFlash
 categories:
@@ -31,7 +31,7 @@ Therefor often the `BIOS` vendor is also the `BMC` firmware vendor on a given
 platform and usually one should use the proprietary tools for flashing the
 `BMC`. The following example uses `YAFUFlash` from `AMI`.
 
-```shell
+```bash
 ./Yafuflash -cd -info bmc_fw_v0.1.0.ima
 ./Yafuflash -cd  bmc_fw_v0.1.0.ima
 ```
@@ -40,6 +40,7 @@ platform and usually one should use the proprietary tools for flashing the
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
-| 0.1.1   | 2022-07-02 | History, shell->bash, fix code fence, fix meta data  |
+| 0.1.2   | 2022-07-02 | Now, really shell->bash                              |
+| 0.1.1   | 2022-07-02 | History, fix code fence, fix meta data               |
 | 0.1.0   | 2020-05-02 | Initial release                                      |
 
