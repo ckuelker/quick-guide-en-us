@@ -2,8 +2,8 @@
 title: Version/ Revison Control Systems
 linkTitle: VCS-RCS
 author: Christian Külker
-date: 2022-05-30
-version: 0.1.1
+date: 2022-07-15
+version: 0.1.2
 type: doc
 disclaimer: True
 PDF: True
