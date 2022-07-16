@@ -8,7 +8,7 @@ locale: en_US
 lang: en
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Git
 commands:

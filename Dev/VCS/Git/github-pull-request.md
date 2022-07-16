@@ -6,7 +6,7 @@ date: 2022-05-31
 version: 0.1.1
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Git
 commands:

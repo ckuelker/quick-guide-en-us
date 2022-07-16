@@ -7,7 +7,7 @@ version: 0.1.2
 type: doc
 disclaimer: True
 PDF: True
-TOC: True
+toc: True
 cards: True
 categories:
 - Version Control System

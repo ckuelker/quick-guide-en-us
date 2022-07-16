@@ -6,7 +6,7 @@ date: 2022-06-14
 version: 0.1.3
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - HPC
 - Benchmark

@@ -5,7 +5,7 @@ date: 2022-06-20
 version: 0.1.2
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Diff
 tags:

@@ -5,7 +5,7 @@ date: 2022-05-23
 version: 0.1.5
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Perl
 - Style-Guide

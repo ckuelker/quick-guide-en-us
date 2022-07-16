@@ -4,7 +4,7 @@ author: Christian Külker
 date: 2020-05-08
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Python
 - Style-Guide

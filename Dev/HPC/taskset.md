@@ -5,7 +5,7 @@ author: Christian Külker
 date: 2022-06-15
 version: 0.1.0
 disclaimer: True
-TOC: True
+toc: True
 keywords:
     - HPC
     - taskset

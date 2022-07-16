@@ -5,7 +5,7 @@ date: 2022-05-25
 version: 0.1.3
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Python
 - Environment

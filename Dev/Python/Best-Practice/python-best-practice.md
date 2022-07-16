@@ -5,7 +5,7 @@ author: Christian Külker
 date: 2020-01-18
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Best-Practice
 tags:
