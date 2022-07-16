@@ -5,7 +5,7 @@ date: 2022-06-01
 version: 0.6
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Nginx
 commands:

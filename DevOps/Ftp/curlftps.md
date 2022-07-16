@@ -6,7 +6,7 @@ date: 2022-06-27
 version: 0.1.1
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Ftp
 commands:

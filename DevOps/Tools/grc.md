@@ -5,7 +5,7 @@ date: 2022-05-27
 version: 0.1.1
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Tools
 tags:

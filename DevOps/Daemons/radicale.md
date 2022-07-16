@@ -5,7 +5,7 @@ date: 2022-07-05
 version: 0.1.4
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Daemons
 tags:

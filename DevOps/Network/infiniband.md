@@ -5,7 +5,7 @@ date: 2022-06-08
 version: 0.1.2
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Network
 commands:

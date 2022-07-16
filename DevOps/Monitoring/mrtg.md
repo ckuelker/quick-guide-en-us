@@ -6,7 +6,7 @@ date: 2022-06-06
 version: 0.1.6
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Monitoring
 commands:

@@ -5,7 +5,7 @@ date: 2022-05-28
 version: 0.1.1
 type: doc
 disclaimer: True
-TOC: True
+toc: True
 categories:
 - Logfiles
 commands:
