@@ -1,10 +1,10 @@
 ---
-title: High Performance Computing
-linkTitle: HPC
+title: High Performance Computing Development
+linkTitle: HPC Dev
 type: doc
 cards: True
 
 ---
 
-## HPC
+## HPC Dev
 
