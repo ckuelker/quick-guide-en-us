@@ -74,10 +74,19 @@ Executing
 Hello World!
 ```
 
+## Documentation
+
+- [Website](https://www.rust-lang.org/)
+- [Official book](https://doc.rust-lang.org/book/)
+- [Official syntax reference](https://doc.rust-lang.org/reference/)
+- [Repository web page]( https://github.com/rust-lang/rust)
+- [Repository](https://github.com/rust-lang/rust.git)
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2022-10-26 | Documentation                                        |
 | 0.1.1   | 2022-07-07 | Debian 11 Bullseye, shell->bash, commands            |
 | 0.1.0   | 2020-09-05 | Initial release                                      |
 
