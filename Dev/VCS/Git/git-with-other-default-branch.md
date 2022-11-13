@@ -23,7 +23,7 @@ tags:
 - git add
 - git commit
 - HEAD
-- refs/heads
+- refs
 description: How to create a new git repository with a non default branch
 
 ---
