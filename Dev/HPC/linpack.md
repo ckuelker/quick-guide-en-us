@@ -4,7 +4,7 @@ title: High Performance Linpack
 type: doc
 author: Christian Külker
 date: 2022-06-18
-version 0.1.1
+version: 0.1.1
 keywords:
 categories:
     - HPC
