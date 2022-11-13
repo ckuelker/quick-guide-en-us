@@ -1,8 +1,8 @@
 ---
 title: Postfix Statistics
 author: Christian Külker
-date: 2022-06-04
-version: 0.1.3
+date: 2022-11-13
+version: 0.1.4
 type: doc
 disclaimer: True
 toc: True
@@ -51,6 +51,7 @@ A list of software that has no mail statistic features.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2022-11-13 | Fix typo                                             |
 | 0.1.3   | 2022-06-04 | Change shell->bash, cron, links                      |
 | 0.1.2   | 2022-05-09 | Change level of sections (one down)                  |
 | 0.1.1   | 2022-05-05 | Add poststats, list of software, links, front matter |
@@ -125,9 +126,9 @@ Then add a line to cron
 
 ## Poststats
 
-Unlike the name the `postats` tool (GPLv3), despite the name is postfix monitor
-with a web interface and mail sending capability triggered via cron. Since it
-seems not providing a statistic it will not covered in this document.
+Unlike the name the `poststats` tool (GPLv3), despite the name is postfix
+monitor with a web interface and mail sending capability triggered via cron.
+Since it seems not providing a statistic it will not covered in this document.
 
 ### Links
 
