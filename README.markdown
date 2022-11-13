@@ -1,8 +1,8 @@
 ---
 title: Quick Guide README
 author: Christian Külker
-version: 0.1.6
-date: 2022-07-02
+version: 0.1.7
+date: 2022-11-13
 
 ---
 
@@ -23,6 +23,19 @@ format of this repository is [Markdown].
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.7   | 2022-11-13 | DevOps/Mail/postfix-statistics.md,                   |
+|         |            | Dev/VCS/Git/git-with-other-default-branch.md,        |
+|         |            | Dev/HPC/linpack.md, Dev/Rust/hello-world.md,         |
+|         |            | DevOps/HPC/index.md, Dev/HPC/index.md,               |
+|         |            | DevOps/Certificates/index.md, Dev/HPC/atlas.md,      |
+|         |            | Dev/VCS/index.md, Dev/VCS/index.md,                  |
+|         |            | Dev/VCS/Git/git-with-other-default-branch.md,        |
+|         |            | DevOps/Hardware/Control/BMC/yafuflash.md,            |
+|         |            | Dev/Python/Web/simple-http-server.md,                |
+|         |            | ...nvironment/managing-dependencies-with-pipenv.md,  |
+|         |            | .../Environment/creating-virtual-environments.md,    |
+|         |            | Dev/Web/Design/favicon.md,                           |
+|         |            | Dev/Python/Style-Guide/flake8.md                     |
 | 0.1.6   | 2022-07-02 | DevOps/Hardware/Control/BMC/yafuflash.md,            |
 |         |            | DevOps/Hardware/Information/cpuinfo.md,              |
 |         |            | DevOps/Hardware/Control/BMC/ipmitool.md,             |
