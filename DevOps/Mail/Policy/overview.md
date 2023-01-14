@@ -2,8 +2,8 @@
 title: Mail Policy Overview
 linkTitle: Overview
 author: Christian Külker
-date: 2023-01-13
-version: 0.1.0
+date: 2023-01-14
+version: 0.1.1
 locale: en_US
 lang: en
 type: doc
@@ -16,10 +16,20 @@ tags:
 - Mail Policy Overview
 - Postfix
 - Policy Weight Daemon
+- Mail::MtPolicyd
+- policyd-rate-limit
+- postfix-policyd-spf-perl
+- postfix-policyd-spf-python
 commands:
 - policyd-weight
+- aptitude
 packages:
 - policyd-weight
+- policyd-rate-limit
+- postfix-policyd-spf-perl
+- postfix-policyd-spf-python
+- memcached
+- mtpolicyd
 description: Overview of mail server policy daemons with the focus on Postfix
 
 ---
@@ -40,9 +50,106 @@ Postfix. Examples for this is Postfix [greylisting][].
 
 ## Open Source Policy Daemons
 
-| Name              | License | Deb | Lang | Updated |
-| ----------------- | ------- | --- | ---- | ------- |
-| [Policy Weight][] | GPL2    | yes | Perl | 2009    |
+| Name                           | License          | Deb | Lang   | Updated | Note     |
+| ------------------------------ | ---------------- | --- | ------ | ------- | -------- |
+| [Mail::MtPolicyd][]            | GPL2             | yes | Perl   | 2020    |          |
+| [policyd-rate-limit][]         | GPL3             | yes | Python | 2022    | Rate     |
+| [Policy Weight][]              | GPL2             | yes | Perl   | 2009    | MX, HALO |
+| [postfix-policyd-spf-perl][]   | GPL2             | yes | Perl   | 2018    | SPF      |
+| [postfix-policyd-spf-python][] | GPL2, Apache 2.0 | yes | Python | 2022    | SPF      |
+
+## MT Policy Daemon
+
+[Mail::MtPolicyd]: https://metacpan.org/dist/Mail-MtPolicyd
+[Mail::MtPolicyd Cookbook]: https://metacpan.org/dist/Mail-MtPolicyd/view/lib/Mail/MtPolicyd/Cookbook.pod
+[Mail::MtPolicyd Debian package]: https://packages.debian.org/stable/mail/mtpolicyd
+[Mail::MtPolicyd source code]: https://github.com/benningm/mtpolicyd
+[Mail::MtPolicyd Debian popularity]: https://qa.debian.org/popcon.php?package=mtpolicyd
+
+A modular policy daemon for postfix.
+
+### Installation
+
+`Mail::MtPolicyd` supports 3 connection:
+
+1. `SQL`
+2. Memcached
+3. `LDAP`
+
+```bash
+aptitude install memcached mtpolicyd
+```
+### Links
+
+- [Mail::MtPolicyd][]
+- [Mail::MtPolicyd Cookbook][]
+- [Mail::MtPolicyd Debian package][]
+- [Mail::MtPolicyd source code][]
+- [Mail::MtPolicyd Debian popularity][]
+
+### Plugins
+
+| Plugin                      | Note                                                  |
+| --------------------------- | ----------------------------------------------------- |
+| Accounting                  | accounting in sql tables                              |
+| Action                      | returns an action                                     |
+| AddScoreHeader              | adding the score as header to the mail                |
+| ClearFields                 | unset session variables                               |
+| Condition                   | conditions based on session values                    |
+| CtIpRep                     | the Commtouch IP reputation service (ctipd)           |
+| DBL                         | checking helo, sender domain, rdns against an DBL     |
+| Eval                        | capture the output of plugins                         |
+| Fail2Ban                    | block an address with fail2ban                        |
+| GeoIPAction                 | checking geo information of an ip                     |
+| GeoIPLookup                 | checking geo information of a client_address          |
+| Greylist                    | greylisting mechanism with an auto whitelist          |
+| Greylist::AWL::Base         | base class for grelisting AWL storage backends        |
+| Greylist::AWL::Redis        | backend for redis greylisting awl storage             |
+| Greylist::AWL::Sql          | backend for SQL greylisting awl storage               |
+| Greylist::Ticket::Base      | base class for greylisting ticket storage backends    |
+| Greylist::Ticket::Memcached | greylisting ticket storage backend for memcached      |
+| Greylist::Ticket::Redis     | greylisting ticket storage backend for redis          |
+| Honeypot                    | creating an honeypot                                  |
+| LdapUserConfig              | retrieving per user configuration from LDAP           |
+| PostfixMap                  | accessing a postfix access map                        |
+| Proxy                       | forward request to another policy daemon              |
+| Quota                       | accounting in sql tables                              |
+| RBL                         | checking the client-address against an RBL            |
+| RBLAction                   | checking the client-address against an RBL            |
+| RegexList                   | regex matching                                        |
+| Result                      | result returned by a plugin                           |
+| Role::ConfigurableFields    | role for plugins using configurable fields            |
+| Role::PluginChain           | role for plugins to support a nested plugin chain     |
+| Role::Scoring               | role for plugins using scoring                        |
+| Role::SqlUtils              | role with support function for plugins using sql      |
+| Role::UserConfig            | role for plugins using per user/request configuration |
+| SMTPVerify                  | remote SMTP address checks                            |
+| SPF                         | apply SPF checks                                      |
+| SaAwlAction                 | checking spamassassin AWL reputation                  |
+| SaAwlLookup                 | querying a spamassassin AWL database for reputation   |
+| ScoreAction                 | running an action based on the score                  |
+| SetField                    | sets and key=value in the session                     |
+| SqlList                     | accessing a SQL white/black/access list               |
+| SqlUserConfig               | retrieving the user config of a user                  |
+| Stress                      | postfix stress mode                                   |
+
+## policyd-rate-limit
+
+[policyd-rate-limit]: https://pypi.org/project/policyd-rate-limit/
+[policyd-rate-limit Debian package]: https://packages.debian.org/buster/policyd-rate-limit
+[policyd-rate-limit source code]: https://github.com/nitmir/policyd-rate-limit
+[policyd-rate-limit Debian popularity]: https://qa.debian.org/popcon.php?package=policyd-rate-limit
+
+Postfix `policyd` server allowing to limit the number of mails accepted by
+postfix over several time periods, by `SASL` usernames and/or `IP` addresses,
+limiting the number of mails a user can send.
+
+### Links
+
+- [policyd-rate-limit][]
+- [policyd-rate-limit Debian package][]
+- [policyd-rate-limit source code][]
+- [policyd-rate-limit Debian popularity][]
 
 ## Policy Weight Daemon
 
@@ -129,9 +236,53 @@ Weight acts __after__ `smtpd`,
 - [Policy Weight old mailing list archive][]
 - [Policy Weight Wikipedia][]
 
+## postfix-policyd-spf-perl
+
+[postfix-policyd-spf-perl]: https://launchpad.net/postfix-policyd-spf-perl/
+[postfix-policyd-spf-perl popularity]: https://qa.debian.org/popcon.php?package=postfix-policyd-spf-perl
+[postfix-policyd-spf-perl Debian developer information]: https://tracker.debian.org/pkg/postfix-policyd-spf-perl
+[postfix-policyd-spf-perl Debian package]: https://packages.debian.org/buster/postfix-policyd-spf-perl
+[postfix-policyd-spf-perl source code]: https://git.launchpad.net/postfix-policyd-spf-perl
+
+Simple Postfix policy server for `RFC 4408/7208` `SPF` checking.
+
+### Links
+
+- [postfix-policyd-spf-perl][]
+- [postfix-policyd-spf-perl popularity][]
+- [postfix-policyd-spf-perl Debian developer information][]
+- [postfix-policyd-spf-perl Debian package][]
+- [postfix-policyd-spf-perl source code][]
+
+## postfix-policyd-spf-python
+
+[postfix-policyd-spf-python]: https://launchpad.net/spf-engine
+[postfix-policyd-spf-python popularity]: https://qa.debian.org/popcon.php?package=spf-engine
+[postfix-policyd-spf-python Debian developer information]: https://tracker.debian.org/pkg/spf-engine
+[postfix-policyd-spf-python Debian package]: https://packages.debian.org/buster/postfix-policyd-spf-python
+[postfix-policyd-spf-python source code]: https://git.launchpad.net/spf-engine
+
+Postfix policy server and `sendmail` milter called `spf-engine` for `SPF`
+checking.
+
+### Packages
+
+- `postfix-policyd-spf-python`
+- `pyspf-milter`
+- `python3-spf-engine`
+
+### Links
+
+- [postfix-policyd-spf-python][]
+- [postfix-policyd-spf-python popularity][]
+- [postfix-policyd-spf-python Debian developer information][]
+- [postfix-policyd-spf-python Debian package][]
+- [postfix-policyd-spf-python source code][]
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2023-01-14 | mtpolicy policyd-rate-limit postfix-policyd-spf-perl |
 | 0.1.0   | 2023-01-13 | Initial release Policy Weight                        |
 
