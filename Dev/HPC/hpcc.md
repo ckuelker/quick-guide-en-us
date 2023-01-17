@@ -2,11 +2,13 @@
 linkTitle: HPCC
 title: HPC Challenge
 author: Christian Külker
-date: 2022-06-13
-version: 0.1.2
+date: 2023-01-17 
+version: 0.1.3
 type: doc
 disclaimer: True
 toc: True
+locale: en_US
+lang: en
 categories:
 - HPC
 - Benchmark
@@ -71,6 +73,7 @@ make ArchitectureE52697v2
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2023-01-17 | Add locale, lang to front matter                     |
 | 0.1.2   | 2022-06-13 | Shell->bash, changes->history                        |
 | 0.1.1   | 2016-03-20 | version 1.5.0                                        |
 | 0.1.0   | 2016-02-01 | Initial release                                      |
