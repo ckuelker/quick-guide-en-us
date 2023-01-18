@@ -1,0 +1,7 @@
+#!env python3
+import os
+from http.server import HTTPServer, CGIHTTPRequestHandler
+os.chdir('.') # Current directory, change it if needed
+server_object = HTTPServer(server_address=('', 8000), RequestHandlerClass=CGIHTTPRequestHandler)
+server_object.serve_forever()
+
