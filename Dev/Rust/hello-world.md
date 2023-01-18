@@ -1,8 +1,8 @@
 ---
 title: Rust Hello World
 author: Christian Külker
-date: 2022-07-07
-version: 0.1.1
+date: 2023-01-18
+version: 0.1.3
 type: doc
 disclaimer: True
 toc: True
@@ -17,13 +17,14 @@ description: The most simple straight forward 'hello world!' program for Rust
 
 ---
 
-The programming language Rust is syntactically similar to C++ and designed for
-performance and safety, especially safe concurrency.
+The Rust programming language is syntactically similar to C++ and is designed
+for performance and safety, especially safe concurrency.
 
 ## Installation
 
-The usual assumption is to install `rust` to use `rust`. However you have to
-install **`rustc`** to compile programs written in Rust.
+The usual assumption is that you need to install `rust` in order to use or
+compile `rust`. However, you must install **`rustc`** in order to compile
+programs written in Rust.
 
 ```bash
 aptitude install rustc
@@ -53,7 +54,7 @@ echo '    println!("Hello World!");' >> hello-world.rs
 echo '}' >> hello-world.rs
 ```
 
-This will give the file `hello-world.rs` with the content
+This will give the file [`hello-world.rs`](hello-world.rs) with the content
 
 ```rust
 fn main() {
@@ -86,6 +87,7 @@ Hello World!
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2023-01-18 | Improve writing, add hello-world.rs link             |
 | 0.1.2   | 2022-10-26 | Documentation                                        |
 | 0.1.1   | 2022-07-07 | Debian 11 Bullseye, shell->bash, commands            |
 | 0.1.0   | 2020-09-05 | Initial release                                      |
