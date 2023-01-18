@@ -2,8 +2,8 @@
 title: Mail Policy Overview
 linkTitle: Overview
 author: Christian Külker
-date: 2023-01-14
-version: 0.1.1
+date: 2023-01-15
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -18,45 +18,69 @@ tags:
 - Policy Weight Daemon
 - Mail::MtPolicyd
 - policyd-rate-limit
+- postgrey
 - postfix-policyd-spf-perl
 - postfix-policyd-spf-python
 commands:
 - policyd-weight
 - aptitude
 packages:
+- greylistd
 - policyd-weight
 - policyd-rate-limit
 - postfix-policyd-spf-perl
 - postfix-policyd-spf-python
+- postgrey
 - memcached
 - mtpolicyd
 description: Overview of mail server policy daemons with the focus on Postfix
 
 ---
 
-This is overview is not complete. It started 2023-01-13 as a aggregation
-document for Postfix policy daemons to understand the current state of policy
-daemons, because some of the well known policy daemons, mentioned in
-literature, are no longer maintained.
+This overview is not complete. It started on 2023-01-13 as a summary document
+for Postfix policy daemons to understand the current state of policy daemons,
+as some of the well-known policy daemons mentioned in the literature are no
+longer maintained.
 
 [SMTPD_POLICY_README]: https://www.postfix.org/SMTPD_POLICY_README.html
 [POSTSCREEN_README]: https://www.postfix.org/POSTSCREEN_README.html
 [Greylisting]: https://en.wikipedia.org/wiki/Greylisting_(email)
 
-The Postfix mail server can block or accept mails by various methods
-internally. In cases where this capability is not sufficient a Postfix `smtpd`
-policy (see [SMTPD_POLICY_README][]) can be used to add functionality to
-Postfix. Examples for this is Postfix [greylisting][].
+The Postfix mail server can internally block or accept mail in a number of
+ways. In cases where this is not sufficient, a Postfix `smtpd` policy (see
+[SMTPD_POLICY_README][]) can be used to add functionality to Postfix. An
+example of this is Postfix [greylisting][].
+
+![Postfix Mail Flow](postfix-mail-flow-v0.1.0.svg)
 
 ## Open Source Policy Daemons
 
-| Name                           | License          | Deb | Lang   | Updated | Note     |
-| ------------------------------ | ---------------- | --- | ------ | ------- | -------- |
-| [Mail::MtPolicyd][]            | GPL2             | yes | Perl   | 2020    |          |
-| [policyd-rate-limit][]         | GPL3             | yes | Python | 2022    | Rate     |
-| [Policy Weight][]              | GPL2             | yes | Perl   | 2009    | MX, HALO |
-| [postfix-policyd-spf-perl][]   | GPL2             | yes | Perl   | 2018    | SPF      |
-| [postfix-policyd-spf-python][] | GPL2, Apache 2.0 | yes | Python | 2022    | SPF      |
+| Name                           | Server  | License          | Deb | Lang   | Updated | Note     |
+| ------------------------------ | ------- |----------------- | --- | ------ | ------- | -------- |
+| [greylistd][]                  | Exim    | GPL2             | yes | Python | 2020    | Greylist |
+| [Mail::MtPolicyd][]            | Postfix | GPL2             | yes | Perl   | 2020    |          |
+| [policyd-rate-limit][]         | Postfix | GPL3             | yes | Python | 2022    | Rate     |
+| [Policy Weight][]              | Postfix | GPL2             | yes | Perl   | 2009    | MX, HALO |
+| [postfix-policyd-spf-perl][]   | Postfix | GPL2             | yes | Perl   | 2018    | SPF      |
+| [postfix-policyd-spf-python][] | Postfix | GPL2, Apache 2.0 | yes | Python | 2022    | SPF      |
+| [postgrey][]                   | Postfix | GPL2             | yes | Perl   | 2022    | Greylist |
+
+## Greylistd
+
+[greylistd soure code]: https://github.com/eurovibes/greylistd
+[greylistd package]: https://packages.debian.org/bullseye/greylistd
+[greylistd developer information]: https://tracker.debian.org/pkg/greylistd
+[greylistd publicity]: https://qa.debian.org/popcon.php?package=greylistd
+
+The `postgreyd` daemon provides simple `greylisting` services for `Exim`
+version 4.
+
+### Links
+
+- [greylistd soure code][]
+- [greylistd package][]
+- [greylistd developer information][]
+- [greylistd publicity][]
 
 ## MT Policy Daemon
 
@@ -140,9 +164,9 @@ aptitude install memcached mtpolicyd
 [policyd-rate-limit source code]: https://github.com/nitmir/policyd-rate-limit
 [policyd-rate-limit Debian popularity]: https://qa.debian.org/popcon.php?package=policyd-rate-limit
 
-Postfix `policyd` server allowing to limit the number of mails accepted by
-postfix over several time periods, by `SASL` usernames and/or `IP` addresses,
-limiting the number of mails a user can send.
+Postfix `policyd` server, which allows you to limit the number of mails
+accepted by Postfix over multiple time periods, by `SASL` usernames and/or `IP`
+addresses, to limit the number of mails a user can send.
 
 ### Links
 
@@ -157,7 +181,7 @@ limiting the number of mails a user can send.
 [Policy Weight home]: https://www.policyd-weight.org/
 [Policy Weight Debian package]: https://tracker.debian.org/pkg/policyd-weight
 [Policy Weight source code]: https://unknown.org/
-[Policy Weight unofficially source code]: https://github.com/Whissi/policyd-weight
+[Policy Weight unofficial source code]: https://github.com/Whissi/policyd-weight
 [Policy Weight Debian popularity]: https://tracker.debian.org/pkg/policyd-weight
 [Policy Weight to do list]: https://github.com/Whissi/policyd-weight/blob/master/todo.txt
 [Policy Weight new mailing list]: https://listen.jpberlin.de/mailman/listinfo/policyd-weight-users
@@ -165,33 +189,33 @@ limiting the number of mails a user can send.
 [Policy Weight old mailing list archive]: https://www.mail-archive.com/policyd-weight-list%40ek-muc.de/
 [Policy Weight Wikipedia]: https://en.wikipedia.org/wiki/Policyd-weight
 
-The Policy Weight Daemon is a well known policy daemon for Postfix. Also the
-German "Das Postfix Buch" mentioned it and the [Policy Weight Debian
+The Policy Weight Daemon is a well-known policy daemon for Postfix. It is also
+mentioned in the German "Das Postfix Buch" and the [Policy Weight Debian
 popularity][] was high between 2010 and 2016. From the [Policy Weight
-unofficially source code][] repository it can be understood that the
-development was suspended probably around 2013 (2018-5) or earlier and the last
-stable version and to-do-list is from 2009. The [Policy Weight source code][]
-location is unknown as of 2023-01-13. The [Policy Weight home][] declares
+unofficial source code][] repository it can be understood that development was
+probably stopped around 2013 (2018-5) or earlier and the last stable version
+and to-do list is from 2009. The location of the [Policy Weight source code][]
+repository is unknown as of 2023-01-13. The [Policy Weight home][] declares
 itself as "Project discontinued".
 
-As of the [Policy Weight Debian package][] page, there are some Debian package
-management task (bugs) known, but no major software bugs as of 2023-01-13.
-However without an upstream buck tracker, this is difficult to know. From the
-[Policy Weight to do list][] `todo.txt` of the [Policy Weight unofficially
-source code][] is is clear that some major `IPv6` features are missing.
+As of the [Policy Weight Debian package][] page, there are some known Debian
+package management tasks (bugs), but no major software bugs as of 2023-01-13.
+However, without an upstream bug tracker, this is difficult to know. From the
+[Policy Weight to do list][] `todo.txt` of the [Policy Weight unofficial source
+code][] it is clear that some important `IPv6` features are missing.
 
-The [Policy Weight old mailing list archive][] can be seen up to 2010. The
+The [Policy Weight old mailing list archive][] is available until 2010. The
 [Policy Weight new mailing list][] location contains the [Policy Weight new
 mailing list archive][] up to 2016.
 
 ### Function
 
-The Policy Weight Daemon is used by Postfix `smtpd` before mail body `DATA` is
-accepted. Various checks are performed by the daemon using caching to minimize
-queries. Individual checks are weighted (hence the name) with a score (that
-can be changed by the administrator) which is aggregated. If the sum is over a
-definable threshold, the mail gets rejected before `DATA` is fetched, saving
-bandwidth.
+The policy weight daemon is used by Postfix `smtpd` before accepting the mail
+body `DATA`. Several checks are performed by the daemon, using caching to
+minimize queries. Individual checks are weighted (hence the name) with a score
+(which can be changed by the administrator), which is aggregated. If the sum is
+above a definable threshold, the mail is rejected before `DATA` is fetched,
+saving bandwidth.
 
 ### Features
 
@@ -203,19 +227,19 @@ bandwidth.
 
 ### Discussion
 
-The main benefits of policy daemons are: rejecting mail before delivering and
+The main advantages of policy daemons are: rejecting mail before delivery and
 saving bandwidth. This is in contrast to SpamAssassin, Amavis and others that
-operates after mail `DATA` is fetched. Policy Weight do not add delays, as
-_greylisting_ would do. It performs rejection of fake `HELO` or sender
-information with better accuracy and less false positives than the Sender
-Policy Framework (SPF).
+operate after the mail `DATA` has been fetched. Policy Weight does not add
+delays like _greylisting_ would. It performs rejection of fake `HELO` or sender
+information with better accuracy and fewer false positives than Sender Policy
+Framework (SPF).
 
-Parts of the functionality might be covered with newer versions of Postfix,
-version 2.8 and up. The [POSTSCREEN_README][] for example gives information
-about testing `MX` (`MX` policy test) and other DNS information. While Policy
-Weight acts __after__ `smtpd`,
+Some of the functionality may be covered by newer versions of Postfix, version
+2.8 and above. For example, the [POSTSCREEN_README][] gives information about
+testing `MX` (`MX` policy test) and other DNS information. While policy weight
+works __after__ `smtpd`,
 [`postscreen`](https://www.postfix.org/postscreen.8.html) works __before__
-`smtpd`, this could save even more bandwidth.
+`smtpd`, which can save even more bandwidth.
 
 ### Further Read
 
@@ -279,10 +303,58 @@ checking.
 - [postfix-policyd-spf-python Debian package][]
 - [postfix-policyd-spf-python source code][]
 
+## postgrey
+
+[postgrey]: http://postgrey.schweikert.ch/
+[postgrey mailing list]: sympa@list.ee.ethz.ch
+[postgrey mailing list archive ]: http://lists.ee.ethz.ch/wws/arc/postgrey
+[postgrey soure code]: http://postgrey.schweikert.ch/
+[postgrey package]: https://packages.debian.org/bullseye/postgrey
+[postgrey developer information]: https://tracker.debian.org/pkg/postgrey
+[postgrey publicity]: https://qa.debian.org/popcon.php?package=postgrey
+
+[Postgrey][] is a Postfix policy server that provides greylisting.  When a
+delivery request of an email is received by Postfix via `SMTP' (`smtpd'), three
+data points, the _client IP_, the _sender_, and the _recipient_, are collected
+and stored if this is the first time these data points have been seen. An email
+is rejected if it is seen for the first time according to these three data
+points, or if the time elapsed since the first encounter is less than 5 minutes
+(or another configurable value). The rejection is reported to the sender in the
+form of a temporary error. Most valid senders will resend later, as required by
+`RFC`. Many `SPAM` hosts will not do this, as tracking the send status of mails
+is usually not worth the resources, as these mailers send millions of mails.
+
+### Discussion
+
+Greylisting is an effective way to reduce SPAM. Around 2010 to 2017, most
+non-SPAM hosts that encountered a greylisting host behaved according to the
+`RFC` and very rarely email was not delivered. However, since 2017 there is a
+trend where more and more companies are moving dedicated mail servers to
+centralized cloud services that do not handle greylisting well. This can be
+seen when a new account is set up and the email address needs to be verified.
+These cloud-based verification emails are often not resent, resulting in an
+inability to log in unless the cloud provider's DNS is accepted. If the mail
+server has only one user, the user can temporarily disable greylisting when
+signing up for a new service. If the mail server has many users, it is not
+possible to accept-list or disable greylisting.  Once an email address
+validation email is sent, it is too late to turn off greylisting because that
+attempt will not be successful.
+
+### Links
+
+- [postgrey][]
+- [postgrey mailing list][]
+- [postgrey mailing list archive ][]
+- [postgrey soure code][]
+- [postgrey package][]
+- [postgrey developer information][]
+- [postgrey publicity][]
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-01-15 | Improve grammar, postgrey greylistd                  |
 | 0.1.1   | 2023-01-14 | mtpolicy policyd-rate-limit postfix-policyd-spf-perl |
 | 0.1.0   | 2023-01-13 | Initial release Policy Weight                        |
 
