@@ -2,8 +2,8 @@
 title: Atlas
 linkTitle: Atlas
 author: Christian Külker
-date: 2022-06-19
-version: 0.1.0
+date: 2023-01-25
+version: 0.1.1
 locale: en_US
 lang: en
 type: doc
@@ -224,9 +224,27 @@ Benchmark   %   Clock   %   Clock   %   Clock   %   Clock
 make[1]: Leaving directory '/opt/hpc/rpi/la/atlas/3.10.3/bld'
 ```
 
+## Installation from Package Dependencies
+
+Installing `atlas` on Debian 11 (Bullseye) will also pull in `mpich`.
+
+```bash
+aptitude install libatlas-base-dev libmpich-dev gfortran
+```
+
+This will install:
+
+~~~
+gfortran gfortran-10{a} hwloc-nox{a} libatlas-base-dev libatlas3-base{a}
+libgfortran-10-dev{a} libhwloc-plugins{a} libhwloc15{a} libmpich-dev
+libmpich12{a} libslurm36{a} libxnvctrl0{a} mpich{a}
+~~~
+
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2023-01-25 | Note for package installation of atlas               |
 | 0.1.0   | 2022-06-19 | Initial release                                      |
 
