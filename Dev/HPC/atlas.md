@@ -2,8 +2,8 @@
 title: Atlas
 linkTitle: Atlas
 author: Christian Külker
-date: 2023-01-25
-version: 0.1.1
+date: 2023-01-26
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -33,28 +33,29 @@ description: Atlas
 
 ## Introduction
 
-Compiling HPC components on a Raspberry Pi do not make sense, as the Raspberry
-Pi is not powerful. However the way and consideration when building HPC
-software components, like Atlas, is very similar as on Intel or AMD based HPC
-systems. For educational purpose this document describes building Altlas 3 on
-the Raspberry Pi 4. Be patient, compiling Atlas takes time and depends on
-single core performance.
+Compiling HPC components on a Raspberry Pi does not make sense because the
+Raspberry Pi is not powerful. However, the process and considerations for
+building HPC software components such as Atlas are very similar to those on
+Intel or AMD based HPC systems. For educational purposes, this document
+describes how to build Atlas 3 on Raspberry Pi 4. Be patient, compiling Atlas
+takes time and depends on single core performance.
 
-## rpi/la/atlas/3.10.3
+## Raspberry Pi Atlas 3.10.3
 
-This builds and installs Atlas 3.10.3 for the Raspberry Pi 4. However, except
-setting a non throttling mode, this is similar to other architectures.
+This will build and install Atlas 3.10.3 for Raspberry Pi 4. Except for setting
+a non-throttling mode, this is similar to other architectures.
 
-Atlas 3.10.3 from 2016 is still the latest (2022-06-18) version.
+Atlas 3.10.3 from 2016 is still the latest (2022-06-18) release.
 
-For this compilation [mpich](mpich.md) was installed first. Dependencies to
-[mpich](mpich.md) are are not listed here.
+For this compilation, [mpich](mpich.md) was installed first. Dependencies on
+[mpich](mpich.md) are not listed here.
 
-For Atlas to be useful in HPC, consider a homogeneous cluster. Atlas should be
-compiled from source for every hardware architecture as Atlas make timing
-calculation during build time. The length of build depends highly on single
-core performance. On a Raspberry Pi 4 8GB it can take 15hours and 44minutes,
-while on a modern AMD 6hours and 30minutes.
+For Atlas to be useful in HPC, a homogeneous cluster should be considered.
+Atlas should be compiled from source for each hardware architecture as Atlas
+performs timing calculations during build time. The build time is highly
+dependent on the performance of the individual cores. On a Raspberry Pi 4 8GB
+it can take 15 hours and 44 minutes, while on a modern AMD it can take 6 hours
+and 30 minutes.
 
 Preparations as root
 
@@ -64,9 +65,9 @@ chown -R $USER.$USER /opt/hpc
 apitude install cpufrequtils
 ```
 
-Make sure you set the performance and disable CPU throttling. Assuming a
-certain hardware you can get the numbers of cores via a command (or you have to
-figure out via `/proc/cpuinfo`)
+Make sure you set performance and disable CPU throttling. Assuming certain
+hardware, you can get the number of cores via a command (or you have to find
+out via `/proc/cpuinfo`)
 
 1. Either try `cpufreq` to disable throttling
 
@@ -92,17 +93,17 @@ echo -n "CPU $c ";cat /sys/devices/system/cpu/cpu$c/cpufreq/scaling_governor;\
 done
 ```
 
-3. Or set via kernel parameter (as described in ATLAS/doc/atlas_install.pdf
-   page 5 (not tested).
+3. Or set by kernel parameter as described in ATLAS/doc/atlas_install.pdf page
+   5 (not tested).
 
-4. Or use `BLAS` (as performance can not be guaranteed anyways, it throttling
-   can not be disabled.)
+4. Or use `BLAS` (since performance cannot be guaranteed anyway, throttling
+   cannot be disabled).
 
 5. Or if you insist on ATLAS, disable timing with `--cripple-atlas-performance`
 
-If throttling is __not__ disabled, and you are not using
-`--cripple-atlas-performance`, you might see this error (copied from a non
-Raspberry Pi):
+If throttling is __not__ disabled and you are not using
+`--cripple-atlas-performance`, you may see this error (copied from a
+non-Raspberry Pi):
 
 ~~~
 ERROR: enum fam=0, chip=32765, model=113, mach=-1785083552
@@ -111,14 +112,14 @@ make[2]: *** [Makefile:449: IRunArchInfo_x86] Error 2
 CPU Throttling apparently enabled!
 ~~~
 
-Either check the above list, the Atlas PDF `doc/atlas_install.pdf` included in
-the archive, the more up to date [online
+Either check the list above, the Atlas PDF `doc/atlas_install.pdf` included in
+the archive, the more recent [online
 documentation](http://math-atlas.sourceforge.net/atlas_install/atlas_install.html),
 use `BLAS` or compile with `--cripple-atlas-performance`.
 
 When building Atlas, do not use the `-j` option, as this will mess up Atlas
-timings. The make run will take some time. Make sure the system stays up that
-long and is not used by other processes. It might make sense to execute it in
+timings. The make run will take some time. Make sure the system is up that long
+and is not being used by other processes. It might make sense to run it in
 `screen` or `tmux`.
 
 As user
@@ -151,7 +152,7 @@ make time # provide performance summary (optional)
 make install
 ```
 
-After a complete build the following might be installed:
+After a full build, the following should be installed:
 
 ```bash
 /opt/hpc/rpi/la/atlas/3.10.3/include/cblas.h
@@ -240,11 +241,11 @@ libgfortran-10-dev{a} libhwloc-plugins{a} libhwloc15{a} libmpich-dev
 libmpich12{a} libslurm36{a} libxnvctrl0{a} mpich{a}
 ~~~
 
-
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
-| 0.1.1   | 2023-01-25 | Note for package installation of atlas               |
+| 0.1.2   | 2023-01-26 | Improve writing                                      |
+| 0.1.1   | 2023-01-25 | Note for package installation of Atlas               |
 | 0.1.0   | 2022-06-19 | Initial release                                      |
 
