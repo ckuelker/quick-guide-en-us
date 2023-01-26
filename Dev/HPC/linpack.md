@@ -3,8 +3,8 @@ linkTitle: Linpack
 title: High Performance Linpack
 type: doc
 author: Christian Külker
-date: 2022-06-18
-version: 0.1.1
+date: 2023-01-25
+version: 0.1.2
 keywords:
 categories:
     - HPC
@@ -42,8 +42,8 @@ The High Performance Linpack (HPL) is the major benchmark to measure the
 performance of super computers. As there are different hardware architectures,
 different optimized version of the benchmark exist.
 
-Running HPL is at least a 6 dimensional problem, where the 6 major dimensions
-are:
+Running HPL is at least a multi dimensional problem, where the main __6
+dimensions__ are:
 
 1. Architecture
 2. Message Passing Interface (MPI) Library
@@ -52,16 +52,20 @@ are:
 5. HPL
 6. Benchmark Problem Size
 
-Unfortunately this 6 dimensions are only partly dependent to each other, some
-are not. For example depends the problem size on the hardware size (nodes,
-memory, cores) but usually not on the HPL version. While the `xhpl` binary
+Unfortunately, these 6 dimensions are only partly dependent on each other, some
+are not. For example, the problem size depends on the hardware size (nodes,
+memory, cores), but usually not on the HPL version. While the `xhpl` binary
 depends on the HPL version, MPI, LA and the compiler/linker, but not on the
 hardware memory size (unless optimized). The problem size configuration
-(HPL.dat) is not dependent on the MPI or vice versa. Therefore a strictly
-hierarchical directory structure to run HPL seems not possible. The following
-diagram shows roughly the dependencies in round brackets and is the proposed
-directory structure of described linpack runs. This is as for the Raspberry Pi
-(rpi) (for educational purpose).
+(HPL.dat) is not dependent on MPI and vice versa. Therefore, a strictly
+hierarchical directory structure to run HPL does not seem possible. The
+following diagram shows roughly the dependencies in round brackets and is the
+proposed directory structure of described linpack runs. This is the same as for
+the Raspberry Pi (rpi) (for educational purposes).
+
+The following directory structure is used throughout this guide, with
+dependency information in round brackets and dimension information in angle
+brackets.
 
 ~~~
 opt
@@ -102,8 +106,6 @@ opt
                    Make.rpi (arch,mpi,la,compiler)
 ~~~
 
-
-
 ## HPL 2.3 On Raspberry Pi
 
 ### Preparation
@@ -123,13 +125,18 @@ cd /opt/hpc/hpl/src
 wget http://www.netlib.org/benchmark/hpl/hpl-2.3.tar.gz
 ```
 
-### Openmpi & Openblas-pthread
+### Package Openmpi & Openblas-pthread
+
+Installing `openmpi` and `openblas-pthread` from packages has the advantage of
+a fast installation. However, the result is usually not a very good
+performance.  It is usually possible to get better performance with
+self-compiled components.
 
 ```bash
-aptitude install openmpi-bin libopenblas-dev openmpi-common libopenmpi-dev \
+aptitude install openmpi-bin libopenblas-dev openmpi-common libopenmpi-dev
 ```
 
-This will install mostly to `/usr/lib/aarch64-linux-gnu/`.
+This will mostly install to `/usr/lib/aarch64-linux-gnu/`.
 
 ### HPL 2.3 with Openmpi & Openblas-pthread
 
@@ -143,7 +150,7 @@ cp Make.UNKNOWN ../Make.rpi
 ```
 
 Change the following values in
-[Make.rpi](opt/hpc/hpl/2.3/openmpi/openblas-pthread/hpl-2.3/Make.rpi):
+[/opt/hpc/hpl/2.3/openmpi/openblas-pthread/hpl-2.3/Make.rpi](Make.rpi):
 
 ~~~
 ARCH         = rpi
@@ -176,12 +183,15 @@ make arch=rpi
 make[1]: Leaving directory '/opt/hpc/hpl/2.3/openmpi/openblas-pthread/hpl-2.3'
 ```
 
-Next it is possible to run HPL on a single node. Prepare some variables and a
-`hostfile`. Execute this manually or create a start script. If the binary is
-not too big, it also might be advisable to copy the `xhpl` binary and
-`Make.rpi` file to the run directory, to recreate  or recheck the run on
-different hardware. An alternative is to make a note about the binary path an
-never recompile the archive under that directory ...
+Next, it is possible to run HPL on a single node. Prepare some variables and a
+`hostfile`. Run this manually or create a startup script. If the binary is not
+too large, it may also be advisable to copy the `xhpl` binary and the
+`Make.rpi` file to the run directory to rebuild or re-test the run on different
+hardware. An alternative is to make a note of the binary path and never
+recompile the archive under that directory ...
+
+
+__This is an example of a simple startup script:__
 
 ```bash
 #!/usr/bin/zsh
@@ -201,10 +211,7 @@ cp $BIN .
 cp $DIR/hpl-2.3/Make.rpi .
 ```
 
-
-
-
-Run the binary.
+If you run the binary the output may look like this:
 
 ```bash
 cd $RDIR
@@ -272,62 +279,19 @@ Finished      1 tests with the following results:
 
 End of Tests.
 ================================================================================
-
-
 ```
-
-
-
-
-
-TODO:
-
-Change approach
-
-A) Use Fast approach
-
-Follow:  https://www.hydromag.eu/~aa3025/rpi/
-
-B) Use Slow approch > 15h
-
-Follow https://mikejmcfarlane.github.io/blog/2020/09/17/High-Performance-Linpack-for-raspberry-pi-supercomputer
-https://computenodes.net/2018/06/28/building-hpl-an-atlas-for-the-raspberry-pi/
-
-- Altlas localtion was wrong (was /tmp/atlas-build, should /opt/hpc/atlas-build)
-- Manuall ln to libs was probably wrong
-- Recompile all
-  - /opt/hpc/mpich-4...
-  - /opt/hpc/atlas-build
-  - /opt/hpc/hpl-2.3-mpich4-atlas
-
-C) Compare with https://forums.raspberrypi.com/viewtopic.php?t=276089
-
-
-
-
-
-######################
-
-
-
-
-
 
 ## HPL 2.3 Debian 11 on Raspberry Pi 4 8GB
 
-### openmpi openblas
-
-
-
-
-
+This describes an unsuccessful attempt to run `HPL` 2.3 as of December 2, 2018
+with `mpich` (mpich-4.1a1) and `atlas` (atlas-3.10.3).  In this example OpenMPI
+and OpenBlas were __not__ used.
 
 ### mpich-4.1a1 atlas-3.10.3
 
-
-This usage of HPL on a raspberry Pi 4 8GB is for educational purpose. It is
-assumed that [mpich-4.1a1](mpich.md) and [atlas-3.10.3](atlas.md) has been
-installed successfully.
+This use of HPL on a Raspberry Pi 4 8GB is for educational purposes. It is
+assumed that [mpich-4.1a1](mpich.md) and [atlas-3.10.3](atlas.md) have been
+successfully installed.
 
 ```bash
 mkdir -p /tmp/hpc # should be already done
@@ -340,8 +304,8 @@ cp Make.UNKNOWN ../Make.rpi
 cd ..
 ```
 
-On my Debian 11 Bullseye installation the following links had been made as
-a workaround:
+On my Debian 11 Bullseye installation the following links had been made as a
+workaround:
 
 ```bash
 cd /usr/lib/aarch64-linux-gnu
@@ -366,8 +330,9 @@ MPlib        = /tmp/hpc/lib/libmpich.so
 LAdir        = /tmp/hpc/atlas-build
 LAlib        = $(LAdir)/lib/libf77blas.a $(LAdir)/lib/libatalas.a
 ```
-Run `make arch=rpi`. If in some cases the configuration is not OK,
-make sure you run from a clean archive.
+
+Run `make arch=rpi`. If in some cases the configuration is not OK, make sure
+you are running from a __clean__ archive.
 
 ```bash
 make arch=rpi
@@ -409,13 +374,17 @@ HPL.out      output file name (if any)
 8            memory alignment in double (> 0)
 ~~~
 
+Make a link.
+
 ```bash
 cd
 ln -s libmpi.so.40.30.0 libmpi.so.0
 ```
 
+The following is a `mpiexec` demonstration of HPL running without a startup
+script.
 
-```
+```bash
 mkdir /opt/hpl/hpl-run/rpi8gb
 cp HPL.dat /opt/hpl/hpl-run/rpi8gb
 cd /opt/hpl/hpl-run/rpi8gb
@@ -428,9 +397,12 @@ a non-zero exit code. Per user-direction, the job has been aborted.
 --------------------------------------------------------------------------
 mpiexec noticed that process rank 0 with PID 0 on node c3 exited on signal 11 (Segmentation fault).
 --------------------------------------------------------------------------
+```
 
+The following is a `mpirun` demonstration of HPL running without a startup
+script.
 
-
+```bash
 mpirun -np 4 /tmp/hpc/hpl-2.3/bin/rpi/xhpl
 --------------------------------------------------------------------------
 Primary job  terminated normally, but 1 process returned
@@ -439,80 +411,7 @@ a non-zero exit code. Per user-direction, the job has been aborted.
 --------------------------------------------------------------------------
 mpirun noticed that process rank 2 with PID 0 on node c3 exited on signal 11 (Segmentation fault).
 --------------------------------------------------------------------------
-
 ```
-
-
-
-
-
-
-
-
-For this approach
-
-mpich-4.1a1
-atlas-3.10.3
-
-
-HPL 2.3 from December 2, 2018
-
-
-
-
-
-
-
-
-#####################
-
-
-## MPICH Openmpi
-
-```bash
-aptitude install openmpi-bin libopenblas-dev
-```
-
-
-
-
-
-### Dependencies:
-
-```bash
-aptitude install libatlas-base-dev libmpich-dev gfortran
-```
-
-Will install
-
-
-
-
-~~~
-gfortran gfortran-10{a} hwloc-nox{a} libatlas-base-dev libatlas3-base{a}
-libgfortran-10-dev{a} libhwloc-plugins{a} libhwloc15{a} libmpich-dev
-libmpich12{a} libslurm36{a} libxnvctrl0{a} mpich{a}
-~~~
-
-HPL 2.3 from December 2, 2018
-
-```bash
-wget https://www.netlib.org/benchmark/hpl/hpl-2.3.tar.gz
-tar xvzf hpl-2.3.tar.gz
-```
-
-Create a file Make.ARCH in the  top-level directory
-
-```bash
-cd hpl-2.1/setup
-sh make_generic
-cp Make.UNKNOWN ../Make.rpi
-cd ..
-./configure --prexif=/tmp/hpl
-```
-
-
-
 ## Compile Linpack 2.1 on CentOS 7
 
 ### Dependencies
@@ -539,12 +438,19 @@ cd ..
 
 ## Intel Optimized Linpack For Linux / Clusters
 
-This benchmark need the Intel(R) Math Kernel Library (MKL) 10.3 update 4 for
-Linux.
+Unfortunately, as of 2023, the performance of free open source (FOSS) libraries
+has limitations. Non-free HPLs for specific hardware, such as Intel CPUs, still
+solve the same problem as the free versions, are faster, but cannot be
+downloaded in source code. Theuse of  non-free-HPLs or libraries will not be
+discussed in detail here, but some links are provided for further reading.
+
+The Intel optimized HPL (Intel Linpack) requires the Intel(R) Math Kernel
+Library (MKL) 10.3 update 4 or later for Linux.
 
 * [MKL Download](http://software.intel.com/en-us/articles/intel-math-kernel-library-linpack-download/)
-* [Intel Linkpack Download](http://registrationcenter-download.intel.com/akdlm/irc_nas/2169/l_lpk_p_10.3.4.007.tgz)
+* Intel Linkpack Download
 * [MKL](http://www.intel.com/software/products/mkl)
+* [oneMKL](https://github.com/oneapi-src/oneMKL)
 
 ### Device Output Codes
 
@@ -567,7 +473,7 @@ Q      :      16                    - cores per node
 
 ## Example Linpack Configuration
 
-Some Linpack binaries accept configuration in the form of a file. Having a name
+Some Linpack binaries accept configuration in the form of a file. With a name
 like `cfg.dat` that needs to have a special format, like this for HPL.
 
 ~~~
@@ -596,8 +502,8 @@ HPL.out      output file name (if any)
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-01-25 | Improve writing, cleanup                             |
 | 0.1.1   | 2022-06-18 | History, shell->bash, Debian 11, hpl-2.3,            |
 |         |            | mpich-4.1a1 and atlas-3.10.3 on AMD and Rpi4         |
 | 0.1.0   | 2020-05-03 | Initial release                                      |
-
 
