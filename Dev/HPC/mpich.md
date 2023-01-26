@@ -2,8 +2,8 @@
 title: Mpich
 linkTitle: Mpich
 author: Christian Külker
-date: 2022-06-20
-version: 0.1.1
+date: 2023-01-26
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -28,11 +28,11 @@ description: Installing and usage of Mpich
 
 ---
 
-## rpi/mpi/mpich/4.1a1
+## Raspberri Pi MPICH 4.1a1
 
-Building and installing `mpich-4.1a1` on a Raspberry Pi 4. The build will be
-performed in `/opt/hpc/rpi/mpi/mpich/4.1a1/bld` and the installaton location
-will be `/opt/hpc/rpi/mpi/mpich/4.1a1` to control the version usage of `mpich`.
+Building and installing `mpich-4.1a1` on a Raspberry Pi 4. The build is
+done in `/opt/hpc/rpi/mpi/mpich/4.1a1/bld` and the install location
+is `/opt/hpc/rpi/mpi/mpich/4.1a1` to control the version usage of `mpich`.
 
 As root
 
@@ -54,8 +54,8 @@ cd $PFX/bld
 tar xvzf /opt/hpc/src/mpich-$VER.tar.gz --strip-components=1
 ```
 
-On traditional `HPC` systems the device needs to match the network.  Without
-specification it might look like:
+On traditional `HPC` systems the device must match the network. Without
+specification it might look like this:
 
 ```bash
 ./configure --prefix=$PFX
@@ -77,7 +77,7 @@ specification it might look like:
 Configuration completed.
 ```
 
-With using the legacy ch3:sock device it looks like:
+With using the legacy `ch3:sock` device it looks like this:
 
 ```bash
 ./configure  --prefix=$PFX --with-device=ch3:sock
@@ -90,9 +90,8 @@ With using the legacy ch3:sock device it looks like:
 Configuration completed.
 ```
 
-In case you follow those different `configure` experiments
-make sure before compiling that `configure` is executed
-from a clean archive.
+If you are following these various `configure` experiments, make sure you run
+`configure` from a clean archive before compiling.
 
 ```bash
 make -j 4
@@ -103,5 +102,6 @@ make install
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-01-26 | Improve writing                                      |
 | 0.1.1   | 2022-06-20 | Change dir structure                                 |
 | 0.1.0   | 2022-06-18 | Initial release                                      |
