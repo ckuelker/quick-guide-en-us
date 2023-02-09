@@ -1,8 +1,8 @@
 ---
 title: Fio
 author: Christian Külker
-date: 2022-05-19
-version: 0.1.1
+date: 2023-02-09
+version: 0.1.2
 type: doc
 disclaimer: True
 toc: True
@@ -24,17 +24,17 @@ description: Fio
 
 ### As A Package
 
-Without **OFED** on some systems installation from package works
+Without **OFED** on some systems, installation from package works.
 
 ```bash
 aptitude install fio
 ```
 
-**CentOS** (and Red Hat Enterprise Linux) have rather limited main repositories
-than most distributions. If you haven't already, you'll need to add the
-**EPEL** repository to **CentOS/RHEL** to get **fio**. However it might clash
-if you are using **Infiniband** with **OFED**. For this, use installation from
-source.
+**CentOS (and Red Hat Enterprise Linux) have more limited main repositories
+than most distributions. If you haven't done so already, you will need to add
+the **EPEL** repository to **CentOS/RHEL** to get **fio**. However, this may
+conflict if you are using **Infiniband** with **OFED**. Use installation from
+source for this.
 
 ```bash
 yum install epel-release -y
@@ -43,8 +43,8 @@ yum install fio
 
 ### From Source
 
-For older setups download the 2.0.14 `tar` version from 2013, because **RPM**
-might clash with **OFED** stack:
+For older setups, download the 2.0.14 `tar` version from 2013, as **RPM** may
+conflict with the **OFED** stack:
 
 ```bash
   # As user:
@@ -61,7 +61,7 @@ install -m 644 fio.1 /usr/local/man/man1
 install -m 644 fio_generate_plots.1 /usr/local/man/man1
 ```
 
-The version 3.19 of 2020 already contains more scripts and man pages:
+Version 3.19 of 2020 already contains more scripts and man pages:
 
 ```bash
   # As user:
@@ -86,9 +86,8 @@ install -m 755 -d /usr/local/share/fio
 install -m 644 ./tools/plot/*gpm /usr/local/share/fio/
 ```
 
-(The above wget URL changed, see github repositoiry tags for new (2022-05-19))
-
-The latest version 3.30 as of 2022-05-19:
+The above `wget` URL has changed, see the <https://github.com> repository tags
+for the new URL. (2022-05-19) The latest version 3.30 as of 2022-05-19:
 
 ```bash
   # As user:
@@ -137,11 +136,11 @@ Run status group 0 (all jobs):
 Reminder: MiB = Mebibyte (basis 1014), MB = Megabyte (basis 1000)
 
 As we can see here the disk was fast, we requested 4g and it was able to run
-though its approximately 2 times in 60 seconds. The most interesting value
-is **bw=127MiB/s**.
+through its approximately 2 times in 60 seconds. The most interesting value is
+**bw=127MiB/s**.
 
-If you have the CPU core number and the bandwidth to the storage subsystem, use
-more jobs in parallel. After this repeat with different block sizes, like 1m.
+If you have the number of CPU cores and the bandwidth to the storage subsystem,
+run more jobs in parallel. Then repeat with different block sizes, such as 1m.
 
 In contrast the version 3.19 from 2020 on a laptop from 2008:
 
@@ -216,8 +215,8 @@ WRITE: bw=26.8MiB/s (28.1MB/s), 26.8MiB/s-26.8MiB/s (28.1MB/s-28.1MB/s), \
 io=2581MiB (2706MB), run=96397-96397msec
 ~~~
 
-As the desktop freezes when `fio` is run on one core, and the performance is
-bad, it is a matter of system design, not of age in some cases.
+Since the desktop freezes when `fio` is run on a core and performance is poor,
+this is in some cases a matter of system design, not age.
 
 In contrast the version 3.30 from 2022 on a laptop from 2008:
 
@@ -283,14 +282,15 @@ io=926MiB (971MB), run=75132-75132msec
 io=1183MiB (1240MB), run=78401-78401msec
 ~~~
 
-So it seems that the newer version is faster. This has to be takes with a pinch
-of salt. However, it it is recommended to calculate an average over several
-runs and stick to the same version of `fio`.
+So it seems that the newer version is faster. This has to be taken with a pinch
+of salt. However, it is recommended to average over several runs and stick to
+the same version of `fio`.
 
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-02-09 | Improve writing                                      |
 | 0.1.1   | 2022-05-19 | Change code blocks, +history, fio-3.30, comparison   |
 | 0.1.0   | 2020-05-19 | Initial release                                      |
 
