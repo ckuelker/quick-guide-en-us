@@ -1,28 +1,46 @@
 ---
 title: Quick Guide README
 author: Christian Külker
-version: 0.1.7
-date: 2022-11-13
+version: 0.1.9
+date: 2023-02-24
+type: doc
 
 ---
 
 # Overview
 
-This document describes briefly the aim and content of the git repository
-[quick-guide]. The goal of [quick-guide] is to collect information about
-tasks and provide a guide that can reproduce the task quickly. The main
-format of this repository is [Markdown].
+This document briefly describes the purpose and contents of the git repository
+[quick-guide]. The goal of [quick-guide] is to collect information about tasks
+and provide a guide that can quickly reproduce the task. The primary format of
+this repository is [markdown].
 
 ![Github license](https://img.shields.io/github/license/ckuelker/quick-guide.svg)
 ![Github issues](https://img.shields.io/github/issues/ckuelker/quick-guide.svg?style=popout-square)
 ![Github code size in bytes](https://img.shields.io/github/languages/code-size/ckuelker/quick-guide.svg)
 ![Git repo size](https://img.shields.io/github/repo-size/ckuelker/quick-guide.svg)
 ![Last commit](https://img.shields.io/github/last-commit/ckuelker/quick-guide.svg)
+[![GFDL 1.3][gfdl-1.3-shield]][gfdl-1.3]
+[![CC BY-SA 4.0][cc-by-sa-4.0-shield]][cc-by-sa-4.0]
 
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.9   | 2023-02-24 | Disptach LICENSE and COPYING file,                   |
+|         |            | Bump copyright year, DevOps/Tools/fzf.md,            |
+|         |            | Dev/License/check-github-license.md, Dev/HPC/fio.md, |
+|         |            | Dev/Diff/kdiff3.md, Dev/HPC/mpich.md,                |
+|         |            | Dev/HPC/atlas.md, Dev/HPC/linpack.md,                |
+|         |            | DevOps/Mail/Client/overview.md,                      |
+|         |            | Dev/Python/I18n/i18n-l10n.md                         |
+|         |            |                                                      |
+| 0.1.8   | 2023-01-18 | Improve README.markdown, index.md,                   |
+|         |            | Dev/Python/Web/simple-http-server.md,                |
+|         |            | Dev/Rust/hello-world.md,                             |
+|         |            | DevOps/Mail/Policy/overview.md, Dev/HPC/hpcc.md,     |
+|         |            | DevOps/HPC/index.md, Dev/Rust/hello-world.rs,        |
+|         |            | DevOps/Mail/Policy/postfix-mail-flow-v0.1.0.svg      |
+|         |            |                                                      |
 | 0.1.7   | 2022-11-13 | DevOps/Mail/postfix-statistics.md,                   |
 |         |            | Dev/VCS/Git/git-with-other-default-branch.md,        |
 |         |            | Dev/HPC/linpack.md, Dev/Rust/hello-world.md,         |
@@ -90,23 +108,34 @@ format of this repository is [Markdown].
 
 # License And Copyright
 
-    Copyright (C) 2020, 2021, 2022 by Christian Kuelker
+    Copyright (C) 2020 - 2023 by Christian Kuelker
 
-## Creative Commons Attribution Share Alike License 4.0
+## GNU Free Document License, Version 1.3
 
-Permission is granted to copy, distribute and/or modify this documents under
-the terms of the Creative Commons Attribution Share Alike License, Version
-[4.0](https://creativecommons.org/licenses/by-sa/4.0/) published by the
-Creative Commons Corporation global nonprofit organization ("Creative
-Commons").
-
-## GNU Free Documentation License, Version 1.3
+Copyright (c)  2020-2023 Christian Külker
 
 Permission is granted to copy, distribute and/or modify this documents under
 the terms of the GNU Free Documentation License, Version 1.3 or any later
 version published by the Free Software Foundation; with no Invariant Sections,
 no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is
-included in the file [License.markdown](LICENSE.markdown).
+included in the file [COPYING](COPYING).
+
+[gfdl-1.3-shield]: https://img.shields.io/badge/License-GFDL--1.3-lightgrey.svg
+[gfdl-1.3]:  https://www.gnu.org/licenses/fdl-1.3.en.html
+
+## Creative Commons Attribution-ShareAlike 4.0 International License
+
+Permission is granted to copy, distribute and/or modify this documents under
+the terms of the Creative Commons Attribution-ShareAlike License, Version
+[4.0](https://creativecommons.org/licenses/by-sa/4.0/) published by the
+Creative Commons Corporation global nonprofit organization ("Creative
+Commons").
+
+[![CC BY-SA 4.0][cc-by-sa-4.0-image]][cc-by-sa-4.0]
+
+[cc-by-sa-4.0]: http://creativecommons.org/licenses/by-sa/4.0/
+[cc-by-sa-4.0-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
+[cc-by-sa-4.0-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
 
 # DISCLAIMER OF WARRANTY
 
