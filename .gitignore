@@ -2,3 +2,5 @@
 *~
 *.tdo
 *.backup
+log
+log/*
