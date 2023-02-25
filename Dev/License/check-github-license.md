@@ -2,8 +2,8 @@
 title: Check Github License
 linkTitle: Github-License
 author: Christian Külker
-date: 2023-02-24
-version: 0.1.0
+date: 2023-02-25
+version: 0.1.1
 locale: en_US
 lang: en
 type: doc
@@ -15,6 +15,8 @@ commands:
 - licensee
 tags:
 - Check-Github-License
+- CC-BY-SA-4.0
+- GFDL-1.3
 description: How to check the LICENSE file in regard to github.com
 
 ---
@@ -25,15 +27,17 @@ known to _github.com_. This document briefly describes how _github.com_ detects
 licenses and how to verify (**without guarantee**) that a project license is
 detected.
 
-# The Quick Guide
+## The Quick Guide
 
 1. Choose a recent operating system, such as Debian Bullseye
 2. Install the `licensee` dependencies: `aptitude install ruby-rugged`
 3. Install `licensee` using the Ruby gem: `gem install --user-install licensee`
 4. Run `licensee` on the `LICENSE` file (not on the uncommitted changes
    repository): `cd repository;licensee detect LICENSE`.
+5. If files like `COPYING` and `LICENSE` are selected properly, dual-licensed
+   projects are also possible: "CC-BY-SA-4.0, GFDL-1.3 licenses found".
 
-# The longer Explanation
+## The longer Explanation
 
 1. When a license is selected during project creation, _github.com_
    automatically creates a license file named `LICENSE`. Selectable licenses
@@ -47,9 +51,11 @@ detected.
    <https://github.com/spdx/license-list-XML> for details.
 
 2. Sometimes a license is added later with a `LICENSE` file, or the license
-   file has a different name. For example, `COPYING' is the `GNU' standard.  I
-   do not know which files are scanned, but to be sure it might be advisable to
-   rename the file to `LICENSE`.
+   file has a different name. For example, `COPYING`' is the `GNU` standard.  I
+   do not know which files are scanned (other than `COPYING` and `LICENSE`),
+   but to be sure it might be advisable to rename the file to either `LICENSE`
+   or `COPYING`. If both files exist, the project will show both licenses:
+   "CC-BY-SA-4.0, GFDL-1.3 licenses found".
 
 3. The content of the `LICENSE` file should be **text** with **78** characters
    per line. The best way to ensure this is to copy the contents of the license
@@ -192,5 +198,10 @@ detected.
 
 9. These experiments are not complete, but may help.
 
+## History
 
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2023-02-25 | Dual-license information                             |
+| 0.1.0   | 2023-02-24 | Initial release                                      |
 
