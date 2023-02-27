@@ -1,8 +1,8 @@
 ---
 title: Basic Things With Nginx
 author: Christian Külker
-date: 2022-06-01
-version: 0.6
+date: 2023-02-27
+version: 0.7
 type: doc
 disclaimer: True
 toc: True
@@ -25,12 +25,12 @@ description: Some basic things on Nginx
 
 ---
 
-[Nginx] is pronounced ``engine x``. It is a light weight http and proxy server.
-"Why I should use a different web server then [Apache2]?" you might ask.
-[Nginx] has some advantages and disadvantages. The advantage of [Nginx] it is
-very fast for simple configured web pages, especially for only one domain.
-However large installation with complex processing, one can almost say middle
-ware, [Apache2] is the choice.
+[Nginx] is pronounced `engine x`. It is a lightweight http and proxy server.
+"Why should I use a web server other than [Apache2]?" you may ask. Nginx has
+several advantages and disadvantages. The advantage of Nginx is that it is very
+fast for simple configured web pages, especially for only one domain.  However,
+for large installations with complex processing, one can almost say middleware,
+Apache2 is the choice.
 
 ## Installation
 
@@ -40,8 +40,8 @@ Under Debian Wheezy, Jessie, Stretch and Buster (and probably others):
 aptitude install nginx
 ```
 
-[Nginx] is already serving pages. More precisely one page. A welcome page. Look
-at
+[Nginx] is already serving pages. One page, to be exact. A welcome page. Look
+at the URL:
 
 ```
     http://127.0.0.1/
@@ -49,9 +49,9 @@ at
 
 ## Configuration
 
-The configuration under Debian is similar to [Apache2] in regard to the file
-location. First you crate a file under ``/etc/nginx/sites-available`` and
-then you make a link to ``/etc/nginx/sites-anabled``.
+The configuration under Debian is similar to [Apache2] in terms of file
+location. First you create a file in `/etc/nginx/sites-available` and then you
+make a link to `/etc/nginx/sites-anabled`.
 
 ```
     .
@@ -75,11 +75,11 @@ then you make a link to ``/etc/nginx/sites-anabled``.
     `-- win-utf
 ```
 
-You might edit the default site, which is already enabled. Or you just copy
-content to ``/var/www/html``. Of course you have to overwrite index.html to see
-your content, since this page will be delivered first. An alternative might be
-to create a directory ``/var/www/html/dragon`` to serve your favorite pictures
-of dragons (or what ever).
+You can edit the default site, which is already enabled. Or you can just copy
+the content to `/var/www/html`. Of course, you will have to overwrite
+`index.html` to see your content, since that page is served first. An
+alternative would be to create a directory `/var/www/html/dragon` to serve your
+favorite pictures of dragons (or whatever).
 
 In the latter case look at:
 
@@ -89,13 +89,14 @@ In the latter case look at:
 
 ### Server Block
 
-When using `nginx` a server block is similar to a virtual host under [Apache2].
+When using `nginx`, a server block is similar to a virtual host under
+[Apache2].
 
-[Nginx] on Debian 9 has one server block enabled by default that is configured
-to serve documents out of a directory at `/var/www/html`. While this works well
-for a single site, it can become difficult if multiple sites are hosted.  The
-domain in this is example is called `D1`, however you should imagine something
-like `example.com`.
+[Nginx] on Debian 9 has a server block enabled by default, configured to serve
+documents from a directory in `/var/www/html`. While this works well for a
+single site, it can become difficult when hosting multiple sites.  The domain
+in this example is called `D1`, but you should think of it as something like
+`example.com`.
 
 
 ```bash
@@ -158,7 +159,7 @@ server {
 
 ## Add +1 Site With Different Port?
 
-Copy the following into the file ``/etc/nginx/sites-available/wizzards``
+Copy the following into the file `/etc/nginx/sites-available/wizzards`
 
 ```nginx
 server {
@@ -233,16 +234,14 @@ nmap --script ssl-enum-ciphers -p 443 81.169.254.165|grep TLSv
 |   TLSv1.2:
 ```
 
-__HOWEVER__ if you use `certbot` than it will use its own TLS configuration:
-
-`/etc/letsencrypt/options-ssl-nginx.conf`
-
-There seems no way to specify with `certbot` what TLS version to allow.
+__HOWEVER__ if you use `certbot` then it will use its own TLS configuration:
+`/etc/letsencrypt/options-ssl-nginx.conf` There seems to be no way to specify
+which TLS version to allow with `certbot`.
 
 ## Reverse Proxy
 
-This seems more common this day to build some kind of web application that
-delivers parts of the content over a certain port.
+This seems to be more common these days to build some kind of web application
+that delivers parts of the content over a specific port.
 
 ```nginx
      location /auth/ {
@@ -255,10 +254,10 @@ delivers parts of the content over a certain port.
 
 ## I18n Index Page
 
-For some users this is convenient. Other user who are not using their own
-browser or who do not understand how to switch the language of their browser
-are basically screwed with this setup. But non the less here it is how it is
-done. (That was the long way to say: don't do it)
+This is convenient for some users. Other users who do not use their own browser
+or do not understand how to change the language of their browser are basically
+screwed with this setup. But nonetheless, this is how it is done. (That was the
+long way of saying: don't do it)
 
 ```nginx
 server {
@@ -288,15 +287,15 @@ server {
 
 ## Multiple Domains With One Server Directive
 
-The section title could also be called 'How to serve multiple virtual domains
-with [Certbot] and [Nginx]'. Usually it is very easy to serve virtual domains
-with **nginx**. Either add a file with a 'server' block or add a new 'server'
-block to the file `/etc/nginx/sites-available/default`. However in the case a
-part of this file (default) is managed by [Certbot] it is easier to manage all
-domains with a single 'server' block, as other parts are managed by [Certbot].
-This is how a default configuration looks like. Comments are removed,
-indentation changed from tab to two spaces and `$host` names (domains, like
-`example.com`) have been replaced by all caps: `D1` and `D2`.
+The section title could also be "How to serve multiple virtual domains with
+[Certbot] and [Nginx]". Usually it is very easy to serve virtual domains with
+nginx. Either add a file with a "server" block or add a new "server" block
+to the `/etc/nginx/sites-available/default` file. However, in case a part of
+this file (default) is managed by Certbot, it is easier to manage all domains
+with a single 'server' block, as other parts are managed by Certbot.  This is
+what a default configuration looks like. Comments are removed, indentation is
+changed from tab to two spaces and `$host` names (domains like `example.com`)
+are replaced by all caps: `D1` and `D2`.
 
 ```nginx
 server {
@@ -354,9 +353,9 @@ server {
 }
 ```
 
-This solution is rather simple. Add a line with the `$host` variable to the
-`https` location, like so: `root /opt/www/domain/$host;` (and you may or may
-not remove the other `root` statement.
+The solution is quite simple. Add a line with the `$host` variable to the
+`https` location, like this `root /opt/www/domain/$host;` (and you may or may
+not remove the other `root` directive.
 
 ```nginx
 server {
@@ -416,10 +415,10 @@ server {
 
 ## Static HTML Mirror
 
-To mirror static HTML files in an ideal world [Nginx] would work out of the box.
-However sometime the pages to served might come from a non static page. In this
-case it can occur that the mirroring script (for example `wget`) had written
-some files with a '?'. Lets assume
+To mirror static HTML files, in an ideal world [Nginx] would work out of the
+box. However, sometimes the pages to be served may come from a non-static
+page. In this case, the mirroring script (e.g. `wget`) may have written some
+files with a '? For example
 
 ```
 https://example.com/Page             - dynamic html page
@@ -433,10 +432,10 @@ mirror.com/example.com/Page/index.html   - a static HTML page
 mirror.com/example.com/Page?action=raw   - a static conten file
 ```
 
-With the usual configuration [Nginx] would give a `404 Not Found` result, when
-trying to get the URL `http://mirror.com/example.com/Page?action=raw`.  With a
-changed try setup `$uri?$args` [Nginx] can server this page at least to let the
-client have a download option, as this will be `application/octet-stream`.
+With the usual configuration, [Nginx] would return a `404 Not Found` result
+when trying to get the URL `http://mirror.com/example.com/Page?action=raw`.
+With a modified try setup `$uri?$args` Nginx can at least serve this page to
+give the client a download option as this will be `application/octet-stream`.
 
 ```nginx
 server {
@@ -455,6 +454,7 @@ server {
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.7     | 2023-02-27 | Improve wording                                      |
 | 0.6     | 2022-06-01 | shell->bash, improve headings                        |
 | 0.5     | 2020-05-27 | Serving static HTML mirror                           |
 | 0.4     | 2020-05-23 | Certbot root with $host                              |
