@@ -2,8 +2,8 @@
 title: Simple HDD/SSD Benchmarks
 linkTitle: HDD/SDD
 author: Christian Külker
-date: 2017-10-25
-version: 0.1.0
+date: 2023-02-28
+version: 0.1.2
 type: doc
 disclaimer: True
 toc: True
@@ -24,15 +24,15 @@ description: Simple HDD/SSD benchmarks with Linux tools
 
 ## Introduction
 
-This document introduces some utilities and test to help to understand
-the performance of Hard Disk Drives (HDD), Solid State Drives (SSD), and
-others.
+This document introduces some utilities and tests to help understand the
+performance of hard disk drives (HDD), solid state drives (SSD), and others.
 
 ### History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
-| 0.1.1   | 2022-05-24 | +Introduction, +History                              |
+| 0.1.2   | 2023-02-28 | Improve writing                                      |
+| 0.1.1   | 2022-05-24 | Add introduction and history                         |
 | 0.1.0   | 2017-10-25 | Initial release                                      |
 
 ## Tools
@@ -48,9 +48,9 @@ iozone
 
 ## Hints
 
-Make sure the device interface (SATA/SAS/mSATA/M.2/NVMe) of the host system is
-the best that the disk can support. See `smartctl` for more info: SATA Version
-is:  SATA 3.1, 6.0 Gb/s (2017: 3.0 Gb/s)
+Make sure that the device interface (SATA/SAS/mSATA/M.2/NVMe) of the host
+system is the best that the disk can support. See `smartctl` for more
+information: SATA version is: SATA 3.1, 6.0 Gb/s (2017: 3.0 Gb/s)
 
 ## Gnome Disk Utility
 
@@ -59,10 +59,10 @@ aptitude install gnome-disk-utility
 /usr/bin/gnome-disks
 ```
 
-1. Select disk, Push cog button, select SMART Data and Self-Tests
-    "Start Self-Test": short, long  and conveyance.
+1. Select the disk, press the "cog" button, select SMART Data and Self-Tests
+   "Start Self-Test": short, long and conveyance.
 
-2. Select disk, Push cog button, select Benchmark
+2. Select disk, press "cog" button, select Benchmark
 
 ```
    Transfer Rate:
@@ -81,7 +81,7 @@ for i in {1..10}; do hdparm -t /dev/sdb > hdparm-t-$i.log;done
 for i in {1..10}; do hdparm -t /dev/sdb > hdparm-T-$i.log;done
 ```
 
-Use a spread sheet and `psppire` to analyse.
+Use a spreadsheet and `psppire` to analyze.
 
 ## smartctl
 
