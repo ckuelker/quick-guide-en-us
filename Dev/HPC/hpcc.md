@@ -2,8 +2,8 @@
 linkTitle: HPCC
 title: HPC Challenge
 author: Christian Külker
-date: 2023-01-17 
-version: 0.1.3
+date: 2023-03-01
+version: 0.1.4
 type: doc
 disclaimer: True
 toc: True
@@ -18,7 +18,7 @@ description: HPC Challenge Benchmark
 
 ---
 
-The **HPC Challenge** (HPCC) is a benchmark suite that measures a range of
+The **HPC Challenge** (HPCC) is a benchmark suite that measures a variety of
 memory access patterns.
 
 The **HPCC** consists of seven tests:
@@ -51,8 +51,8 @@ tar xvzf ../src/pcc-1.5.0.tar.gz
 
 ## Compile 1.4.3 On an Intel Cluster
 
-To compile the code under a fictive architecture **ArchitectureE52697v2** the
-Makefile needs to be copied and edited.
+To compile the code under a fictitious architecture **ArchitectureE52697v2**,
+the Makefile must be copied and edited.
 
 ```bash
 cd /srv/build/hpcc-1.4.5
@@ -73,6 +73,7 @@ make ArchitectureE52697v2
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2023-03-01 | Improve wording                                      |
 | 0.1.3   | 2023-01-17 | Add locale, lang to front matter                     |
 | 0.1.2   | 2022-06-13 | Shell->bash, changes->history                        |
 | 0.1.1   | 2016-03-20 | version 1.5.0                                        |
