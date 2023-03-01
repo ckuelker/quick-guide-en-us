@@ -73,7 +73,7 @@ make ArchitectureE52697v2
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
-| 0.1.4   | 2023-03-01 | Improve wording                                      |
+| 0.1.4   | 2023-03-01 | Improve writing                                      |
 | 0.1.3   | 2023-01-17 | Add locale, lang to front matter                     |
 | 0.1.2   | 2022-06-13 | Shell->bash, changes->history                        |
 | 0.1.1   | 2016-03-20 | version 1.5.0                                        |
