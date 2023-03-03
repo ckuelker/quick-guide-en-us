@@ -1,8 +1,8 @@
 ---
 title: Iperf
 author: Christian Külker
-date: 2022-06-17
-version: 0.1.2
+date: 2023-03-03
+version: 0.1.3
 type: doc
 disclaimer: True
 toc: True
@@ -22,23 +22,23 @@ description:
 ---
 
 The [iperf] tool can be used to measure network performance. The current
-version is [iperf3]. [Iperf] is a cross platform tool for active measurements
-of the maximum achievable bandwidth on IP network protocols [TCP], [UDP] and
-[SCTP] with IPv4 and IPv6. [iperf3] is a new implementation from scratch, with
-the goal of a smaller, simpler code base, and a library version of the
-functionality that can be used in other programs.
+version is [iperf3]. Iperf is a cross-platform tool for active measurements of
+the maximum achievable bandwidth on the IP network protocols [TCP], [UDP] and
+[SCTP] with IPv4 and IPv6. iperf3 is a new implementation from scratch, aiming
+for a smaller, simpler code base and a library version of the functionality
+that can be used in other programs.
 
 ## Features
 
 TCP and SCTP            | UDP
 ----------------------- | ----------------------
-Bandwidth measurement   | creation of dedicated bandwidth streams
-Report MSS/MTU size     | measure package loss
-Observe MSS/MTU size    | measure delay jitter
-Support TCP window size | use multicast
+Bandwidth measurement   | Creation of dedicated bandwidth streams
+Report MSS/MTU size     | Measure package loss
+Observe MSS/MTU size    | Measure delay jitter
+Support TCP window size | Use multicast
 
-[iperf3] and specially [iperf3.1] has additional features compared to [iperf2].
-However the following features are not available:
+[iperf3] and especially [iperf3.1] have additional features compared to
+[iperf2]. The following features are not available:
 
 - -d/-r: Bidirectional testing
 - -I: Data transmitted from stdin
@@ -47,8 +47,7 @@ However the following features are not available:
 - -y: Report as a Comma-Separated Values
 - -C: Compatibility mode allows for use with older version of [iPerf]
 
-The [iperf2] has a nice brief [comparison table] which compares iperf2 and
-iperf3.
+The [iperf2] has a nice short [comparison table] comparing iperf2 and iperf3.
 
 ## Debian Versions
 
@@ -72,9 +71,9 @@ aptitude install iperf3
 
 ## Command Line Completion
 
-For command line completion `bash` can be used. If there is the file
-`/usr/share/bash-completion/completions/iperf`, most likely completion will
-work for `bash`.
+For command line completion, `bash` can be used. If the file
+`/usr/share/bash-completion/completions/iperf` is available, the `bash`
+completion will most likely work.
 
 ## Mailinglist
 
@@ -83,12 +82,12 @@ work for `bash`.
 
 ## Usage Of Iperf
 
-[iperf] is a client  and server application and used on two computers. One
-takes the role as server the other the role as client.  [iperf] then send
-packages over the network and measure the link or links in between the server
-and the client. Usually on would limit the link count between server and client
-to understand which link has what performance. Many operations are similar
-between [iperf2] and [iperf3].
+[iperf] is a client and server application and is used on two computers. One is
+the server and the other is the client. iperf then sends packets over the
+network and measures the connection(s) between the server and the client.
+Normally, one would limit the number of links between server and client to
+understand which link has what performance. Many operations are similar between
+[iperf2] and [iperf3].
 
 ### Simple Iperf2 Example
 
@@ -124,7 +123,7 @@ It can be calculated as follows:
 
 - `MSS = MTU - TCP + IP headers`
 - The `TCP + IP headers` are equal to 40 bytes.
-- The Maximum Transmission Unit (MTU) is the greatest amount of data that
+- The maximum transmission unit (MTU) is the greatest amount of data that
   can be transferred in a frame.
 
 Some default MTU sizes for different network topologies:
@@ -132,7 +131,7 @@ Some default MTU sizes for different network topologies:
 - Ethernet - 1500 bytes: used in a LAN
 - PPPoE - 1492 bytes: used on ADSL links
 
-Generally speaking, higher MTU (and MSS) brings higher bandwidth efficiency
+In general, higher MTU (and MSS) results in higher bandwidth efficiency.
 
 Server:
 
@@ -153,7 +152,7 @@ TCP window size: 16.0 KByte (default)
 [ 3] MSS size 1448 bytes (MTU 1500 bytes, ethernet)
 ```
 
-Here the MSS is not equal to `1500 - 40` but to `1500 - 40 - 12 (Timestamps
+Here the MSS is not equal to `1500 - 40`, but to `1500 - 40 - 12 (Timestamps
 option) = 1448`
 
 ### Simple Iperf3 Example
@@ -227,6 +226,7 @@ Connecting to host 192.168.168.32, port 5201
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-03-03 | Improve writing                                      |
 | 0.1.2   | 2022-06-17 | Shell->bash, add Bullseye version, Typo              |
 | 0.1.1   | 2021-06-06 | Add comparison table link, MSS example               |
 | 0.1.0   | 2021-06-05 | Initial release                                      |
