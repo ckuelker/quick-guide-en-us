@@ -1,8 +1,8 @@
 ---
 title: Creating Virtual Environments
 author: Christian Külker
-date: 2022-07-12
-version: 0.1.1
+date: 2023-03-04
+version: 0.1.2
 type: doc
 disclaimer: True
 toc: True
@@ -33,24 +33,24 @@ description: Creating virtual Python environments with venv and virtualenv
 
 ---
 
-The tool [virtualenv] uses the command-line path environment variable to
-create isolated **Python Virtual Environments**, much as [venv] does.
-Compared to **venv**, **virtualenv** provides additional functionality by
-supporting Python 2.7 and by providing convenient features for configuring,
-maintaining, duplicating, and troubleshooting the virtual environments.
+The [virtualenv] utility uses the command line path environment variable to
+create isolated **Python virtual environments**, similar to [venv].  Compared
+to **venv**, **virtualenv** provides additional functionality by supporting
+Python 2.7 and providing convenient features for configuring, maintaining,
+duplicating, and debugging the virtual environments.
 
 Python **Virtual Environments** allow Python packages to be installed in an
 isolated (local) location, rather than being installed globally.
 
-Currently, there are two common tools for creating Python virtual environments:
+There are currently two popular tools for creating Python virtual environments:
 
 * [venv] (Python 3.4+) is part of Python since Python 3.3
 * [virtualenv] (Python 2.7+ and Python 3.3+)
 
-See [Pipenv] on how to manage multiple virtual environments. The recommended
-tool **pyvenv** for creating virtual environments for Python 3.3 and 3.4 is
-deprecated in Python 3.6. The use of [venv] is from Python 3.5 recommended for
-creating virtual environments.
+See [Pipenv] to manage multiple virtual environments. The **pyvenv** virtual
+environment creation tool recommended for Python 3.3 and 3.4 is deprecated in
+Python 3.6. The use of [venv] is recommended for creating virtual environments
+in Python 3.5 and later.
 
 ## Basic Usage venv
 
@@ -111,12 +111,12 @@ find|wc -l
 ## Excursus On Perl Virtual Environments
 
 Virtual environments are well known in Perl. And there are basically two
-reasons why you would manage and use Perl virtual environments: (1) Some
-conflicting Perl modules. (2) A controlled environment. While I came across (2)
-more than once I actually never experienced (1) in the last 25 years. While I
-think it is possible, it seems seldom to be an issue as modules tend to upgrade
-in Perl quite smoothly. As my experience with Python is less long, I am
-wondering why virtual environments are suggested to be used so many times.
+reasons why you would want to manage and use virtual environments in Perl: (1)
+Some conflicting Perl modules. (2) A controlled environment. While I have
+encountered (2) more than once, I have never encountered (1) in the last 25
+years. While I think it is possible, it rarely seems to be an issue, as modules
+in Perl tend to upgrade quite smoothly. Since my experience with Python is less
+long, I wonder why virtual environments are suggested so often.
 
 | Scope                       | Python           | Perl                |
 | --------------------------- | ---------------- | ------------------- |
@@ -128,7 +128,8 @@ wondering why virtual environments are suggested to be used so many times.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
-| 0.1.0   | 2022-07-12 | History, shell->bash                                 |
+| 0.1.2   | 2023-03-04 | Improve writing                                      |
+| 0.1.1   | 2022-07-12 | History, shell->bash                                 |
 | 0.1.0   | 2020-05-16 | Initial release                                      |
 
 [venv]: https://docs.python.org/3/library/venv.html
