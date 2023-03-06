@@ -1,8 +1,8 @@
 ---
 title: Managing Dependencies With Pipenv
 author: Christian Külker
-date: 2022-07-13
-version: 0.1.3
+date: 2023-03-06 
+version: 0.1.4
 type: doc
 disclaimer: True
 toc: True
@@ -28,22 +28,21 @@ description: Managing Python dependencies virtually with pipenv
 
 ## Introduction
 
-Python is used for a many different purposes and how you want to manage your
-dependencies may change based on how you decide to publish the software. This
-document show some tools for different kind of software: applications and
-libraries.
+Python is used for many different purposes, and how you want to manage your
+dependencies may change depending on how you decide to publish the software.
+This document shows some tools for different types of software: applications
+and libraries.
 
 ## Managing Application Dependencies
 
-With some [caveats] `pipenv`, mentioned in the [Python Packaging Guide] (from
-which this section got its [inspirations]), is a tool to manage Python
-application dependencies (in opposite to Python libraries).
+With some [caveats], `pipenv`, mentioned in the [Python Packaging Guide] (from
+which this section got its [inspirations]), is a tool for managing the
+dependencies of Python applications (as opposed to Python libraries).
 
-**Pipenv** is a manager for dependencies of Python projects similar to `npm`
-(Node.js) which might be handy for development, but comes with all its
-disadvantages in a shared library environment: installing similar things per
-user per application all over again, leading to the waste of time and storage
-place.
+**Pipenv** is a dependency manager for Python projects, similar to `npm`
+(Node.js), which may be handy for development, but comes with all the drawbacks
+of a shared library environment: reinstalling similar things per user per
+application, wasting time and disk space.
 
 ### Installing Pipenv
 
@@ -79,8 +78,8 @@ warning, use --no-warn-script-location.
 Successfully installed pipenv-2018.11.26 virtualenv-clone-0.5.4
 ```
 
-This installs "successfully" `pipenv`. Interesting is what kind of definition
-of "successfully" is used in this context.
+This will "successfully" install `pipenv`. What is interesting is what kind of
+definition of "successful" is used in this context.
 
 ```bash
 pipenv
@@ -202,14 +201,14 @@ And `Pipfile.lock` (`sha256` hashes are truncated in this output!)
 }
 ```
 
-Where the dependencies to "`certifi`", "`chardet`", "`idna`", "`requests`" and
-"`urllib3`" come from is not quite clear. I might be wrong, but it seems a
-waste of resources to me.
+Where the dependencies on `certifi`, `chardet`, `idna`, `requests` and
+`urllib3` come from is not entirely clear. I could be wrong, but it seems like
+a waste of resources.
 
-To better test this out your example project should have some dependencies. The
-project above just has `setuptools`, `pkg_resources`, `pip` and  `wheel`. To
-test this create a file `main.py` with you dependency: like `mydep`. Here some
-pseudo code.
+To better test this, your sample project should have some dependencies. The
+project above has only `setuptools`, `pkg_resources`, `pip` and `wheel`. To
+test this, create a `main.py` file with your dependencies: like `mydep`. Here
+is some pseudo code.
 
 ```python
 import mydep
@@ -229,6 +228,7 @@ pipenv run python main.py
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2023-03-06 | Improve writing                                      |
 | 0.1.3   | 2022-07-13 | Shell->bash, move history, formatting                |
 | 0.1.2   | 2022-05-10 | Fix json syntax highlighting                         |
 | 0.1.1   | 2022-05-09 | PDF: False (no ⠼ (U+283C), 🐍 (U+1F40D) in font      |
