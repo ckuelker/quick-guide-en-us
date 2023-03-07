@@ -1,8 +1,8 @@
 ---
 title: Managing Dependencies With Poetry
 author: Christian Külker
-date: 2022-05-25
-version: 0.1.3
+date: 2023-03-07
+version: 0.1.4
 type: doc
 disclaimer: True
 toc: True
@@ -14,27 +14,27 @@ commands:
 - virtualenv
 - pipenv
 tags:
-- Managing-Dependencies-With-Poetry
-description: Managing-Dependencies-With-Poetry
+- Managing dependencies with poetry
+description: Managing dependencies with poetry
 
 ---
 
-As many other fancy tools [poetry] is used to circumvent the well maintained
-package manager of your distribution and this is called "Dependency Management
-for Python" or as [python-poetry.org] describes: "Python packaging and
+Like many other fancy tools, [poetry] is used to bypass your distribution's
+well-maintained package manager, and it is called "Dependency Management for
+Python" or as [python-poetry.org] describes it: "Python packaging and
 dependency management made easy".
 
-Unlike [pipenv], [poetry] is not in Debian, so it has to be downloaded from an
-unsupervised location of the internet: [github] or [pypi].
+Unlike [pipenv], [poetry] is not included in Debian, so it must be downloaded
+from an unsupervised location on the Internet: [github] or [pypi].
 
 ## Installation
 
-We leave out the insecure curl method. In the [github] README you can read the
+We omit the insecure curl method. In the [github] README you can read the
 warning "Be aware, however, that it will also install poetry's dependencies
-which might cause conflicts. "How can that be that a dependency manager needs
-to be afraid of conflicting dependencies? Isn't that the reason to use it in
-the first place. For me this reads more like prose not poetry. Welcome to the
-new era of package "managers"!
+which may cause conflicts. "How is it that a dependency manager has to be
+afraid of conflicting dependencies? Isn't that the reason for using it in the
+first place? To me, this reads like prose, not poetry. Welcome to the new era
+of package "managers"!
 
 ```bash
 $ python3 -m pip install --user poetry
@@ -49,10 +49,10 @@ poetry-1.0.5 ptyprocess-0.6.0 pycparser-2.20 pylev-1.3.0
 
 ## One File To Bind Them All
 
-The tool [poetry] handle dependency installation, building and packaging. It
-only needs one file: the [PEP518] `pyproject.toml` and replaces `setup.py`,
-`requirements.txt`, `setup.cfg`, `MANIFEST.in` and `Pipfile`. Note, that not
-all files are needed by other dependency managers.
+The [poetry] tool takes care of installing, building, and packaging
+dependencies. It requires only one file: the [PEP518] `pyproject.toml` and
+replaces `setup.py`, `requirements.txt`, `setup.cfg`, `MANIFEST.in` and
+`pipfile`. Note that not all files are needed by other dependency managers.
 
 ```toml
 [tool.poetry]
@@ -98,7 +98,6 @@ Resolving dependencies... (21.7s)
 
 Writing lock file
 
-
 Package operations: 9 installs, 5 updates, 0 removals
 
   - Updating zipp (3.1.0 -> 1.2.0)
@@ -117,8 +116,8 @@ Package operations: 9 installs, 5 updates, 0 removals
   - Installing toml (0.9.6)
 ```
 
-This creates a big `poetry.lock` file. Unlike working with `setup.py` working
-with [test.pypi.org] is not as straight forward.
+This creates a large `poetry.lock` file. Unlike working with `setup.py`,
+working with [test.pypi.org] is not so straightforward.
 
 ```bash
 $ poetry build
@@ -144,7 +143,7 @@ dist
 ├── example-pkg-0.0.1.tar.gz
 ```
 
-However this do not conform to the [test.pypi.org] format:
+However, these do not conform to the [test.pypi.org] format:
 
 ```bash
 $ tree
@@ -170,8 +169,8 @@ dist
 └── example-pkg_ckuelker-0.0.1.tar.gz
 ```
 
-If your project has a unique name, testing with [poetry] works, if not
-renaming is the way to go: this disqualifies [poetry] to use in package
+If your project has a unique name, testing with [poetry] works, if not,
+renaming is the way to go: this disqualifies [poetry] for use in package
 tutorials.
 
 An alternative is to create a symbolic link.
@@ -180,25 +179,25 @@ An alternative is to create a symbolic link.
 ln -s example_pkg example_pkg_YOUR_USERNAME
 ```
 
-On how to install the package and on how to upload this to [test.pypi.org]
-see [packaging-python-projects].
+To install the package and upload it to [test.pypi.org], see
+[packaging-python-projects].
 
 ## Considerations
 
 Reading the reasoning behind [poetry] gives the impression of a **not invented
 here** project: about [pipenv] "I do not like the CLI it provides, or some of
 the decisions made, and I think we can make a better and more intuitive one."
-Intuitiveness is the best for a software one writes by it oneself. Writing a
-tool because dependency management is "convoluted"  and "hard to understand"
-for newcomers is a non argument. Dependencies management is always difficult to
-understand. The project claims "[...] there is no reliable tool to properly
-resolve dependencies in Python". I doubt it and my answer: there is Debian.
-Usually what I expect is: Feature X is missing, that is why I wrote software Y.
-None of this seem to be a reason for this project.
+Intuitiveness is best for software you write yourself. Writing a tool because
+dependency management is "convoluted" and "hard to understand" for newcomers is
+a non-argument. Dependency management is always hard to understand. The project
+claims "[...] there is no reliable tool for properly resolving dependencies in
+Python". I doubt this and my answer is: there is Debian. Usually what I expect
+is: Feature X is missing, so I wrote software Y. None of this seems to be a
+reason for this project.
 
-However, the project is correct when pointing on problems of
-`pipenv installing oslo.utils==1.4.0`. Meanwhile also [poetry] has
-its problems (and has bad error messages).
+However, the project is correct in pointing out problems with `pipenv
+installing oslo.utils==1.4.0`. Meanwhile, [poetry] also has its problems (and
+bad error messages).
 
 ```bash
 poetry add oslo.utils=1.4.0
@@ -207,9 +206,9 @@ poetry add oslo.utils=1.4.0
 Invalid character '\n' in string at line 11 col 81
 ```
 
-Which is not related to `oslo`, just a " (quote character)  was missing in line
-11 of `pyproject.toml`. Who would have thought that? Actually it added `oslo`
-fine with the " (quote character) fixed:
+Which has nothing to do with `oslo`, only a " (quotation mark) was missing in
+line 11 of `pyproject.toml`. Who would have guessed that? Actually, it added
+`oslo` just fine with the " (quote character) fixed:
 
 ```bash
 poetry add oslo.utils=1.4.0
@@ -225,20 +224,20 @@ Package operations: 0 installs, 1 update, 0 removals
   - Updating oslo.i18n (4.0.1 -> 2.1.0)
 ```
 
-Not sure if this is an update, though. I would have expected `2.1.0 -> 4.0.1`.
+Not sure if this is an update though. I would have expected `2.1.0 -> 4.0.1`.
 Looks more like a downgrade ...
 
-But the colorful console characters are looking very cheerfully.
+But the colorful console characters look very cheerfully.
 
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2023-03-07 | Improve writing                                      |
 | 0.1.3   | 2022-05-25 | Change comments, replace shell with bash             |
 | 0.1.2   | 2022-05-09 | Fix missing quotes in toml section                   |
 | 0.1.1   | 2020-09-05 | Fix heading levels, fix and add more links           |
 | 0.1.0   | 2020-05-18 | Initial release                                      |
-
 
 [documenation]: https://python-poetry.org/
 [github]: https://github.com/python-poetry/poetry
