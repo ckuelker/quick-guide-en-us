@@ -3,8 +3,8 @@ linkTitle: NUMA
 title: Non-Uniform Memory Access
 type: doc
 author: Christian Külker
-date: 2022-05-17
-version: 0.1.2
+date: 2023-03-10
+version: 0.1.3
 disclaimer: True
 toc: True
 keywords:
@@ -35,15 +35,14 @@ description: Usage of Non-Uniform Memory Access
 
 ---
 
-The __Non-Uniform Memory Access__ ([NUMA]) is a design specification of some
-modern multiprocessing architectures that are characterized by the fact that
-not all memory can be access equally from all CPUs in contrast to __Uniform
-Memory Access__ ([UMA]). Usually the is due to the fact that each CPU has some
-memory attached to it. That do not necessarily mean that this memory can not be
-access by processes from other CPUs, but accessing the memory has some
-performance penalty. As creating a [NUMA] architecture is cheaper but still
-performs well if the programs is carefully designed, this design is quite
-popular in High Performance Computing ([HPC]).
+Non-uniform memory access ([NUMA]) is a design specification of some modern
+multiprocessing architectures that, unlike uniform memory access ([UMA]), does
+not allow all CPUs to access all memory equally. Usually this is due to the
+fact that each CPU has some memory attached to it. This does not necessarily
+mean that this memory cannot be accessed by processes from other CPUs, but
+accessing the memory has some performance penalty. Because building a [NUMA]
+architecture is cheaper and still performs well if the programs are carefully
+designed, this design is quite popular in high performance computing ([HPC]).
 
 <!--
 ~~~
@@ -85,23 +84,11 @@ UMA:                       NUMA:
 
 ![NUMA](numa-v0.1.0.png)
 
-
-
-## History
-
-| Version | Date       | Notes                                                |
-| ------- | ---------- | ---------------------------------------------------- |
-| 0.1.2   | 2022-05-17 | Change shell blocks to bash block, history, dots     |
-|         |            | description, Debian helper tools table, +lscpu       |
-|         |            | Update for Debian 11 Bullseye                        |
-| 0.1.1   | 2020-05-01 | Update for Debian 10 Buster                          |
-| 0.1.0   | 2016-03-24 | Initial release                                      |
-
 ## Installing
 
-The content of installation varies. It is recommended to either
-use a new distribution or even compile **numactl** from source,
-as this also includes the `numademo` command.
+The content of the installation varies. It is recommended to either use a new
+distribution or even compile __numactl__ from source, as this includes the
+`numademo` command.
 
 ## Installing Numa Helper Tools For Debian
 
@@ -150,10 +137,9 @@ NUMA node(s):                    1
 NUMA node0 CPU(s):               0-11
 ```
 
-Standard hardware not used for [HPC] usually only have one [NUMA] node. Typical
-`X86` [NUMA] hardware has 2 or more CPUs and 2 or more memory banks, one
-attached to each CPU.
-
+Standard hardware not used for [HPC] typically has only one [NUMA] node.
+Typical `X86` [NUMA] hardware has 2 or more CPUs and 2 or more memory banks,
+one attached to each CPU.
 
 ## Compiling And Installing numactl From Source
 
@@ -197,8 +183,8 @@ numastat
 
 ### numactl
 
-The `numactl` command controls the [NUMA] policy for processes or shared memory.
-
+The `numactl` command controls the [NUMA] policy for processes or shared
+memory.
 
 Example for one CPU:
 
@@ -223,8 +209,8 @@ Example for one CPU:
 ### memhog
 
 The `memhog` command allocates memory with a policy for testing.  For some
-reasons the Debian 10 Buster version do not include a man page.  However there
-is a [page](http://man7.org/linux/man-pages/man8/memhog.8.html) online.
+reason, the Debian 10 Buster release does not include a man page.  However,
+there is a [page] online (http://man7.org/linux/man-pages/man8/memhog.8.html).
 
 Allocate a 1G region, (implicit) default policy, repeat test 4 times
 
@@ -238,8 +224,8 @@ memhog -r4 1G
 
 ### numademo
 
-The command `numademo` is not available via Debian package, it is available
-via `numctl` source code.
+The `numademo` command is not available as a Debian package, it is available as
+`numctl` source code.
 
 On an old laptop from 2008 with Debian 8.11 Jessie (used with a compiled
 `numademo` executable from `numactl` source from before 2020, maybe in 2016):
@@ -254,9 +240,8 @@ memory on node 0 memset                   Avg 2303.58 MB/s Max 2306.69 MB/s ...
 [...]
 ```
 
-Executing this test on Debian 11 Bullseye on a desktop from 2013 or a laptop
-from 2015 or on the same laptop from 2008 (Debian 8.11 Jessie) the newer
-version gives:
+Running this test on Debian 11 Bullseye on a 2013 desktop or 2015 laptop, or on
+the same 2008 laptop (Debian 8.11 Jessie) the newer version gives:
 
 ```bash
 /numademo -S 100M
@@ -267,8 +252,8 @@ It seems that the minimum requirement for the test changed.
 
 ## Numatop
 
-This tool require a supported CPU. If executed on non supported CPU
-it will state that:
+This utility requires a supported CPU. If executed on an unsupported CPU, it
+will indicate that:
 
 ```bash
 numatop -s low -l 2 -f /tmp/warn.log
@@ -280,6 +265,17 @@ CPU is not supported!
 * [NUMA - hpc wiki info](https://hpc-wiki.info/hpc/NUMA)
 * [NUMA - wikipedia](https://en.wikipedia.org/wiki/Non-uniform_memory_access)
 * [github](https://github.com/numactl/numactl)
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2023-03-10 | Improve writing, move history                        |
+| 0.1.2   | 2022-05-17 | Change shell blocks to bash block, history, dots     |
+|         |            | description, Debian helper tools table, +lscpu       |
+|         |            | Update for Debian 11 Bullseye                        |
+| 0.1.1   | 2020-05-01 | Update for Debian 10 Buster                          |
+| 0.1.0   | 2016-03-24 | Initial release                                      |
 
 
 [HPC]: https://en.wikipedia.org/wiki/High-performance_computing
