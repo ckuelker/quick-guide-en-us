@@ -1,8 +1,8 @@
 ---
 title: Sparse Files
 author: Christian Külker
-date: 2022-05-20
-version: 0.1.1
+date: 2023-03-10
+version: 0.1.2
 type: doc
 disclaimer: True
 toc: True
@@ -26,55 +26,54 @@ description: Sparse files
 
 ---
 
-__Sparse files__ are files that allocate data to disk space  and summarize
-empty space (null bytes blocks) in the meta data, making the use of the file
-system storage more efficiently.  When meta data space is allocated to data,
-the data is written to the file system and the count of empty space is reduced.
-In this manner reported file size and actual used disk space differs for sparse
-files that contain empty space. The size of the file gets its maximum on the
-file system when there is no empty data. Therefore sparse files makes only
-sense for information that has a lot of empty data or at least a lot of empty
-data in the beginning. It makes no sense to create sparse file to be filled
-completely with data.
+Sparse files__ are files that allocate data to disk space and aggregate empty
+space (blocks of zero bytes) in the metadata to make more efficient use of file
+system space.  When metadata space is allocated to data, the data is written to
+the file system and the amount of empty space is reduced.  In this way, the
+reported file size and the actual disk space used differ for sparse files that
+contain empty space. The size of the file on the file system reaches its
+maximum when there is no empty data. Therefore, sparse files only make sense
+for information that has a lot of empty data, or at least a lot of empty data
+in the beginning. It makes no sense to create a sparse file to be completely
+filled with data.
 
-The ability to creates sparse files is dependent on the file system. A peculiar
-feature of sparse files is the discrepancy with reported size (__apparent
-size__) and __actual size__ of used blocks on the storage media, which makes
-the use of some command not intuitive. This document shows how to create sparse
-file with different tools as well as measure them.
+The ability to create sparse files depends on the file system. A peculiarity of
+sparse files is the discrepancy between the reported size (__apparent size__)
+and the __actual size__ of used blocks on the storage media, which makes the
+use of some commands not intuitive. This document shows how to create sparse
+files using various tools and how to measure them.
 
-Reading sparse file will convert transparently to the application empty meta
-data to empty blocks filled with zero bytes. This is the opposite when writing.
-On Linux most modern file systems support sparse files. That includes NTFS
-but not `HFS+`.
+When reading a sparse file, empty metadata is transparently converted to empty
+blocks filled with zero bytes. Writing does the opposite.  On Linux, most
+modern file systems support sparse files. This includes NTFS, but not `HFS+`.
 
-A very common usage for sparse files are disk images. A disk image is a large
-file containing data. Often the data is a formatted file system. Usually new
-file systems are mostly empty, therefore using sparse files for this purpose
-safes a large amount of real disk space until the disk image file system is
-filled with non empty data. However it has to be noted that sparse files are
-not a miracle. If a sparse file is created that is larger than the actual free
-space of a disk, which is possible, it will grow up to the remaining empty disk
-space, but not beyond. Of course planning ahead is important as running a file
-system on disk or inside a sparse file that hits the boundaries of free space
-is a nightmare as the kind of corruption that may occur is not predictable.
+A very common use for sparse files is disk images. A disk image is a large file
+containing data. The data is often a formatted file system. Usually new file
+systems are mostly empty, so using sparse files for this purpose saves a lot of
+real disk space until the disk image file system is filled with non-empty data.
+It should be noted, however, that sparse files are no miracle. If a sparse file
+is created that is larger than the actual free space of a disk, which is
+possible, it will grow up to the remaining free space, but not beyond. Of
+course, planning ahead is important, as running a file system on a disk or
+within a sparse file that hits the limits of free space is a nightmare, as the
+type of corruption that can occur is unpredictable.
 
-While the creation of a sparse file is very efficient, when used as disk image
-a sparse file can become fragmented and less efficient. Filling up file systems
-inside a sparse file can have unexpected effects. Of course some tools will not
-show that a certain file is a sparse file. And when copied or moved around the
-tool to do the movement or copy need to be capable of handling sparse files.
-If a too is used that can not copy a sparse file, the empty data represented in
-the meta data of the file system can be omitted and the result will be a
-corrupted file or a file which content is not usable any more. In a minor
-severe case a sparse file would be copied to a non sparse file with lot of
-empty space allocated to the disk, which would revert the usefulness of using
-sparse files. That might happen when using sparse file aware tool to copy a
-sparse file from a sparse file aware file system to a non sparse file aware
-file system.
+While creating a sparse file is very efficient, when used as a disk image, a
+sparse file can become fragmented and less efficient. Filling file systems
+inside a sparse file can have unexpected effects. Of course, some tools will
+not indicate that a given file is a sparse file. And when copying or moving,
+the tool to do the moving or copying needs to be able to handle sparse files.
+If a tool is used that cannot copy a sparse file, the empty data represented in
+the metadata of the file system may be omitted, and the result will be a
+corrupted file or a file whose contents are no longer usable. In a less severe
+case, a sparse file would be copied to a nonsparse file with a lot of empty
+space allocated to the disk, which would negate the usefulness of using sparse
+files. This can happen when using a sparse file aware tool to copy a sparse
+file from a sparse file aware file system to a non sparse file aware file
+system.
 
 The following file systems for Linux (according to Wikipedia [File Systems])
-might support sparse files:
+may support sparse files:
 
 - BeeGFS
 - APFS
@@ -103,7 +102,7 @@ might support sparse files:
 
 ## Making
 
-Each of the below two commands create a 128MB sparse file called `file.image`.
+Each of the two commands below creates a 128MB sparse file called `file.image`.
 
 ```bash
 truncate -s 128M file.image
@@ -146,7 +145,7 @@ Some `du` use `--apparent-size` instead of `--apparent`.
 
 ### To
 
-Converting files to sparse files works only on supported file systems.
+Converting files to sparse files only works on supported file systems.
 
 ```bash
   # make a non sparse file
@@ -169,10 +168,10 @@ cp sparse.image non-sparse.image --sparse=never
 
 ## Copying
 
-Usually `cp` can detect a sparse file. No option is needed. However if one want
-to be explicit the `--sparse` option can be used. This can also be used convert
-a non sparse file to a sparse file while copying. When using `rsync` the `-S`
-or `--sparse` option need to be set.
+Usually `cp` can recognize a sparse file. No option is needed. However, if you
+want to be explicit, the `--sparse` option can be used. This can also be used
+to convert a non-sparse file into a sparse file during copying. When using
+`rsync` the `-S` or `--sparse` option must be set.
 
 ```bash
 cp old.image new.image # sparseness of files is the same
@@ -182,12 +181,12 @@ rsync -S old.image new.image
 
 ## Archiving
 
-Per default `tar` uses non-sparse files. And `tar` converts sparse file to
-non-sparse files! To use `tar` and keep the sparse feature of files use the
-`-S` option.
+By default, `tar` uses non-sparse files. And `tar` converts sparse files to
+non-sparse files! To use `tar` and keep the sparse feature of the files, use
+the `-S` option.
 
-This example used the sparse file `file.image` that contains a `XFS` file
-system that uses 3.6M of meta data (that is of course not empty and therefore
+This example used the sparse file `file.image` which contains an `XFS` file
+system that uses 3.6M of metadata (which is of course not empty and therefore
 not sparse).
 
 ```bash
@@ -232,7 +231,7 @@ du -h file.image --apparent; du -h file.image
 ## Enlarge
 
 With `dd` it is possible to grow an existing sparse file. Even if it contains a
-file system.
+filesystem.
 
 ```bash
 dd if=/dev/zero of=file.image bs=1 count=0 seek=1G
@@ -243,8 +242,7 @@ du -h file.image --apparent; du -h file.image
 
 ## Mounting A File System
 
-There is no difference of mounting file systems of non-sparse files and sparse
-files.
+There is no difference between mounting non-sparse and sparse file systems.
 
 ```bash
 mkdir mountpoint
@@ -255,15 +253,14 @@ df -h|grep mountpoint
 
 ## Resize A File System
 
-Resizing a file system is a delicate matter. As a matter of fact the way to
-resize a file system depends on the file system and its tools. Just to see how
-it is done in this section should not let you assume that it is done similar to
-a different file system. Also be warned, resizing a used file system __is
-risky__ and data loss may occur. Better make a validated backup before trying
-to resize a partition.
+Resizing a file system is a tricky business. In fact, the way to resize a
+filesystem depends on the filesystem and its tools. Just to see how it is done
+in this section should not make you assume it is done similarly on another file
+system. Also be warned, resizing a used filesystem is __risky__ and data loss
+can occur. Better make a validated backup before trying to resize a partition.
 
 While a sparse file containing `riserfs` can (and should?) be resized while it
-is __not__ mounted. A `XFS` can only be resized while it __is__ mounted.
+is __not__ mounted. An `XFS` can only be resized while it is __mounted__.
 
 | Action             |  XFS        | ReiserFS    |
 | ------------------ | ----------- | ----------- |
@@ -273,7 +270,7 @@ is __not__ mounted. A `XFS` can only be resized while it __is__ mounted.
 | grow file system   | mounted     | not mounted |
 
 
-The command to grow a file system depends on the file system. For `xfs` it is
+The command to grow a filesystem depends on the filesystem. For `xfs` it is
 `xfs_growfs` for `reiserfs` it is `resize_reiserfs`.
 
 ```bash
@@ -361,6 +358,7 @@ du -h file.image;du --apparent -h file.image
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-03-10 | Improve writing                                      |
 | 0.1.1   | 2022-05-20 | Improve shell blocks, typos                          |
 | 0.1.0   | 2022-03-21 | Initial release                                      |
 
