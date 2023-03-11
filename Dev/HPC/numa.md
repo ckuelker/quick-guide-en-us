@@ -3,8 +3,8 @@ linkTitle: NUMA
 title: Non-Uniform Memory Access
 type: doc
 author: Christian Külker
-date: 2023-03-10
-version: 0.1.3
+date: 2023-03-11
+version: 0.1.4
 disclaimer: True
 toc: True
 keywords:
@@ -35,14 +35,19 @@ description: Usage of Non-Uniform Memory Access
 
 ---
 
-Non-uniform memory access ([NUMA]) is a design specification of some modern
-multiprocessing architectures that, unlike uniform memory access ([UMA]), does
-not allow all CPUs to access all memory equally. Usually this is due to the
-fact that each CPU has some memory attached to it. This does not necessarily
-mean that this memory cannot be accessed by processes from other CPUs, but
-accessing the memory has some performance penalty. Because building a [NUMA]
-architecture is cheaper and still performs well if the programs are carefully
-designed, this design is quite popular in high performance computing ([HPC]).
+__Non-uniform memory access__ ([NUMA]) is a design specification of some modern
+multiprocessing architectures that, unlike __uniform memory access__ ([UMA]),
+does not allow all CPUs to access all memory equally. Usually this is due to
+the fact that each CPU has some memory attached to it. This does not
+necessarily mean that this memory cannot be accessed by processes from other
+CPUs, but accessing the memory has some performance penalty. Because building a
+[NUMA] architecture is cheaper and still performs well if the programs are
+carefully designed, this design is quite popular in high performance computing
+([HPC]).
+
+The Linux 2.5 kernel started with basic NUMA support, which was improved in
+3.8. Later, in 3.13, NUMA-related performance enhancements were added, such as
+_memory pages_ shared between processes, _huge pages_, and `sysctl` support.
 
 <!--
 ~~~
@@ -80,9 +85,9 @@ UMA:                       NUMA:
 ~~~
 -->
 
-![UMA](uma-v0.1.0.png)
+![Uniform memory access](uma-v0.1.0.png)
 
-![NUMA](numa-v0.1.0.png)
+![Non-uniform memory access](numa-v0.1.0.png)
 
 ## Installing
 
@@ -90,7 +95,7 @@ The content of the installation varies. It is recommended to either use a new
 distribution or even compile __numactl__ from source, as this includes the
 `numademo` command.
 
-## Installing Numa Helper Tools For Debian
+## Installing NUMA Helper Tools For Debian
 
 | Package      | Stretch 9.12    | Buster 10      | Bullseye 11      |
 | -------------|---------------- | -------------- | ---------------- |
@@ -99,6 +104,7 @@ distribution or even compile __numactl__ from source, as this includes the
 | numatop      | 1.0.4-3         | 2.1-2          | 2.1-4            |
 | util-linux   | 2.29.2-1+deb9u1 | 2.33.1-0.1     | 2.36.1-8+deb11u1 |
 
+Tools and their package or source:
 
 | Command      | Package    | Source     |
 | ------------ | ---------- | ---------- |
@@ -111,12 +117,11 @@ distribution or even compile __numactl__ from source, as this includes the
 | numatop      | numatop    | numatop    |
 | numad        | numad      | numad      |
 
-
 - `numademo` is part of `numactl` but not packaged
 
 ## lscpu
 
-The tool __lscpu__ can be used to understand the number of [NUMA] nodes.
+The tool `lscpu` can be used to understand the number of [NUMA] nodes.
 
 ```bash
   # Laptop 2008
@@ -138,7 +143,7 @@ NUMA node0 CPU(s):               0-11
 ```
 
 Standard hardware not used for [HPC] typically has only one [NUMA] node.
-Typical `X86` [NUMA] hardware has 2 or more CPUs and 2 or more memory banks,
+Typical __X86__ [NUMA] hardware has 2 or more CPUs and 2 or more memory banks,
 one attached to each CPU.
 
 ## Compiling And Installing numactl From Source
@@ -157,11 +162,13 @@ make install
 
 ### migratepages
 
-The man pages says: "migratepages  moves  the  physical  location of a
-processes pages without any changes of the virtual address space of the
-process. Moving the pages allows one to change the distances of a process to
-its memory. Performance may be optimized by moving a processes pages to the
-node where it is executing."
+The man pages says:
+
+> _"migratepages  moves  the  physical  location of a processes pages without
+> any changes of the virtual address space of the process. Moving the pages
+> allows one to change the distances of a process to its memory. Performance
+> may be optimized by moving a processes pages to the node where it is
+> executing."_
 
 ### numastat
 
@@ -208,8 +215,8 @@ Example for one CPU:
 
 ### memhog
 
-The `memhog` command allocates memory with a policy for testing.  For some
-reason, the Debian 10 Buster release does not include a man page.  However,
+The `memhog` command allocates memory with a policy for testing. For some
+reason, the Debian 10 Buster release does not include a man page. However,
 there is a [page] online (http://man7.org/linux/man-pages/man8/memhog.8.html).
 
 Allocate a 1G region, (implicit) default policy, repeat test 4 times
@@ -224,8 +231,8 @@ memhog -r4 1G
 
 ### numademo
 
-The `numademo` command is not available as a Debian package, it is available as
-`numctl` source code.
+The `numademo` command is __not__ available as a Debian package, it is
+available as `numctl` source code.
 
 On an old laptop from 2008 with Debian 8.11 Jessie (used with a compiled
 `numademo` executable from `numactl` source from before 2020, maybe in 2016):
@@ -270,13 +277,13 @@ CPU is not supported!
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2023-03-11 | Linux note, minor improvements in typeface           |
 | 0.1.3   | 2023-03-10 | Improve writing, move history                        |
 | 0.1.2   | 2022-05-17 | Change shell blocks to bash block, history, dots     |
 |         |            | description, Debian helper tools table, +lscpu       |
 |         |            | Update for Debian 11 Bullseye                        |
 | 0.1.1   | 2020-05-01 | Update for Debian 10 Buster                          |
 | 0.1.0   | 2016-03-24 | Initial release                                      |
-
 
 [HPC]: https://en.wikipedia.org/wiki/High-performance_computing
 [NUMA]: https://en.wikipedia.org/wiki/Non-uniform_memory_access
