@@ -1,8 +1,8 @@
 ---
 title: Goaccess
 author: Christian Külker
-date: 2022-06-28
-version: 0.1.1
+date: 2023-03-14
+version: 0.1.2
 type: doc
 disclaimer: True
 toc: True
@@ -24,10 +24,10 @@ report.
 
 - MIT license
 - Fast, real-time, millisecond/second updates
-- written in C
+- Written in C
 - Only `ncurses` as a dependency
-- Many web log formats (Apache, Nginx, Amazon S3, Elastic Load Balancing,
-  CloudFront, Caddy, for the latest version. A bit less for Debian Buster)
+- Many weblog formats (Apache, Nginx, Amazon S3, Elastic Load Balancing,
+  CloudFront, Caddy, for the latest version. Somewhat less for Debian Buster)
 - Beautiful terminal
 
 ## Installation
@@ -38,11 +38,23 @@ aptitude install goaccess
 
 ## Command Line Usage
 
-The manual page gives a lot of command line options. A simple way to use it is
-the command line mode that just uses the log file as a parameter.
+The manual page gives a lot of command line options. An easy way to use it is
+the command line mode, which only uses the log file as a parameter. Preferably
+this should be run within `screen` or similar to keep it running even if the
+ssh connection is lost. Restarting is not a problem. Configuration can be done
+(a) via configuration file and command line option _or_ (b) via interactive
+setup.
 
-Preferable this should be run inside `screen` or similar to maintain running,
-even if the ssh connection drops. A restart is not a problem.
+__(a)__
+
+```bash
+echo 'time-format %T' >> /etc/goaccess.conf
+echo 'date-format %d/%b/%Y' >> /etc/goaccess.conf
+echo 'log-format %h %^[%d:%t %^] "%r" %s %b "%R" "%u"' >> /etc/goaccess.conf
+goaccess --log-format=COMBINED access.log
+```
+
+__(b)__
 
 
 ```bash
@@ -126,27 +138,27 @@ cd TEST
 goaccess /var/log/nginx/access.log -o report.html --log-format=COMBINED
 ```
 
-This will generate the file `report.hml`. View this with you browser or
-create this in a directory served by the web server.
-
-For Debian 10 Buster this will be created with missing missing Unicode
-characters under Firefox. Other browsers display them.
+This will create the `report.hml` file. View it with your browser or create it
+in a directory served by the web server. For Debian 10 Buster this will be
+created with missing Unicode characters in Firefox. Other browsers will display
+them.
 
 ## Real Time HTML Report Usage
 
-This is just a short test and has some flaws that need to be addressed.
+This section, using the Real-Time HTML Reporting feature, was just a quick test
+and showed some bugs that would need to be fixed.
 
 ```
 goaccess /var/log/nginx/access.log -o /web/server/root/report.html \
 --log-format=COMBINED --real-time-html
 ```
 
-The above command will generate a page under the web server root as well opens
-a socked for the update. A short test under Debian 10 Buster reveals some
-problems. The main problem is that the page is not displayed with Firefox or
-Chromium. Chromium complained about insecure scripts. After waving, the page
-was displayed. However as permanent solution this would not be acceptable.
-Firefox received the page with code 200 but failed to load the `favicon.ico`
+The above command will generate a page under the web server root as well as
+open a socked for the update. A quick test on Debian 10 Buster shows some
+problems. The main problem is that the page does not display with Firefox or
+Chromium. Chromium complains about insecure scripts. After waving the page was
+displayed. However, this would not be acceptable as a permanent solution.
+Firefox received the page with code 200, but failed to load the `favicon.ico`
 and three `fontawesome` web fonts.
 
 ## Links
@@ -160,7 +172,7 @@ and three `fontawesome` web fonts.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-03-14 | Improve writing, add command line example            |
 | 0.1.1   | 2022-06-28 | Grammar, formatting, minor improvements, shell->bash |
 | 0.1.0   | 2021-05-22 | Initial release                                      |
-
 
