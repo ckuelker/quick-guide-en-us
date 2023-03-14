@@ -2,8 +2,8 @@
 title: VASP Benchmark
 linkTitle: VASP
 author: Christian Külker
-date: 2022-06-14
-version: 0.1.3
+date: 2023-03-14
+version: 0.1.4
 type: doc
 disclaimer: True
 toc: True
@@ -25,25 +25,17 @@ description: Vienna Ab-initio Simulation Package
 ---
 
 **VASP** stands for **Vienna Ab-initio Simulation Package** and is a code
-written in FORTRAN 90 with MPI support that performs **quantum-mechanical
-molecular dynamics** (MD). This benchmark requires low latency networks to
+written in FORTRAN 90 with MPI support that performs **quantum mechanical
+molecular dynamics** (MD). This benchmark requires low-latency networks to
 scale (Infiband over GbE). A free software stack
-(Open64/MVAPICH2/ACML/ScaLAPACK) performs comparably to the Intel stack.
-
-## History
-
-| Version | Date       | Notes                                                |
-| ------- | ---------- | ---------------------------------------------------- |
-| 0.1.3   | 2022-06-14 | Shell->bash, changes->history, typos                 |
-| 0.1.2   | 2020-12-27 | Improve link section, line length                    |
-| 0.1.1   | 2020-05-03 | Typos                                                |
-| 0.1.0   | 2016-08-27 | Initial release                                      |
+(Open64/MVAPICH2/ACML/ScaLAPACK) performs well, comparable to the Intel stack.
+For now, however, the examples given here are done with proprietary software.
 
 ## VASP on Bright Cluster Manager
 
 ### First Time Preparation
 
-As root
+As root:
 
 ```bash
 cd /root/ckuelker/bm/bin
@@ -56,6 +48,8 @@ tar xvzf vasp.tar.gz
 mv vasp vasp-007
 chown -R hpc:hpc vasp-007
 ```
+
+The `speedup` script sets the frequency of all CPU cores on each cluster node.
 
 ### Before Every Run
 
@@ -83,11 +77,11 @@ cd /home/hpc/bm-vasp/src/Benchmarks/vasp-007
 ./run.sh
 ```
 
-Eventually edit `run.sh` and change core number to be used.
+Eventually edit `run.sh` and change the core number to be used.
 
 ### Optimization
 
-Optimization (changing compiler flags) in the make files:
+Optimization (changing compiler flags) in the make files.
 
 ```bash
 Benchmarks/vasp/src/vasp.5.lib/Makefile
@@ -110,8 +104,7 @@ module load blas/2011--intel--cs-xe-2013--binary
 ```
 
 One problem is that the Intel wrapper is not made available for VASP. The file
-`/lib/intel64/libfftw3xf_intel.a` do not exists. Which will be announced like
-this:
+`/lib/intel64/libfftw3xf_intel.a` does not exist. This is announced like this:
 
 ```
 make: *** No rule to make target `/lib/intel64/libfftw3xf_intel.a', needed by
@@ -133,7 +126,8 @@ bm/build/intel/fftw3xf" > env
 source env
 ```
 
-That do not work, try this
+If this does not work, which is probably the case, try this
+
 
 ```bash
 cp src/vasp.5.2.12/makefile src/vasp.5.2.12/makefile.original
@@ -146,16 +140,18 @@ diff src/vasp.5.2.12/makefile.original src/vasp.5.2.12/makefile
 > FFT3D   = fftmpi.o fftmpi_map.o  fftw3d.o  fft3dlib.o  ~/bm/build/intel/fftw3xf/libfftw3xf_intel.a
 ```
 
-Then an other error occurs
+Then another error may occur
 
 ```
 ifort: error #10236: File not found:  '/opt/intel/mkl/lib/intel64/libmkl_scalapack_lp64.a'
 ifort: error #10236: File not found:  '/opt/intel/mkl/lib/intel64/libmkl_blacs_intelmpi_lp64.a'
 ```
 
-They can be found at:
+This files can be found at:
 
 `/prod/compilers/intel/cs-xe-2013/binary/composer_xe_2013.1.117/mkl/lib/intel64/`
+
+And they should be replaced inside the `makefile`.
 
 ```bash
 sed -i -e 's%/opt/intel/mkl/lib/intel64/libmkl_blacs_intelmpi_lp64.a%/prod/\
@@ -173,20 +169,20 @@ libmkl_scalapack_lp64.a%' src/vasp.5.2.12/makefile
 
 Suppressing warning and remarks:
 
-Option `-diag-disable warn` (Linux and Mac OS X) and `/Qdiag-disable:warn`
-(Windows) disable all Source Checker diagnostics except those that have an
-"error" severity level. They suppress all Source Checker warnings, cautions,
-and remarks.
+The options `-diag-disable warn` (Linux and Mac OS X) and `/Qdiag-disable:warn`
+(Windows) disable all Source Checker diagnostics except those with the severity
+level "error". They suppress all Source Checker warnings, cautions and remarks.
 
 ## Links
 
 ### VASP Analysis and Profiling
 
-The original link to a
-[PDF](https://www.hpcadvisorycouncil.com/pdf/VASP_Analysis_and_Profiling_AMD.pdf)
-from slides of 2013 should be available. However sometimes (2020-10-21) are
-not. In this case the document is available via
-[archive.org](https://web.archive.org/web/20190419065437/http://hpcadvisorycouncil.com/pdf/VASP_Analysis_and_Profiling_AMD.pdf)
+The original link to a PDF
+<https://www.hpcadvisorycouncil.com/pdf/VASP_Analysis_and_Profiling_AMD.pdf>
+with slides from 2013 should be available. However, sometimes (2020-10-21) the
+PDF is not available. In that case, the PDF is available via archive.org
+<https://web.archive.org/web/20190419065437/http://hpcadvisorycouncil.com/pdf/VASP_Analysis_and_Profiling_AMD.pdf>.
+
 
 ### Installation, Compiling
 
@@ -208,3 +204,12 @@ not. In this case the document is available via
 - [vasp.at](https://www.vasp.at/vasp-workshop/slides/performance.pdf) backup at
   [archive.org](https://web.archive.org/web/20180903073934/https://www.vasp.at/vasp-workshop/slides/performance.pdf)
 
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2023-03-14 | Improve writing, minor changes                       |
+| 0.1.3   | 2022-06-14 | Shell->bash, changes->history, typos                 |
+| 0.1.2   | 2020-12-27 | Improve link section, line length                    |
+| 0.1.1   | 2020-05-03 | Typos                                                |
+| 0.1.0   | 2016-08-27 | Initial release                                      |
