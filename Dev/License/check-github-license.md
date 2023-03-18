@@ -2,8 +2,8 @@
 title: Check Github License
 linkTitle: Github-License
 author: Christian Külker
-date: 2023-02-25
-version: 0.1.1
+date: 2023-03-18
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -21,7 +21,7 @@ description: How to check the LICENSE file in regard to github.com
 
 ---
 
-The web site <https://github.com> usually displays the license next to a git
+The website <https://github.com> usually shows the license next to a git
 repository. Sometimes this information shows "other" and the license is not
 known to _github.com_. This document briefly describes how _github.com_ detects
 licenses and how to verify (**without guarantee**) that a project license is
@@ -32,9 +32,9 @@ detected.
 1. Choose a recent operating system, such as Debian Bullseye
 2. Install the `licensee` dependencies: `aptitude install ruby-rugged`
 3. Install `licensee` using the Ruby gem: `gem install --user-install licensee`
-4. Run `licensee` on the `LICENSE` file (not on the uncommitted changes
+4. Run `licensee` on the `LICENSE` file (not the uncommitted changes
    repository): `cd repository;licensee detect LICENSE`.
-5. If files like `COPYING` and `LICENSE` are selected properly, dual-licensed
+5. If files like `COPYING` and `LICENSE` are properly selected, dual-licensed
    projects are also possible: "CC-BY-SA-4.0, GFDL-1.3 licenses found".
 
 ## The longer Explanation
@@ -44,44 +44,51 @@ detected.
    are collected in the `_licenses` directory of the _choosealicense.com_
    repository:
    <https://github.com/github/choosealicense.com/tree/gh-pages/_licenses>.
-   This licenses should be detected. The license file from _github.com_
+   These licenses should be recognized. The license file from _github.com_
    contains metadata about the license, such as an id called `spdx`.  Only
-   licenses with an id will be recognized. See
+   licenses with an id will be detected. See
    <https://github.com/spdx/license-list-data> and
    <https://github.com/spdx/license-list-XML> for details.
 
 2. Sometimes a license is added later with a `LICENSE` file, or the license
-   file has a different name. For example, `COPYING`' is the `GNU` standard.  I
+   file has a different name. For example, `COPYING` is the `GNU` standard. I
    do not know which files are scanned (other than `COPYING` and `LICENSE`),
    but to be sure it might be advisable to rename the file to either `LICENSE`
-   or `COPYING`. If both files exist, the project will show both licenses:
+   or `COPYING`. If both files exist, the project will display both licenses:
    "CC-BY-SA-4.0, GFDL-1.3 licenses found".
 
 3. The content of the `LICENSE` file should be **text** with **78** characters
    per line. The best way to ensure this is to copy the contents of the license
    file found in the `_licenses` directory to `LICENSE`.
 
-4. The Ruby gem called Licensee <https://github.com/licensee/licensee> is used
-   to query the license. To use it, the following requirements are necessary:
+4. The Licensee Ruby gem <https://github.com/licensee/licensee> is used to
+   query the license. To use it, the following requirements are necessary:
+
    - Recent Ruby version (2.7 for example, 2.3 will not work) (faraday-net_http
      requires Ruby version >= 2.6.0.)
+
    - A recent version of Debian (Bullseye will work; Stretch will not, even
      from package). An older Debian could use `aptitude insall ruby-licensee`
      to install `licensee`, but newer licenses may not be recognized and this
-     binary seems to be broken on Debian Stretch.
+     binary seems to broken on Debian Stretch.
+
    - Even if you are considering installing from source, it is convenient to
      install the heavy dependencies from package, install as root using the
      command `aptitude install ruby-rugged`.
+
    - Use the `gem install` command.
-   - Use the `--user-install` command line option or add `gem: --user-install`
-     to `~/gemrc` (tested) or use the `root` user (not tested).
+   
+   - Use the `--user-install` switch or add `gem: --user-install` to `~/gemrc`
+     (tested) or use the `root` user (untested).
+
    - Add `~/.local/share/gem/ruby/2.7.0/bin` to your `PATH` if you are using
      Ruby 2.7.
-   - If `licensee` is to be installed from source. The dependencies are at
+
+   - If you want to install `licensee` from source. The dependencies are at
      least `rugby-dev`, `cmake` and maybe `libevent-pthreads-2.1-7`, but surely
-     other dependencies need to be installed as well. This path was not
-     investigated further on older systems or with out package install of
-     `ruby-rugged`.
+     other dependencies need to be installed as well. This path has not been
+     explored further on older systems or without installing `ruby-rugged`.
+
    - After running `gem install licensee`, the `licensee` binary can be found
      in `~/.local/share/gem/ruby/2.7.0/bin` or, if installed via package, in
      `/usr/bin/licensee`.
@@ -143,8 +150,8 @@ detected.
         ODbL-1.0 similarity:  31.60%
     ```
 
-    After changing the format of the `LICENSE` file from Markdown to text, the
-    detection of the project is still 99.16%. My guess is that it checks
+    After changing the format of the `LICENSE` file from markdown to text, the
+    detection of the project is still 99.16%. My guess is that it is checking
     against the repository and not against the uncommitted changes.
 
     ```bash
@@ -202,6 +209,7 @@ detected.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-03-18 | Improve writing                                      |
 | 0.1.1   | 2023-02-25 | Dual-license information                             |
 | 0.1.0   | 2023-02-24 | Initial release                                      |
 
