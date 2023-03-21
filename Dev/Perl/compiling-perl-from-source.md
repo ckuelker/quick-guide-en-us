@@ -2,8 +2,8 @@
 title: Compiling Perl From Source
 type: doc
 author: Christian Külker
-version: 0.1.1
-date: 2016-06-27
+version: 0.1.2
+date: 2023-03-21
 disclaimer: True
 categories:
  - Perl
@@ -11,13 +11,25 @@ tags:
  - Tar
  - Environment
  - Debian 10 Buster
-description: Compiling Perl from source is easier than most people think
+description: Compiling Perl from source is easier than most people think.
 
 ---
 
 ## Introduction
 
 > Compiling Perl from source is easier than most people think.
+
+This document uses Perl 5.20 on Debian Jessie as an example of how to compile a
+custom version of Perl. It is to be expected that versions of Perl that are
+very different from the distributed versions may not compile.
+
+|  # | Debian   | Perl Version |
+| -- | -------- | ------------ |
+|  8 | Jessie   | 5.20         |
+|  9 | Stretch  | 5.24         |
+| 10 | Buster   | 5.28         |
+| 11 | Bullseye | 5.32         |
+
 
 ## Compiling Perl From Source
 
@@ -35,7 +47,9 @@ sh Configure -de -Dprefix='/srv/perl-5.20.0'
  #  -e : go on without questioning past the production of config.sh.
 ```
 
-## Configuring A Custom Environment
+## Configuring a Custom Environment
+
+This section introduces a version-specific Perl environment.
 
 ```bash
 mkdir -p /srv/env
@@ -62,6 +76,9 @@ ln -s perl-5-20-2 perl
 
 ## Using The New Custom Perl
 
+To use a custom version of Perl, some shell variables should be set. This is
+done using the `source` shell command.
+
 ```bash
 source /srv/env/perl
 
@@ -81,10 +98,12 @@ Complete documentation for Perl, including FAQ lists, should be found on
 this system using "man perl" or "perldoc perl".  If you have access to the
 Internet, point your browser at http://www.perl.org/, the Perl Home Page.
 ```
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-03-21 | Improve writing, add versions of Debian              |
 | 0.1.1   | 2022-05-10 | Description, typos, history                          |
 | 0.1.0   | 2016-06-27 | Initial release                                      |
 
