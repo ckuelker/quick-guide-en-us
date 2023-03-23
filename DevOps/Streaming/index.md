@@ -1,8 +1,8 @@
 ---
 title: Streaming
 author: Christian Külker
-date: 2023-03-09
-version: 0.1.0
+date: 2023-03-23
+version: 0.1.1
 locale: en_US
 lang: en
 type: doc
@@ -15,7 +15,10 @@ commands:
 tags:
 - Vlc
 - Stream Generator
+- Streaming
 - Streaming Server
+- Streaming Client
+- Streaming of Streams
 - Icecast2
 - Ices2
 - Darkice
@@ -42,10 +45,28 @@ Scenario:
 ### Server
 
 Browse to a directory that contains audio or video files, or use a file. Run
-the following command in the directory or file.
+of the following commands in the directory or file.
 
 ```bash
-vlc -vvv `pwd` --sout '#rtp{mux=ts,dst=239.255.12.42,sdp=sap,name="TestStream"}'
+# 1
+vlc -vvv `pwd` --sout '#rtp{mux=ts,dst=239.255.12.42,sdp=sap,name="Stream"}'
+# 2
+vlc -vvv --sout '#rtp{mux=ts,dst=239.255.12.42,sdp=sap,name="Stream"}' .
+# 3
+export RTP="#rtp{mux=ts,dst=239.255.12.42,sdp=sap,name='Stream'}"
+find -name "*.mp4" -print0|xargs -0 vlc --sout $RTP
+```
+
+It is also possible to stream a stream. This has the advantage that the
+download bandwidth is used only once and that all clients play the stream via
+the local network. This works in principle with `m3u8` and `mp3` `URL` types.
+
+```bash
+# 1
+export URL=https://example.org/stream.m3u8
+# 2
+export URL=https://example.org/stream.mp3
+vlc --sout '#rtp{mux=ts,dst=239.255.12.42,sdp=sap,name="Stream"}' $URL
 ```
 
 The GUI can be used to steer the stream.
@@ -89,5 +110,6 @@ Icecast examples:
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2023-03-23 | Streaming of streams                                 |
 | 0.1.0   | 2023-03-09 | Initial release with vlc                             |
 
