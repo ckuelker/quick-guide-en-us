@@ -1,8 +1,8 @@
 ---
 title: Kubernetes
 author: Christian Külker
-date: 2021-05-21
-version: 0.1.0
+date: 2023-03-27
+version: 0.1.2
 type: doc
 disclaimer: True
 toc: True
@@ -17,29 +17,28 @@ description: Kubernetes
 
 ## Introduction
 
-The word Kubernetes ([κυβερνήτης] originates from Greek and means "helmsman" or
-"pilot" or "governor", and is the etymological root of cybernetics)
+The word Kubernetes ([κυβερνήτης] comes from Greek and means "helmsman" or
+"pilot" or "governor", and is the etymological root of cybernetics).
 
 ![Dedicated - Virtual - Container](sys-virt-container0.1.0.png){width=100%}
 
-**Dedicated** server are easy to maintain and every application can talk to
-each other application directly.
+__Dedicated__ servers are easy to maintain and each application can communicate
+directly with any other application.
 
-**Virtualized** servers allows to run multiple servers (VM) on one hardware
-with good security separation. Virtualisation allows a faster response and
-allocation of different hardware towards applications that have a volatile
-load.
+__Virtualized__ servers allow multiple servers (VM) to run on one hardware with
+good security separation. Virtualization allows faster response and allocation
+of different hardware to applications that have a volatile load.
 
-**Containerized** servers share some advantages from virtualised servers, but
-with less security in separation of instances. The advantage is that only one
-OS needs to be managed, with the cost that only similar applications can be
-run.  It would for example be difficult (or impossible) to run 32 bit big
-endian applications together with 64 bit small endian and `arm64` applications.
-Among many advantages containerized servers might suffer from less secure
-applications as the libraries are application depended and are often not
-administered by experienced system administrators but software engineers.
-However this depends much on the culture of the organization that uses
-containerized server.
+Containerized servers share some of the advantages of virtualized servers, but
+with less security in the separation of instances. The advantage is that there
+is only one operating system to manage, at the cost of running only similar
+applications.  For example, it would be difficult (or impossible) to run 32-bit
+big endian applications together with 64-bit small endian and `arm64`
+applications.  Among the many advantages, containerized servers may suffer from
+less secure applications because the libraries are application dependent and
+are often managed not by experienced system administrators but by software
+engineers.  However, this depends very much on the culture of the organization
+using the containerized server.
 
 Some advantages of containerized servers are:
 
@@ -53,8 +52,9 @@ Some advantages of containerized servers are:
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-03-27 | Improve writing, fix date                            |
 | 0.1.1   | 2022-05-09 | +history; PDF: False (no Greek in Noto Sans CJK JP)  |
-| 0.1.0   | 2022-05-09 | Initial release                                      |
+| 0.1.0   | 2021-05-21 | Initial release                                      |
 
 [κυβερνήτης]: https://en.wikipedia.org/wiki/Kubernetes
 
