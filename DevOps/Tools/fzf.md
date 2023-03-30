@@ -14,6 +14,8 @@ commands:
 - fzf
 tags:
 - Fzf
+- Vim
+- Zsh
 description: Search or match a list in a fuzzy way
 
 ---
@@ -21,6 +23,25 @@ description: Search or match a list in a fuzzy way
 `fzf` is an interactive filter program that can be used to search for items in
 a list. For example, it can be used to interactively match filenames in a list
 of files.
+
+1. Interactive interface: `fzf` provides an easy way to search through large
+   collections of files, command histories, and other types of data.
+
+3. Customizable: `fzf` is customizable via environment variables
+   `FZF_DEFAULT_COMMAND` and `FZF_DEFAULT_OPTS`, allowing users to configure it
+   to suit their specific needs. It has a wide range of options that can be
+   used to add functionality and integrate with other tools.
+
+4. Some external programs, like `zsh`, `vim` and `tmux` have plugins to
+   interact with `fzf`.
+
+   - `fzf-tab`: Replace zsh's default completion selection menu with `fzf`!
+   - `fzf-tmux`: <https://github.com/junegunn/fzf/tree/master/bin>
+   - `fzf.vim`: <https://github.com/junegunn/fzf.vim>
+
+5. Versatile: fzf can be used for a variety of tasks, such as navigating files,
+   searching command history, selecting processes to kill, and more. It can
+   also be integrated with other tools such as vim, tmux, and zsh.
 
 ## Installation
 
@@ -45,7 +66,19 @@ find / -name "*.pdf*"|fzf > results.txt
 # Press <ENTER> to save that line into 'results.txt' and end the fzf session
 ```
 
+### Select Command History
+
+This example will display your command history and allow you to search through
+it using fzf. You can then select a command and press enter to execute it.
+
+```bash
+history | fzf
+```
+
 ### Edit the Result in One Go
+
+This example will open the file you select in `vim`. You can use `fzf` to
+quickly search and select the file you want to open.
 
 ```bash
 # This will search all files below the current directory
@@ -79,10 +112,31 @@ This could for example give file `scratch/todo/books-to-write.md`.
 | !^movie  | inverse-prefix-exact-match  | Items that do not start with movie |
 | !.pdf$   | inverse-suffix-exact-match  | Items that do not end with .pdf    |
 
+### Change Directories
+
+This example should not be taken too serious. This command will allow you to
+quickly navigate your file system using `fzf`. It will list all directories
+under the current directory and allow you to select one to change into. However
+it also will display dot-files. So that is basically useless in `~/` or a git
+repository.
+
+```bash
+cd $(find . -type d -print 2>/dev/null | fzf)
+```
+
+This improved example is similar to the previous one, but it uses the -not
+-path `*/\.*` option to exclude directories that begin with a dot (i.e.,
+dot-files). This ensures that only visible directories are displayed in the
+`fzf` interface, making it easier to navigate the file system.
+
+```bash
+cd $(find . -type d -not -path '*/\.*' -print 2>/dev/null | fzf)
+```
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2023-03-30 | Improve writing, add 2 examples                      |
 | 0.1.0   | 2023-02-16 | Initial release                                      |
-
 
