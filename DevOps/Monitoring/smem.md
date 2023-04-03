@@ -2,8 +2,8 @@
 title: Smem
 linkTitle: Smem
 author: Christian Külker
-date: 2022-06-29
-version: 0.1.1
+date: 2023-04-03 
+version: 0.1.2
 type: doc
 disclaimer: True
 toc: True
@@ -40,13 +40,13 @@ smem
   600 prg3     /usr/sbin/prg3 -x /etc/          888       28      431     2816
 ```
 
-This is only a rough estimation. For precise measurement or other categories
-see `man smem`.
+This is just a rough estimate. For exact measurements or other categories, see
+`man smem`.
 
 ## Show Sorted Swap Memory Usage
 
-One strong incentive to use `smem` is its sort option to understand the
-processes that uses most of the swap space. As root do:
+A strong incentive to use `smem` is its sort option to understand which
+processes are using the most swap space. Do it as root:
 
 ```bash
 smem -s swap
@@ -77,6 +77,7 @@ smem -s swap
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-04-03 | Improve writing                                      |
 | 0.1.1   | 2022-06-29 | Swap sort + install section, history, shell->bash    |
 | 0.1.0   | 2020-06-10 | Initial release                                      |
 
