@@ -1,8 +1,8 @@
 ---
 title: Fzf
 author: Christian Külker
-date: 2023-02-16
-version: 0.1.0
+date: 2023-04-12
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -12,10 +12,16 @@ categories:
 - Tools
 commands:
 - fzf
+- awk
+- git
+- rg
+- find
+- history
 tags:
 - Fzf
 - Vim
 - Zsh
+- Git
 description: Search or match a list in a fuzzy way
 
 ---
@@ -133,10 +139,21 @@ dot-files). This ensures that only visible directories are displayed in the
 cd $(find . -type d -not -path '*/\.*' -print 2>/dev/null | fzf)
 ```
 
+### Select Git Commit and Show the Commit
+
+```bash
+git show "$(git log --oneline | fzf | awk '{print $1}')"
+```
+
+This command shows the list of Git commits in the current repository using `git
+log --oneline`, filters them using `fzf`, extracts the commit hash using `awk`,
+and then displays the selected commit using `git show`.
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-04-12 | Add git example                                      |
 | 0.1.1   | 2023-03-30 | Improve writing, add 2 examples                      |
 | 0.1.0   | 2023-02-16 | Initial release                                      |
 
