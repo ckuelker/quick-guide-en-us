@@ -1,8 +1,8 @@
 ---
 title: Streaming
 author: Christian Külker
-date: 2023-03-23
-version: 0.1.1
+date: 2023-04-18
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -12,7 +12,10 @@ categories:
 - Streaming
 commands:
 - vlc
+- ffmpeg
+- ffplay
 tags:
+- ffmpeg
 - Vlc
 - Stream Generator
 - Streaming
@@ -106,10 +109,50 @@ Icecast examples:
 - <https://blog.michael.franzl.name/2013/11/25/audio-streaming/>
 - <https://www.linuxuprising.com/2019/09/how-to-create-your-own-internet-radio.html>
 
+## Ffmpeg
+
+### Stream the Local Audio Device
+
+Sometimes a process plays something on the local audio device. For example, a 5
+hour podcast or a live stream of a rocket launch that takes a long time.  If
+you do not want to interrupt this playback, but want to change the room, it is
+possible to ad hoc stream the local audio device to another computer.
+
+#### Start a Local Ffmpg Server
+
+```bash
+ffmpeg -f pulse -i alsa_output.pci-0000_00_1b.0.analog-stereo.monitor \
+-acodec libopus -b:a 128k -vn -f rtp rtp://239.255.12.42:5004 \
+-sdp_file audio_stream.sdp
+```
+
+If your audio device is different use:
+
+```bash
+ffmpeg -f pulse -i $(pactl list short sources | grep 'monitor' | \
+awk '{print $2}' | head -n1) -acodec libopus -b:a 128k -vn \
+-f rtp rtp://239.255.12.42:5004 -sdp_file audio_stream.sdp
+```
+
+In another shell, copy the `audio_stream.sdp`' file to the remote client.
+
+```bash
+scp audio_stream.sdp remote.machine:
+```
+
+#### Start a Client on a Different Machine
+
+For this to work, you need the `audio_stream.sdp` file from the server.
+
+```bash
+ffplay -protocol_whitelist file,rtp,udp -i audio_stream.sdp
+```
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-04-18 | Ad hoc ffmpeg audio streams                          |
 | 0.1.1   | 2023-03-23 | Streaming of streams                                 |
 | 0.1.0   | 2023-03-09 | Initial release with vlc                             |
 
