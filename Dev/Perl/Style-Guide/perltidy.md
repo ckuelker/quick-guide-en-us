@@ -1,8 +1,8 @@
 ---
 title: Perltidy
 author: Christian Külker
-date: 2022-05-23
-version: 0.1.5
+date: 2023-04-26
+version: 0.1.6
 type: doc
 disclaimer: True
 toc: True
@@ -15,7 +15,7 @@ commands:
 tags:
 - Perltidy
 - PBP
-- Perls Best Practice
+- Perl Best Practice
 - vimrc
 description: Perl style guide code checking and formatting
 
@@ -25,17 +25,6 @@ description: Perl style guide code checking and formatting
 code in a common way. This is especially helpful if you follow the recommended
 Perl Best Practices (PBP) style guide.
 
-## History
-
-| Version | Date       | Notes                                                |
-| ------- | ---------- | ---------------------------------------------------- |
-| 0.1.5   | 2022-05-23 | Fix perltidyrc download link                         |
-| 0.1.4   | 2022-05-22 | Changes->History, change comments, improve ,pt       |
-| 0.1.3   | 2020-05-12 | Add front matter                                     |
-| 0.1.2   | 2016-06-22 | Improve vim section                                  |
-| 0.1.1   | 2009-03-06 | Adapt changes from PBP                               |
-| 0.1.0   | 2009-02-05 | Initial release                                      |
-
 ## Installation
 
 ```bash
@@ -44,7 +33,7 @@ aptitude install perltidy
 
 ## Configuration
 
-__Perltidy__ uses its configuration file at: `~/.perltidyrc`
+__Perltidy__ uses its configuration file under `~/.perltidyrc`.
 
 ## Example Configuration Inspired by Perl Best Practice
 
@@ -115,23 +104,24 @@ __Perltidy__ uses its configuration file at: `~/.perltidyrc`
 |= >>= ||= .= %= ^= x="
 ```
 
-- Download local by browsers and PDF in browser tabs: [perltidyrc](perltidyrc)
+- Download locally by browser and PDF in browser tabs: [perltidyrc](perltidyrc)
 - View via <https://github.com> by PDF viewers:
   <https://raw.githubusercontent.com/ckuelker/quick-guide-en-us/master/Dev/Perl/Style-Guide/perltidyrc>
 
 ## Activation In Vim
 
-To activate ``perltidy`` cleanup in vim you can add this to `~/.vimrc`
+To enable `perltidy` cleanup inside Vim, you can add this to `~/.vimrc`
 
 ```vim
 map ,pt <Esc>:%!perltidy <CR>
 ```
 
-When pressing ',pt' fast after each other your Perl code gets reformatted if
-``perltidy`` is installed in your path. Otherwise you code gets removed.
+If you press the ',pt' key combination quickly, your Perl code will be
+reformatted if `perltidy` is installed in your path. Otherwise your code will
+be removed.
 
-In case unintentional removing of content is not desired the above mapping
-can be made safer by adding a vim function.
+If unintentional removal of content is not desired, the above mapping can be
+made safer by adding a vim function.
 
 ```vim
 function! s:Perltidy() abort
@@ -144,3 +134,16 @@ function! s:Perltidy() abort
 endfunction
 map ,pt :call <sid>Perltidy()<CR>
 ```
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.6   | 2023-04-26 | Improve writing, mv history                          |
+| 0.1.5   | 2022-05-23 | Fix perltidyrc download link                         |
+| 0.1.4   | 2022-05-22 | Changes->History, change comments, improve ,pt       |
+| 0.1.3   | 2020-05-12 | Add front matter                                     |
+| 0.1.2   | 2016-06-22 | Improve vim section                                  |
+| 0.1.1   | 2009-03-06 | Adapt changes from PBP                               |
+| 0.1.0   | 2009-02-05 | Initial release                                      |
+
