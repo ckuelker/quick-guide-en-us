@@ -2,8 +2,8 @@
 title: MRTG on Raspberry Pi
 linkTitle: MRTG
 author: Christian Külker
-date: 2022-06-06
-version: 0.1.6
+date: 2023-05-01
+version: 0.1.7
 type: doc
 disclaimer: True
 toc: True
@@ -25,35 +25,35 @@ description:
 
 ## Introduction
 
-This article is about a software called "Multi Router Traffic Grapher" (MRTG)
-that can monitor the load of network interfaces and other values on one ore
-more computers.  While this article tries to be as explicative as possible due
-to the nature of the subject it is targeting experienced Linux users or system
+This article is about a software called "Multi Router Traffic Grapher" (MRTG),
+which can monitor network interface usage and other values on one or more
+computers.  While this article tries to be as explanatory as possible due to
+the nature of the subject, it is aimed at experienced Linux users or system
 administrators.
 
-This article describe a simple installation on one server. In fact a small
+This article describes a simple installation on a server. In fact, a small
 Raspberry Pi router. It should be very similar with any Debian based
 distribution on other hardware too.
 
-One advantage of using [MRTG] is that it explicitly summarise the usage of
-network devices on daily, weekly and monthly basis in terms of **speed**. This
-is useful, if you are connected with a limited internet connection and you need
-to to know how fast your are.
+One advantage of using [MRTG] is that it explicitly summarizes the usage of
+network devices on a daily, weekly and monthly basis in terms of **speed**.
+This is useful if you are on a limited Internet connection and need to know how
+fast you are.
 
 ## Dependencies
 
-The [MRTG] is usually a multi server installation. One server can be a web
-server that collects and display aggregated log data. Other servers or switches
-can be queried via **[SNMP]**. For this article everything is installed on one
-machine.
+The [MRTG] is typically a multi-server installation. One server can be a web
+server that collects and displays aggregated log data. Other servers or
+switches can be queried via **[SNMP]**. For this article, everything is
+installed on one machine.
 
 ### Web Server
 
-One dependency for [MRTG] is the web server. That can basically any web server.
-Out of curiosity I tested **Nginx** (speak: engine x) and it works. However in
-the past, when [MRTG] was created, Apache was more common. For this reason many
-guides on the web have some tricks when it comes with the usage of Apache. You
-might consider [Apache2], if you need certain features.
+One dependency for [MRTG] is the web server. This can be basically any web
+server.  Out of curiosity, I tested **Nginx** (speak: engine x) and it works.
+However, in the past, when [MRTG] was created, Apache was more common. For this
+reason, many guides on the web have some tricks when it comes to using Apache.
+You may want to consider [Apache2] if you need specific features.
 
 #### Configuring of Nginx for MRTG
 
@@ -90,14 +90,14 @@ service nginx restart
 
 #### Configuration of Apache2 for MRTG
 
-The configuration can be done in many ways. [MRTG] can be configured as main
-host, virtual host with and without SSL. The following configuration is using
-the Debian default `site configuration` and do not set up [MRTG] as a site,
-but as an `configuration snippet` for [Apache2].
+Configuration can be done in many ways. [MRTG] can be configured as a main
+host, virtual host, with or without SSL. The following configuration uses the
+default Debian `site configuration` and does not set up [MRTG] as a site, but
+as a `configuration snippet` for [Apache2].
 
-Copy the following content into the file
-`/etc/apache2/conf-available/mrtg.conf`.  The values for `AllowOverride` and
-`Options` need to be made specific for the server. This is just an example.
+Copy the following to the `/etc/apache2/conf-available/mrtg.conf` file.  The
+values for `AllowOverride` and `Options` need to be made specific to the
+server. This is just an example.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   <IfModule mod_alias.c>
@@ -153,17 +153,17 @@ iso.3.6.1.2.1.1.7.0 = INTEGER: 72
     ...
 ```
 
-As it can be seen from this output some values in ``/etc/snmp/snmpd.conf`` are
-wrong. The e-mail address and the location "Sitting on the Dock of the Bay".
-However for a basic function a change it is not needed. After your complete
-installation works, make a backup of that configuration file and update
-missing/ wrong entries.
+As you can see from this output, some values in `/etc/snmp/snmpd.conf` are
+wrong. The email address and the location "Sitting on the Dock of the Bay".
+This is not necessary for basic operation. After your installation is complete,
+make a backup of this configuration file and update any missing/incorrect
+entries.
 
-Especially under Debian the problem is a very limiting default configuration
-that do not give read access to most of the MIB tree. To change this, for
-example, the following `-V systemonly` has to be removed from `rocommunity
-public  default` for [IPv4] in `/etc/snmp/snmpd.conf` and the `snmpd` service
-has to be restarted. If one uses [IPv6] a different line need to be changed.
+Especially on Debian, the problem is a very restrictive default configuration
+that does not give read access to most of the MIB tree. To change this, remove
+the following `-V systemonly` from the `rocommunity public default` for [IPv4]
+in `/etc/snmp/snmpd.conf` and restart the `snmpd` service. If you are using
+[IPv6], you need to change another line.
 
 **before:**
 
@@ -189,32 +189,31 @@ aptitude install mrtg
 
 ## MRTG Configuration
 
-The first step is to secure the default configuration. The reason to reuse the
-name `mrtg.cfg` is, that `crond` or a `systemd timer` is most likely already
-configured to use this fil, so we do not need to modify `crond` or `systemd`.
-For Debian 10 Buster [MRTG] uses cron in `/etc/cron.d/mrtg` and updates the
-graphs every 5 minutes and write log entries to `/var/log/mrtg/mrtg.log`. You
+The first step is to back up the default configuration. The reason for reusing
+the name `mrtg.cfg` is that `crond` or a `systemd timer` is most likely already
+configured to use this file, so we do not need to modify `crond` or `systemd`.
+On Debian 10, Buster [MRTG] uses cron in `/etc/cron.d/mrtg` and updates the
+graphs every 5 minutes and writes log entries to `/var/log/mrtg/mrtg.log`. You
 should check the log file for errors in case the configuration is updated.
 
 ```bash
 cp -a /etc/mrtg.cfg /etc/mrtg.cfg.`date +'%F'`
 ```
 
-The configuration of the web interface is a very crude and archaic process,
-compared to INI or YAML files. The configuration is done via `/etc/mrtg.cfg`
-and applied by a command since the `mrtg` command is executed via a scheduler:
-`crond` or `systemd`. The format of [mrtg.cfg] can be looked up via the
-[mrtg-reference].
+Configuring the web interface is a very crude and archaic process compared to
+INI or YAML files. The configuration is done via `/etc/mrtg.cfg` and is applied
+by a command, since the `mrtg` command is executed by a scheduler: `crond` or
+`systemd`. The format of [mrtg.cfg] can be looked up in the [mrtg-reference].
 
 ### Adding Entries/ Graphs
 
-Most entries are added via [SNMP] OIDs to the file [mrtg.cfg]. There fore
-looking up the MIB and figuring out which value can be reached via `snmpget` is
-the first thing to do.
+Most entries are added to the [mrtg.cfg] file via [SNMP] OIDs. So the first
+thing to do is to look up the MIB and find out what value is accessible via
+`snmpget`.
 
-A graph entry can be generated by a set of configuration keywords belonging to
-one entity. Lets call the entity 'hobbit' for example, than it looks in an
-abstract way like this:
+A graph entry can be generated by a set of configuration keywords associated
+with an entity. For example, if we call the entity 'hobbit', then in an
+abstract way it looks like this
 
 ```
 KeyWord1[hobbit]: Value1
@@ -226,11 +225,11 @@ KeyWord5[hobbit]: Value5
 
 One of the most important keywords is the __Target__ keyword. The __value__ of
 a keyword is called an __argument__ in [MRTG], probably because a keyword is
-related to a command.  For the __Target__ keyword different commands can be
-executed, which manifests it self in different __argument__ classes. So to
-understand you have to reverse the thinking. The kind of value to a keyword
-determines with command is executed. The following classes are defined for
-the keyword __target__:
+associated with a command.  For the __Target__ keyword, different commands can
+be executed, which manifests itself in different __argument__ classes. So to
+understand, you have to reverse the thinking. The type of value associated with
+a keyword determines which command is executed. The following classes are
+defined for the __target__ keyword:
 
 - Basic
 - SNMPv2c
@@ -249,10 +248,10 @@ the keyword __target__:
 - Interface by Type
 - Extended positioning of ifIndex
 
-As this is quite extensive, only the __Explicid OIDs__ class is used. For this
-to work **two** OIDs have to be used. The reason is that per default [MRTG]
-plots 2 variables against time. Usually this will be network bytes in and out.
-So, to plot a single value the same OID has to be used twice.
+Since this is quite extensive, only the __Explicid OIDs__ class is used. For
+this to work, **two** OIDs must be used. The reason for this is that by default
+[MRTG] plots 2 variables against time. Usually these are network bytes in and
+out.  So to plot a single value, the same OID must be used twice.
 
 The format is:
 
@@ -267,23 +266,23 @@ Taget[NAME]: OID_1&OID_2:COMMUNITY@HOST
 ~~~
 
 The format can be more flexible. For all places where `COMMUNITY@HOST` can be
-used the real format of this can be
+used, the real format can be
 
 ```
 COMMUNITY@HOST[:[port][:[timeout][:[retries][:[backoff][:[version]]]]][|name]
 ```
 
-Also __port__ can be more flexible. See [mrtg-reference] for examples and
-explanation.
+Also __port__ may be more flexible. See [mrtg-reference] for examples and
+explanations.
 
-What has to be understood is that the value of __Target__ is interpolated in a
-very [MRTG] specific way and some expressions are extrapolated. So addition,
-subtraction, division, multiplication, brackets and piping to custom commands
-works. It is a complete language by itself.
+What needs to be understood is that the value of __Target__ is interpolated in
+a very [MRTG] specific way and some expressions are extrapolated. So addition,
+subtraction, division, multiplication, parentheses and piping to custom
+commands works. It is a complete language in itself.
 
-When you find a valid OID, for example `.1.3.6.1.4.1.2021.4.6` for the total
-amount of free main memory, you sometimes have to add a `0` to make [MRTG] and
-[SNMP] happy: `.1.3.6.1.4.1.2021.4.6.0`.
+If you find a valid OID, for example `.1.3.6.1.4.1.2021.4.6` for the total
+amount of free main memory, you may need to add a `0` to make [MRTG] and [SNMP]
+happy: `.1.3.6.1.4.1.2021.4.6.0`.
 
 A target for the value would look like this:
 
@@ -291,9 +290,8 @@ A target for the value would look like this:
 Target[hobbit]: .1.3.6.1.4.1.2021.4.6.0&.1.3.6.1.4.1.2021.4.6.0:public@localhost
 ~~~
 
-The full example for the measurement of free main memory on a Debian 10 Buster
-Linux Raspberry Pi 4 with 4 GB main memory looks like this:
-
+The full example for measuring free memory on a Debian 10 Buster Linux
+Raspberry Pi 4 with 4 GB of memory looks like this:
 
 __Global Configuration:__
 
@@ -318,23 +316,24 @@ Legend1[localhost-free]: bytes free
 Options[localhost-free]: integer, gauge, nopercent, growright, unknaszero, noo
 ~~~
 
-The value for __MaxBytes__ can be queried with [SNMP]: (A working configuration
-for `snmpd` is assumed here - if this does not give a value, either the `snmpd`
-configuration need set up correctly or it is a different hardware)
+The value for __MaxBytes__ can be queried with [SNMP]: (This assumes a working
+configuration for `snmpd` - if this does not give a value, either the `snmpd`
+configuration needs to be set up correctly, or you are using different
+hardware).
 
 ```bash
 snmpget -v 2c localhost -c public .1.3.6.1.4.1.2021.4.5.0
 iso.3.6.1.4.1.2021.4.5.0 = INTEGER: 3918772
 ```
 
-Then the configuration needs to be activated
+The configuration must then be activated
 
 ```bash
 LANG=C indexmaker /etc/mrtg.cfg > /var/www/mrtg/index.html
 ```
 
-Then the configuration needs to be executed twice, as first run throws errors
-due to an empty database.
+Then the configuration must be run twice, because the first run will fail due
+to an empty database.
 
 ```bash
 LANG=C /usr/bin/mrtg  /etc/mrtg.cfg
@@ -343,18 +342,17 @@ LANG=C /usr/bin/mrtg  /etc/mrtg.cfg
 
 #### Semi Automatic Configuration
 
-A semi automatic configuration for network interfaces is possible with the
+Semi-automatic configuration of network interfaces is possible with the
 `cfgmaker` script.
 
-Since one interface, the ``wlan0``, do not deliver a speed value, to be able to
-use it with [MRTG], it is necessary to set a value with the ``-zero-speed=``
-parameter
+Since one interface, ``wlan0``, does not provide a speed value, to use it with
+[MRTG], it is necessary to set a value with the ``-zero-speed=`` parameter.
 
 ```bash
 LANG=C cfgmaker --zero-speed=100000000 public@127.0.0.1  > /etc/mrtg.cfg
 ```
 
-[MRTG] has a limited capability to scan hardware and create a configuration for
+[MRTG] has a limited ability to scan hardware and create a configuration for
 it.
 
 ```bash
@@ -362,7 +360,7 @@ LANG=C cfgmaker public@127.0.0.1 --ifref=descr --output /etc/mrtg.cfg
 ```
 
 This basically generates 3 interface graphs for `lo`, `eth0` and `wlan` on the
-Raspberry Pi 4. Some commented out. The `eth0` section looks like:
+Raspberry Pi 4. Some are commented out. The `eth0` section looks like this:
 
 ~~~
 #### Interface 2 >> Descr: 'eth0' | Name: 'eth0' | Ip: '192.168.168.35' | \
@@ -407,14 +405,15 @@ PageTop[127.0.0.1_2]: <h1>Traffic Analysis for 2 -- monitor</h1>
     </div>
 ~~~
 
-Even though the scanning understands that this is the `eth0` interface, the
-name of the title is just the number '2'. Which might work well for switches,
-but not for hosts. Clicking on the graph however show the information.
+Even though the scan understands that this is the `eth0` interface, the title
+name is just the number `2`. This may work fine for switches, but not for
+hosts. However, clicking on the graph will show the information.
 
 ### Example Configuration For CPU Idle Time
 
-This example show the configuration of the CPU idle time for the Raspberry PI 4
-and shows how simple mathematical terms are realized inside the target keyword.
+This example shows the configuration of the CPU idle time for the Raspberry PI
+4 and shows how simple mathematical terms are realized within the target
+keyword.
 
 ~~~
 Title[localhost-CPU]: Localhost CPU load
@@ -433,10 +432,9 @@ Options[localhost-CPU]: integer, gauge, nopercent, growright, unknaszero, noo
 
 ### Configuring MRTG Web output
 
-One can of course generate an index page by hand, which is probably
-recommended. A quick and dirty approach is to use the `indexmaker` script.
-This creates a page with one graph per target and a link to the sub-page of
-the target.
+Of course, you can create an index page by hand, which is probably recommended.
+A quick and dirty approach is to use the `indexmaker` script.  This creates a
+page with one graph per target and a link to the target's subpage.
 
 ```bash
 mkdir -p /var/www/mrtg
@@ -462,8 +460,8 @@ Point your web browser to the IP of your [MRTG] machine.
 
 ### SNMP And SNMPD
 
-For many functionality of [MRTG] a working and well configured `snmpd` is
-mandatory. Version 1 can be tested with:
+For many of the features of [MRTG] a working and well configured `snmpd` is
+essential. Version 1 can be tested:
 
 ```bash
 snmpstatus -c public -v1 localhost
@@ -517,7 +515,7 @@ iso.3.6.1.4.1.2021.4.5.0 = INTEGER: 3918772
 
 ### Run MRTG Manually
 
-The cron job defined and runs [MRTG] as follows:
+The cron job defines and runs [MRTG] as follows:
 
 ```bash
 if [ -x /usr/bin/mrtg ] && [ -r /etc/mrtg.cfg ] && \
@@ -527,8 +525,7 @@ env LANG=C /usr/bin/mrtg /etc/mrtg.cfg 2>&1 | tee -a /var/log/mrtg/mrtg.log ; \
 fi
 ```
 
-This can be used to run [MRTG] immediately and there is no need to wait 5
-minutes.
+This can be used to run [MRTG] immediately, rather than waiting 5 minutes.
 
 ### Running MRTG With Different Log Information
 
@@ -537,8 +534,8 @@ LANG=C /usr/bin/mrtg -debug cfg /etc/mrtg.cfg
 ```
 ### Debugging SNMP
 
-This helps to debug `snmpget` and other [SNMP] operations as well as some
-script debugging.
+This is useful for debugging `snmpget` and other [SNMP] operations, as well as
+some script debugging.
 
 ```bash
 LANG=C /usr/bin/mrtg -debug snpo /etc/mrtg.cfg
@@ -551,8 +548,8 @@ A script failure might look like
 --snpo: External result:100 out:undef uptime:unknown name:unknown
 ~~~
 
-However in this case the script do not return all values, so this
-is actually intended.
+In this case, however, the script does not return all values, so this is
+actually intended.
 
 ## Packages
 
@@ -568,26 +565,26 @@ pcp-import-mrtg2pcp - Tool for importing data from MRTG into PCP archive logs
 
 ## Known Problems and Caveats
 
-- The standard web page (index.html) of [MRTG] will not **reload** when [MRTG]
-  has updated the graphs manually. The page refresh is set to the time
-  specified inside the configuration, usually 10 minutes, which make sense.
-  However when debugging or adding new configuration [MRTG] is usually run
-  manually and the page do not update. To mitigate, press browser reload
-  button.
-- **Devices are numbers:** For now the display of the index page enumerates
-  devices, like 2 (``eth0``) and 3 (``wlan0``) that is not very intuitive. I
-  tried to use some options to ``cfgmaker`` but without success. In case you
-  know the answer I would be happy to include it here.
-- **No back links:** If you click on a device graph of the index page you can
-  enter the detailed report about each device on a dedicated page. There are no
-  links back. One can modify the configuration and add a link for every target
-  manually in the `PageTop` attribute.
-- Nice about [MRTG] is that it already have a daily, weekly, monthly and yearly
-  overview of network interfaces **speed** (that can be generated
-  automatically). However it do not have a summary on how much KB or MB or GB
-  (or KiB, MiB, GiB) the interface processed over the time (of a day, month,
-  week or year) aka **accumulated traffic**. So if your intention is to keep
-  the usage of your mobile plan under control then [MRTG] will not help.
+- The default web page (index.html) of [MRTG] will not **reload** when [MRTG]
+  has manually updated the graphs. The page refresh is set to the time
+  specified in the configuration, usually 10 minutes, which makes sense.
+  However, when debugging or adding new configuration, [MRTG] is usually run
+  manually and the page does not refresh. To mitigate this, press the browser
+  reload button.
+- **Devices are numbers:** At the moment the display of the index page
+  enumerates devices like 2 (``eth0``) and 3 (``wlan0``), which is not very
+  intuitive. I tried to use some options to ``cfgmaker`` but without success.
+  If you know the answer, I would be happy to include it here.
+- **No backlinks:** When you click on a device graphic on the index page, you
+  can access the detailed report for each device on a dedicated page. There are
+  no back links. You can change the configuration and manually add a link for
+  each target in the `PageTop` attribute.
+- The nice thing about [MRTG] is that it already has a daily, weekly, monthly
+  and yearly overview of network interfaces **speed** (which can be generated
+  automatically). However, it does not have a summary of how much KB or MB or
+  GB (or KiB, MiB, GiB) the interface has processed over time (of a day, month,
+  week or year) aka **accumulated traffic**. So if you want to keep track of
+  your mobile plan usage, [MRTG] will not help you.
 
 ## Critique
 
@@ -602,11 +599,11 @@ __Pros__
 - No obfuscating abstraction layers
 - Reliable execution
 - Low system resource usage
+- It provides customizable graphs and a simple configuration process
 
 __Cons__
 
-- First invocation of [MRTG] always produces errors (the handling of data files
-  and data backup files is not clean)
+  not clean)
 - No back links in the web interface to the index page
 - Mixing of HTML and configuration inside the configuration
 - Difficult to configure new graphs from scratch
@@ -615,6 +612,7 @@ __Cons__
 - Only numeric values
 - Data and markup language is not separated and even stored in log files inside
   the web root (e.g. `/var/www/mrtg/localhost-cpu.log`)
+- The user interface may seem dated compared to newer monitoring tools
 
 ## Links
 
@@ -625,6 +623,7 @@ __Cons__
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.7     2023-05-01 | Improve writing                                      |
 | 0.1.6   | 2022-06-06 | Change shell to bash                                 |
 | 0.1.5   | 2021-05-18 | Updates for Raspberry PI 4                           |
 | 0.1.4   | 2021-01-02 | Updates for Debian 10 Buster                         |
