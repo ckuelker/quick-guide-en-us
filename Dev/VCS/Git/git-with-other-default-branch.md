@@ -2,8 +2,8 @@
 title: Git With Other Default Branch
 linkTitle: Git-New-Default-Branch
 author: Christian Külker
-date: 2023-05-03
-version: 0.1.1
+date: 2023-05-04
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -27,6 +27,13 @@ tags:
 description: How to create a new Git repository with a non-default branch
 
 ---
+
+## Default Git Branch
+
+There is no way I know of to query the default branch name that git will use
+for a new repository. As of 2023-05-04 it is `master`.
+
+## Manually Changing Default Branch At Creation Time
 
 Sometimes the default branch name is not what you want. However, this branch
 name is hard-coded into `git`. One way to get around using the hard-coded
@@ -119,10 +126,81 @@ main
 As you can see, `ls .git/refs/heads` now shows that the new branch has been
 created.
 
+## Setting Globally a Different Branch Per Default
+
+The previous section described the situation where you are not happy with the
+default branch name. As of Git 2.28.0, release July 2020, it is possible to use
+the `init.defaultBranch` configuration option, which allows Git users to define
+and configure a default branch name other than `master`.
+
+For example, Gitlab changed the default branch from `master' to `main' in 2021.
+
+### Example
+
+To change the default branch name in Git from `master` to `bonanza` (for
+example) for all new repositories, you can use the `init.defaultBranch`
+configuration setting. This setting was introduced in Git 2.28.0, so make sure
+you have a compatible version installed.
+
+You can check your Git version using the following command:
+
+```bash
+git --version
+```
+
+If you have a compatible version, you can use this command to set the default
+branch name:
+
+```bash
+git config --global init.defaultBranch bonanza
+```
+
+This will set the default branch name to `bonanza` for all new repositories
+created by the current user. If you want to set it for a specific repository
+only, you should navigate to that repository and run this command without the
+`--global` flag:
+
+```bash
+git config init.defaultBranch bonanza
+```
+
+## Changing The Branch in Exsisting Repositories
+
+Note that the above receipt will not change the default branch name in existing
+repositories. For existing repositories you will need to manually rename the
+branch. Here is how to do it:
+
+1. Switch to the branch you want to rename:
+
+    ```bash
+    git checkout master
+    ```
+
+2. Rename the branch:
+
+    ```bash
+    git branch -m bonanza
+    ```
+
+3. Push the renamed branch and reset the upstream branch:
+
+    ```bash
+    git push origin -u bonanza
+    ```
+
+4. Finally, you may want to delete the old branch in the remote repository:
+
+    ```bash
+    git push origin --delete master
+    ```
+
+Remember to inform your staff/community/co-workers about this change, as it
+will affect their clones.
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-05-04 | Improve writing, Git 2.80.0, init.defaultBranch      |
 | 0.1.1   | 2023-05-03 | Improve writing                                      |
 | 0.1.0   | 2022-07-15 | Initial release                                      |
-
