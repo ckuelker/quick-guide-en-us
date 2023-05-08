@@ -2,8 +2,8 @@
 title: Github Pull Request
 linkTitle: Github-Pull-Request
 author: Christian Külker
-date: 2022-05-31
-version: 0.1.1
+date: 2023-05-08
+version: 0.1.3
 type: doc
 disclaimer: True
 toc: True
@@ -20,25 +20,25 @@ description: How to make a github.com pull request
 
 ---
 
-A common way participating in software projects managed with git is the so
-called 'pull request' on certain services like <https://github.com> (It is
-called 'merge request on <https://gitlab.com>). This technique is very popular
-with git, as people often have a one time commitment and no write access to the
-repository. A 'pull request' is therefore a one time __write__ exception to the
-repository. In traditional `VCS` a tar ball was send via mail for example and
-the repository maintainer would manually save the tar ball to the file system,
-extract the content and add the changes to the repository, review it, make a
-diff and decide if the changes would be included in the next repository commit
-to make a one time contribution possible. This was a labour intensive error
-prone process. Git and <https://github.com> use the concept of a 'pull
-request' and 'fork' to facilitate a half automatic method for one time write
-contribution. This section is about how to make a pull request (and fork) on
-<https://github.com> specific. As this is not a git feature as such, the web
-interface of <https://github.com> need to be used together with the command
-line.
+A common way to participate in git-managed software projects is to submit a
+"pull request" to certain services such as <https://github.com> (it's called a
+"merge request" on <https://gitlab.com>). This technique is very popular with
+git because people often have a one-time commitment and do not have write
+access to the repository. A pull request is therefore a one-time __write__
+exception to the repository. In traditional `VCS`, for example, a tarball would
+be emailed, and the repository maintainer would manually save the tarball to
+the filesystem, extract the contents and add the changes to the repository,
+review it, make a diff, and decide whether to include the changes in the next
+commit of the repository to allow for a one-time contribution. This was a
+labor-intensive, error-prone process. Git and <https://github.com> use the
+concept of a "pull request" and a "fork" to provide a semi-automated method for
+a one-time write contribution. This section is about how to make a pull request
+(and fork) on <https://github.com> specifically. As this is not a Git feature
+as such, the web interface of <https://github.com> must be used in conjunction
+with the command line.
 
 1. Log into <https://github.com>
-2. Go to the web page projects repository, press the fork button
+2. Go to the website projects repository, press the fork button
 3. Clone **your** fork of the repository
 
 ```bash
@@ -51,9 +51,9 @@ user@host:~$ git clone git@github.com:USER/REPOSITORY.git
 user@host:~$ cd REPOSITORY
 ```
 
-5. Switch to the master branch (your branch should be diverted from master) and
-look for the other branches, so that your new name do not conflict. For
-example.
+5. Switch to the main or master branch (your branch should be redirected from
+   the master) and check the other branches so that your new name does not
+   conflict. For example
 
 ```bash
 user@host:~$ git checkout master
@@ -77,7 +77,7 @@ git branch BRANCHNAME
 git checkout BRACHNAME
 ```
 
-The short form of the last 2 steps, create a self descriptive branch of
+The short form of the last 2 steps, create a self-describing branch of the
 intended change.
 
 ```bash
@@ -153,9 +153,9 @@ To github.com:ckuelker/cwa-documentation.git
 
 11. Request A Pull
 
-The last commit already shows the URL to go
+The last commit already shows the URL to go to
 `https://github.com/UPSTREAM-USER/UPSTREAM-REPO/pull/new/BRANCHNAME`. Use the
-URL and press the green button "Compare & pull request". Add a message.
+URL and press the green "Compare & Pull Request" button. Add a message.
 
 ## Understanding The Remote Origin
 
@@ -186,15 +186,15 @@ user@host:~$ git remote show origin
 
 ## Delete An Unused Branch
 
-Sometimes while working on the pull request one realize that the name of the
-branch is not fit for the purpose, needs an addition. Usually the `-d` option
+Sometimes, while working on a pull request, one realizes that the name of the
+branch is not appropriate, that an addition is needed. Usually the `-d` option
 is used.
 
 ```bash
 user@host:~$ git branch -d BRANCHNAME
 ```
 
-However if the branch is not merged `-D` needs to be used.
+However, if the branch is not merged, `-D` must be used.
 
 ```bash
 user@host:~$ git branch -D BRANCHNAME
@@ -208,6 +208,7 @@ See [managing forks](github-manageing-forks.html) for details.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2023-05-08 | Improve writing                                      |
 | 0.1.2   | 2022-06-23 | Improve introduction                                 |
 | 0.1.1   | 2022-05-31 | Fix front matter, shell->bash                        |
 | 0.1.0   | 2020-06-08 | Initial release                                      |
