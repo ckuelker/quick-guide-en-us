@@ -1,8 +1,8 @@
 ---
 title: Packaging Python Projects
 author: Christian Külker
-date: 2020-05-16
-version: 0.1.1
+date: 2023-05-10
+version: 0.1.2
 type: doc
 disclaimer: True
 toc: True
@@ -16,6 +16,8 @@ commands:
 - virtualenv
 - venv
 - pip
+- pip3
+- venv
 tags:
 - Packaging-Python-Projects
 - setuptools
@@ -24,32 +26,33 @@ tags:
 - zsh
 - setuptools
 - wheel
+- Local Package Testing
 description: Packaging Python projects with setuptools
 
 ---
 
-This document describes briefly the process to package Python projects. It
-follows the Python Software Foundation [packaging tutorial] that uses
-[setuptools]. Setuptools is a collection of enhancements to the Python
+This document briefly describes the process of packaging Python projects. It
+follows the Python Software Foundation's [Packaging Tutorial], which uses
+[setuptools]. Setuptools is a collection of extensions to the Python
 distribution utilities that allow you to more easily build and distribute
-Python distributions, especially ones that have dependencies on other packages.
-For details on how to use the [setuptools] see the [documentation of
-setuptools].
+Python distributions, especially those that have dependencies on other
+packages.  For details on how to use the [setuptools], see the [setuptools
+documentation].
 
 ## Example Test Package
 
 ### Create Account
 
-Because [TestPyPI] has a separate database from the live PyPI, you’ll need a
-separate user account for specifically for TestPyPI.  [Create an account on
-test.pypi.org] to [register an account] with a valid mail address.
+Because [TestPyPI] has a separate database from the live PyPI, you'll need a
+separate user account specifically for TestPyPI.  [Create an account at
+test.pypi.org to [register an account] with a valid email address.
 
-Go to the [token section] of your account and create a new API token; don’t
-limit its scope to a particular project, since you are creating a new project.
+Go to the [Token Section] of your account and create a new API token; do not
+restrict it to a specific project, as you are creating a new project.
 
-Since we will use `twine` copy the API token to `$HOME/.pypirc`. However this
-will not hinder to be asked about it. So maybe it is useless, but mentioned
-in your token section of your test account.
+Since we will be using `twine`, copy the API token to `$HOME/.pypirc`. However,
+this will not prevent you from being asked for it. So it may be useless, but
+mention it in the token section of your test account.
 
 ```
 [pypi]
@@ -70,9 +73,10 @@ echo -e "# Example Package\n\nThis is a simple example package.">README.md
 vim setup.py
 ```
 
-The contents of `setup.py`, replace `YOUR-USERNAME-HERE` with your user name.
-And probably also update others, like URL to your repository and e-mail
-address. (That is a guess, the tutorial gives no information about this).
+The contents of `setup.py`, replace `YOUR-USERNAME-HERE` with your username.
+And probably update others as well, like the URL to your repository and your
+email address. (This is a guess, the tutorial does not give any information
+about this).
 
 ```
 import setuptools
@@ -101,9 +105,10 @@ setuptools.setup(
 
 ### Install Dependencies
 
-Even though it is recommended to install the latest version of `setuptool` and
-`wheel`, if you like the to maintain the security management supported by your
-Linux distribution, you probably will prefer the package manager.
+Although it is recommended to install the latest version of `setuptool` and
+`wheel`, if you want to maintain the security management supported by your
+Linux distribution, you will probably prefer the package manager.
+
 
 ```bash
 aptitude install python3-setuptools python3-wheel twine python3-pip
@@ -247,8 +252,8 @@ Installing setuptools, pkg_resources, pip, wheel...done.
 source /tmp/python-packaging-tutorial-example-package/bin/activate
 ```
 
-For `zsh` you know that the environment is active when your `zsh` prompt is
-messed up as it prints (DIR) in front of your prompt.
+For `zsh`, you know that the environment is active when your `zsh` prompt is
+messed up because it prints (DIR) in front of your prompt.
 
 Or you use `virtalenv` with python3
 
@@ -264,10 +269,10 @@ Installing setuptools, pkg_resources, pip, wheel...done.
 source /tmp/python-packaging-tutorial-example-package/bin/activate
 ```
 
-Why `virtualenv` is complaining about 'Already ...' is unclear, as it certainly
-did use python2 before. Does this software have some attitude issues?
+Why `virtualenv` is complaining about 'Already ...' is unclear, since it surely
+used python2 before. Does this software have some attitude issuses?
 
-Installing the new test software:
+Install the new test software:
 
 ```bash
 python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps \
@@ -281,22 +286,22 @@ Installing collected packages: example-pkg-ckuelker
 Successfully installed example-pkg-ckuelker-0.0.1
 ```
 
-Testing the installation with the command line.
+Test the installation with the command line.
 
 ```bash
 python3
 import example_pkg
 ```
 
-Since the example package does nothing there is nothing more to say on this.
-However one might add a non trivial package to [test.pypi.org] to better
-understand this process.
+Since the example package does nothing, there is nothing more to say about
+this.  However, one could add a non-trivial package to [test.pypi.org] to
+better understand the process.
 
 ## Real Project
 
-Real projects should be tested on [text.pypi.org], however at some point you
-might upload it to the real [pypi.org]. Here only some short differences to the
-example project section above.
+Real projects should be tested on [test.pypi.org], but at some point you might
+want to upload it to the real [pypi.org]. Here are just a few small differences
+to the sample project section above.
 
 * Chose a unique name for your project (you should not add your user name to
   the project name)
@@ -329,9 +334,8 @@ p   python3-setuptools-scm-git-archive - Plugin for setuptools_scm to add
                                          support for git archives
 ```
 
-From a distance Debian offers 2 packages: `python3-setuptools` and
-`pypy-setuptools`. However it seems they are the same.
-
+From a distance, Debian offers 2 packages: `python3-setuptools` and
+`pypy-setuptools`. However, they seem to be the same.
 
 ```bash
 aptitude show pypy-setuptools
@@ -370,10 +374,197 @@ Extensions to the python-distutils for large or complex distributions.
 Homepage: https://pypi.python.org/pypi/setuptools
 ```
 
+## Local Package Installs and Testing
+
+Consider the following small Flask application called 'boxes'. It has the
+following structure. Note that unlike the previous example, the `tests` test
+directory is at the project level.
+
+~~~
+boxes-project  # = PACKAGE_DEV
+.
+├── boxes
+│   ├── config.py
+│   ├── debug.py
+│   ├── env.py
+│   ├── error.py
+│   ├── exception.py
+│   ├── git.py
+│   ├── __init__.py
+│   ├── main.py
+│   ├── static
+│   │   └── css
+│   │       └── default.css
+│   ├── store.py
+│   ├── templates
+│   │   ├── edit_view.html
+│   │   ├── error_view.html
+│   │   ├── input_view.html
+│   │   ├── list_view.html
+│   │   └── search_view.html
+│   ├── util.py
+│   └── version.py
+├── MANIFEST.in
+├── setup.py
+└── tests
+    ├── __init__.py
+    ├── test_config.py
+    ├── test_debug.py
+    ├── test_env.py
+    ├── test_exception.py
+    ├── test_git.py
+    ├── test_main.py
+    ├── test_store.py
+    ├── test_template.py
+    └── test_util.py
+~~~
+
+### Test a Python3 Package With pip3 Inside venv
+
+First, we need to create a new virtual environment to isolate our dependencies
+from the rest of our system. This is done using the venv module in Python.
+
+```bash
+cd /tmp
+python3 -m venv test_env
+cd test_env
+source bin/activate # We assume the rest in venv
+export PYTHONDONTWRITEBYTECODE=1 # prevent __pycache__
+```
+
+Next, we install wheel to make sure we can build the project into a Python
+wheel file, a kind of built-package format for Python.
+
+```bash
+pip3 install wheel # And probably others
+# We assume the package to be in ~/PACKAGE_DEV
+cd PACKAGE_DEV
+python setup.py sdist bdist_wheel
+```
+
+This creates two different types of distributable package formats: `sdist` (a
+source distribution format encapsulated in a tar file) and `bdist_wheel` (a
+built distribution format encapsulated in a `*.whl` file) and many other files.
+
+~~~
+├── boxes.egg-info
+│   ├── dependency_links.txt
+│   ├── entry_points.txt
+│   ├── PKG-INFO
+│   ├── requires.txt
+│   ├── SOURCES.txt
+│   └── top_level.txt
+├── build
+│   ├── bdist.linux-x86_64
+│   └── lib
+│       └── boxes
+│           ├── config.py
+│           ├── debug.py
+│           ├── env.py
+│           ├── error.py
+│           ├── exception.py
+│           ├── git.py
+│           ├── __init__.py
+│           ├── main.py
+│           ├── store.py
+│           ├── templates
+│           │   ├── edit_view.html
+│           │   ├── error_view.html
+│           │   ├── input_view.html
+│           │   ├── list_view.html
+│           │   └── search_view.html
+│           ├── util.py
+│           └── version.py
+├── dist
+│   ├── boxes-0.1.0-py3-none-any.whl
+│   └── boxes-0.1.0.tar.gz
+~~~
+
+
+Some packages can run tests without installation (like Perl modules), in other
+cases you need to install the package before you can test it. Unlike Perl,
+there is an uninstall target, so if the tests are negative, the software can be
+removed. For the moment we assume that we do not need to install it.
+
+#### Install Test Environment
+
+__Bash__
+
+```bash
+pip3 install .[test]
+```
+
+__Zsh__
+
+```bash
+pip3 install .\[test\]
+```
+
+#### Run The Tests
+
+To run the tests, we use Python's built-in `unittest` module. This module
+provides a rich set of tools for constructing and executing tests, and can be
+run directly from the command line to test single or multiple modules.
+
+```bash
+cd PACKAGE_DEV
+python3 -m unittest tests/testutil.py # One test
+python3 -m unittest tests/test*.py    # All tests
+```
+
+The last command automatically detects and executes all test cases found in the
+tests directory.
+
+#### Install Package Inside venv
+
+Before installing our package, we need to make sure we're in a virtual
+environment (venv). A virtual environment is a self-contained directory tree
+that contains a Python installation and a number of additional packages. This
+helps to keep dependencies required by different projects separate by creating
+isolated spaces for them. In this case, it can be understood if the
+'(test_env)' is displayed after the shell prompt.  
+
+__Install via tar archive:__
+
+```bash
+tar tvzf dist/boxes-0.1.0.tar.gz # Check the content
+pip3 install dist/boxes-0.1.0.tar.gz # Install
+```
+
+__Install via `*.whl` file:__
+
+```bash
+pip3 install dist/boxes-0.1.0-py3-none-any.whl
+```
+
+__Check if it is installed:__
+
+```bash
+pip3 list|grep boxes
+boxes (0.1.0)
+```
+
+__Uninstall:__
+
+```bash
+pip3 uninstall boxes
+```
+
+#### Conclusion
+
+By following this guide, you can effectively test your Python projects and
+ensure that they are easy to distribute and install. Remember, always use a
+virtual environment when working with Python projects to avoid many common
+problems related to project dependencies. For more advanced uses and best
+practices regarding Python packaging, see the official Python Packaging User
+Guide <https://packaging.python.org/en/latest/>.
+
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-05-10 | Improve writing, Add Test a Python3 Package With ... |
 | 0.1.1   | 2022-05-26 | +History, Change shell to bash                       |
 | 0.1.0   | 2020-05-16 | Initial release                                      |
 
@@ -387,3 +578,4 @@ Homepage: https://pypi.python.org/pypi/setuptools
 [token section]: https://test.pypi.org/manage/account/#api-tokens
 [pypi.org]: https://pypi.org
 [Create an account on pypi.org]: https://pypi.org/account/register/
+
