@@ -2,7 +2,8 @@
 title: Python Best Practice
 linkTitle: Python-Best-Practice
 author: Christian Külker
-date: 2020-01-18
+date: 2023-05-11
+version: 0.1.2
 type: doc
 disclaimer: True
 toc: True
@@ -14,8 +15,8 @@ description: Python-Best-Practice
 
 ---
 
-This guides follows some ideas from `The Hitchhiker's Guide To Python` and
-other ideas from the internet and myself. It is a project in progress.
+This guide follows some ideas from `The Hitchhiker's Guide To Python` and other
+ideas from the internet and myself. It is a work in progress.
 
 ## PEP (Python Enhanced Proposals)
 
@@ -28,8 +29,8 @@ conventions associated with Python `docstrings`.
 
 ## IDE
 
-This sections contains only IDE and editors that I have Python experience with.
-Be aware that this section is incomplete.
+This section contains only IDE and editors that I have Python experience with.
+Note that this section is incomplete.
 
 ### Vim
 
@@ -45,8 +46,8 @@ set shiftround    " round indent to multiple of 'shiftwidth'
 set autoindent    " align the new line indent with the previous line
 ~~~
 
-- If you are using vim also for other language, use plugin
-[ident](http://www.vim.org/scripts/script.php?script_id=974).
+- If you also use vim for another language, use the [ident] plugin
+  (http://www.vim.org/scripts/script.php?script_id=974).
 
 - Improved [syntax](http://www.vim.org/scripts/script.php?script_id=790)
 highlighting.
@@ -71,9 +72,10 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_loc_list_height=5
 ```
 
-- Use [Python-mode](https://github.com/klen/python-mode): Python code checking
-with pylint, pyflakes, pycodestyle or mccabe; refactoring, authocompletion with
-[Rope](TODO); virtualenv support, search documentation.
+- Use the [Python mode](https://github.com/klen/python-mode): Python code
+  checking with pylint, pyflakes, pycodestyle, or mccabe; refactoring,
+  autocompletion with [Rope](https://github.com/python-rope/rope); virtualenv
+  support, documentation search.
 
 - Use [SuperTab](http://www.vim.org/scripts/script.php?script_id=1643) for code
 completion with the tab key.
@@ -87,7 +89,7 @@ Install `pip` if not already done.
 ### IPython
 
 [IPhthon](http://ipython.org/) should be used interactively with the features:
-shell, web-base notebook, data data visualization, GUI toolkits, parallel
+shell, web-based notebook, data visualization, GUI toolkits, parallel
 execution.
 
 ```bash
@@ -105,7 +107,36 @@ Bash: (for `pip install`, this will make `pip` require a virtual environment)
 export PIP_REQUIRE_VIRTUALENV=true
 ```
 
-See this example environment. TODO (/srv/env/python)
+See this example environment.
+
+```bash
+#!/usr/bin/zsh
+VER=3.10.2
+# Disable the creation if bytecode (should be enabled)
+# export PYTHONDONTWRITEBYTECODE=1
+
+# pip only work with virtual enviroments (prevents accidental global installs)
+# Or edit pip.conf, pip.ini
+export PIP_REQUIRE_VIRTUALENV=true
+
+# cache often used libraries, or edit pip.conf, pip.ini
+if [ ! -d $HOME/.pip/cache ]; then mkdir -p $HOME/.pip/cache; fi
+export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
+
+# To install globally use 'gpip'
+gpip() {
+    PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
+
+LOC=/usr/local/bin
+BIN=$LOC/python3.10
+DIR=/srv/build/Python-$VER
+if [  -f $BIN ];then
+    #echo "BIN [$BIN] exists"
+    export PATH=$LOC:$PATH
+    alias -g python3="$BIN"
+fi
+```
 
 ## Project Layout
 
@@ -126,8 +157,8 @@ tests/test_basic.py
 tests/test_advanced.py
 ~~~
 
-- use directory `sample` (and replace this with a real name) and do not use
-`src` or `python`.
+- Use the directory `sample` (and replace this with a real name) and do not use
+  `src` or `python`.
 
 ## Makefile
 
@@ -146,7 +177,7 @@ clean:
 
 - Use a simple and explicit path modification to resolve the package properly
 
-- Individual tests should have import context, create a tests/context.py file:
+- Individual tests should have an import context, create a `tests/context.py` file:
 
 ```python
 import os
@@ -155,6 +186,8 @@ sys.path.insert(0,os.path.abspath(os.path.join(os.path.dirname(__file__),'..')))
 
 import sample
 ```
+
+Alternatively this can be done in `tests/__init__.py`.
 
 - Within the individual test modules: import the module like so
 
@@ -202,9 +235,9 @@ from.context import sample
 - Do not add too many code to `__init__.py`
 - It is considered a good practice to leave `__init__.py` emtpy
 
-The statement `import pack.module` will look for the file `pack/__init.py__`
-and execute all top level statements and than looks for `pack/module.py` and
-execute all top level statements.
+The command `import pack.module` will look for the file `pack/__init.py__` and
+execute all top level statements and then look for `pack/module.py` and execute
+all top level statements.
 
 ## Function
 
@@ -336,45 +369,45 @@ send('Hello', ['Bilbo', 'Frodo', 'Sauron']
 - Do not change how the Python interpreter imports modules
 - Try not to embed C routines in Python, if possible
 
-## Be a nice user
+## Be a Nice User
 
-- Do not write client code can override an object’s properties and methods
+- Do not write client code that can override an object’s properties and methods
 
-## Return values
+## Return Values
 
 - Try to avoid multiple places for return statements
 
 ## Documentation
 
-While there usually one way to do it. It seems when it comes to documentation
-there are more.
+Although there is usually one way to do it. It seems that when it comes to
+documentation, there are more.
 
-Python makes no exception by suggesting to maintain a `README` file for
-project documentation and less a `INSTALL` document as ways of installing
-are usually known and similar. The Python Guide suggests the presence of
-a `LICENSE` file.
+Python is no exception, suggesting that a `README` file be maintained for
+project documentation rather than an `INSTALL` document, since installation
+methods are usually known and similar. The Python manual suggests the presence
+of a `LICENSE` file.
 
-If the project gets bigger and the `README` will get to long (only then)
-parts of the `README` might be offloaded to a `TODO` file and a `CHANGELOG`
-file.
+If the project gets bigger and the `README` gets too long (only then), parts of
+the `README` might be moved to a `TODO` file and a `CHANGELOG` file.
 
 For the format `reStructuredText` or `Markdown` is suggested.
 
-Usually this is sufficient for small and medium sized projects. Often the dead
-of an aspiring open source software project arise when the project reaches the
-size, that a README is not sufficient any more. Then a wiki or even a home page
-is suggested and political factions emerge that sometimes fighting severe bike
-shed color wars. The following short paragraph is for these situations.
+This is usually sufficient for small and medium-sized projects. Often, the
+death knell of an emerging open source software project comes when the project
+reaches a size where a README is no longer sufficient. Then a wiki, or even a
+homepage, is suggested, and political factions form, sometimes engaging in
+fierce bike-shed color wars. The following short section is for those
+situations.
 
-`Shpinx` is a popular Python documentation tool utilize `reStructuredText`
-and spits HTML and PDF out.
+Shpinx is a popular Python documentation tool that uses reStructuredText and
+spits out HTML and PDF.
 
-For other parts it is advisable to already document the source code.  Python
-can be documented well with `docstrings` (`PEP 0257#specification`) in favor of
-block comments (`PEP 8#comments`).
+For other parts, it is advisable to document the source code already.  Python
+can be well documented using `docstrings` (`PEP 0257#specification`) in favor
+of block comments (`PEP 8#comments`).
 
-A `docstring` comment is basically a multi line comment with three quotes and
-in some cases they can be used to supplement unit tests.
+A `docstring` comment is basically a multi-line comment with three quotes
+around it, and in some cases they can be used to supplement unit tests.
 
 ```python
 def add_two_numbers(x, y):
@@ -451,6 +484,7 @@ __pycache__/
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-05-11 | Improve writing, add environemnt, add link.          |
 | 0.1.1   | 2022-06-09 | Shell->bash, +history, documtation                   |
 | 0.1.0   | 2020-01-18 | Initial release                                      |
 
