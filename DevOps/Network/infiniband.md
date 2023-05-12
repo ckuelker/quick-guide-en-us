@@ -1,8 +1,8 @@
 ---
 title: Infiniband
 author: Christian Külker
-date: 2022-06-08 
-version: 0.1.2
+date: 2023-05-12
+version: 0.1.3
 type: doc
 disclaimer: True
 toc: True
@@ -33,9 +33,9 @@ description: Basic Infiniband usage
 
 ---
 
-The computer networking standard InfiniBand (IB) is used in high-performance
-computing. It features a very high throughput and very low latency compared to
-Ethernet.  It is used for data and communication interconnect between nodes
+The InfiniBand (IB) computer networking standard is used in high performance
+computing. It features very high throughput and very low latency compared to
+Ethernet.  It is used for data and communication interconnection between nodes
 (computers).  InfiniBand can be used as a switched interconnect between nodes
 and storage or storage and storage.
 
@@ -45,15 +45,15 @@ InfiniBand host bus adapters and network switches.  In 2016 it was reported
 that also Oracle created its own version of InfiniBand switch units and server
 adapter chips.
 
-Mellanox IB host adapters work with major Linux distributions: RHEL, SLES and
-Debian, but some might have better support than others for proprietary add-ons.
+Mellanox IB host adapters work with all major Linux distributions: RHEL, SLES
+and Debian, but some may have better support for proprietary add-ons than
+others.
 
-Infiniband,  promoted by the InfiniBand Trade Association, is competing with
-other network interconnects like Fibre Channel, Intel Omni-Path as well as
-Ethernet.
+InfiniBand, promoted by the InfiniBand Trade Association, competes with other
+network interconnects such as Fibre Channel, Intel Omni-Path, and Ethernet.
 
-The following tests have been performed on Debian and/or CentOS with Mellanox
-host adapters.
+The following tests were performed on Debian and/or CentOS with Mellanox host
+adapters.
 
 ## Install The Software
 
@@ -71,7 +71,7 @@ lspci -v | grep Mellanox
 compatibility mode) (rev 20)
 ```
 
-In case it is not present or in doubt, sue `dmesg|grep ib`.
+In case it is not present or in doubt, use `dmesg|grep ib`.
 
 
 Check if kernel modules are loaded:
@@ -99,7 +99,7 @@ mlx4_core              67736  1 mlx4_ib
 scsi_mod              126565  2 sd_mod,libata
 ```
 
-Load Other IB Modules
+Load other IB Modules
 
 ```bash
 modprobe ib_sdp
@@ -167,7 +167,7 @@ ibstat -p
 
 ## Configure Opensm
 
-SM stands for subnet manager. There different implementations and locations
+SM stands for Subnet Manager. There are different implementations and locations
 where subnet managers can be installed.
 
 Per default it is started on all ports, open `/etc/default/opensm`
@@ -194,8 +194,8 @@ Sep 20 18:10:40 ts2 OpenSM[3527]: Entering DISCOVERING state#012
 Sep 20 18:10:40 ts2 OpenSM[3527]: SM port is down#012
 ```
 
-If the above steps are done also on an other node the following message can  be
-seen:
+If the above steps are also performed on another node, the following message is
+displayed:
 
 ```bash
 Sep 20 18:38:50 ts2 OpenSM[3527]: Entering MASTER state#012
@@ -234,7 +234,7 @@ Ca      : 0x002590ffff2e4f70 ports 1 "MT25408 ConnectX Mellanox Technologies"
 
 ## Check Switches
 
-As the time of writing I had not a switch attached. Usually there is a
+At the time of writing I did not have a switch attached. Usually there is a
 long output.
 
 ```bash
@@ -246,7 +246,7 @@ ibswitches
 iblinkinfo
 ```
 
-Other low level information can be obtained by the `sys` file system
+Other low-level information can be obtained from the `sys` filesystem
 
 ```
 /sys/class/infiniband/DEVICE_NAME
@@ -254,8 +254,8 @@ Other low level information can be obtained by the `sys` file system
 
 ## Setting Up IPoverIB
 
-Infinband can be used without IP, but for many application it is easier to
-use IPoverIB. iSCSIoverIB is not covered here.
+Infinband can be used without IP, but for many applications it is easier to use
+IPoverIB. iSCSIoverIB is not covered here.
 
 Check that the module is loaded:
 
@@ -263,7 +263,7 @@ Check that the module is loaded:
 modprobe ib_ipoib |grep ib_ipoib
 ```
 
-This shows nothing but the following should be showing something
+This shows nothing, but the following should show something
 
 ```bash
 ifconfig -a |grep ib
@@ -272,9 +272,9 @@ ib0   Link encap:UNSPEC  HWaddr 80-00-00-48-FE-80-00-00-00-00-00-00-00-00-00-00
 
 ## TCP Performance Tuning
 
-In order to obtain maximum IPoIB throughput you may need to tweak the MTU and
-various kernel TCP buffer and window settings. (Jumbo frames) See the details
-in the ipoib_release_notes.txt document in the ofed-docs package.
+To get maximum IPoIB throughput, you may need to tweak the MTU and various
+kernel TCP buffer and window settings. (Jumbo frames) See the
+ipoib_release_notes.txt document in the ofed-docs package for details.
 
 ## Test The Connection With Ibping
 
@@ -345,7 +345,7 @@ ib_write_bw nodeABC
 ------------------------------------------------------------------
 ```
 
-An other method is: (UNTESTED)
+Another method is: (UNTESTED)
 
 On host A:
 
@@ -376,8 +376,8 @@ opensm
 
 ## Troubleshooting Infiniband
 
-There many ways to troubleshoot Infiniband and the topic it self can fill a
-book, a quick start point is to use `libdiagnet`.
+There are many ways to troubleshoot Infiniband and the topic itself could fill
+a book, a quick starting point is to use `libdiagnet`.
 
 ```bash
 mkdir libdiagnet
@@ -385,17 +385,16 @@ cd libdiagnet
 ibdiagnet -ls 10 -lw 4x -vlr > ibdiagnet.out
 ```
 
-Maybe you have to do this over again. In this case (1) reset the error
-counters.
+You may need to do this again. In that case (1) reset the error counters.
 
 ```bash
 ibdiagnet –pc
 ```
 
-And (2) stress the network with benchmark like Intel **IMB-MPI1** benchmark
-over `mvapich` MPI or other network heavy load. Then (3) read out error
-counters again. After finish to run the test on all network nodes, run
-`ibdignet` again.
+And (2) stress the network with a benchmark like Intel **IMB-MPI1** benchmark
+over `mvapich` MPI or other heavy network load. Then (3) read the error
+counters again. After finishing the test on all network nodes, run `ibdignet`
+again.
 
 ```bash
 ibdiagnet –P all=1
@@ -410,9 +409,9 @@ ip addr|grep 'link/infiniband'|sed -s 's%.*link/infiniband \
 
 ## Command In Mellanox OFED Environmanets
 
-Mellanox OFED for Linux is provided as ISO images, one per supported Linux
-distribution and CPU architecture, that includes source code and binary RPMs,
-firm-ware, utilities, and documentation. This image also contains firmware.
+Mellanox OFED for Linux is provided as ISO images, one for each supported Linux
+distribution and CPU architecture, containing source code and binary RPMs,
+firmware, utilities, and documentation. This image also includes firmware.
 
 ```
 ibv_devinfo
@@ -421,10 +420,30 @@ flint
 spark
 ```
 
+# The State of InfiniBand 2022
+
+In 2022, InfiniBand will operate at a signaling rate of 100 Gbps and an
+effective throughput of 200 Gbps for a single link and up to 1200 Gbps for 12
+links. This is a leap from 2018's High Data Rate (HDR) technology, which
+offered a 50 Gbps signaling rate and up to 600 Gbps throughput with 12 links.
+
+InfiniBand uses a duplex link system, with most systems using a 4-link/lane
+connector known as QSFP. NDR technology, to be introduced in 2022, will allow
+the use of 8x links with NDR switch ports using [OSFP](https://osfpmsa.org/)
+(Octal Small Form Factor Pluggable) connectors and can be used with active
+copper and fiber optic cables.
+
+InfiniBand continues to provide Remote Direct Memory Access (RDMA)
+capabilities, resulting in low CPU overhead, and uses a switched fabric
+topology where all transfers begin and end at a channel adapter.
+
+[=>](https://en.wikipedia.org/wiki/InfiniBand)
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2023-05-12 | Improve writing, add 'State of IB 2022'              |
 | 0.1.2   | 2022-06-08 | shell->bash, +history                                |
 | 0.1.1   | 2020-09-05 |                                                      |
 | 0.1.0   | 2020-05-18 | Initial release                                      |
