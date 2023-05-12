@@ -1,8 +1,8 @@
 ---
 title: Grc
 author: Christian Külker
-date: 2023-04-14
-version: 0.1.2
+date: 2023-05-12
+version: 0.1.3
 type: doc
 disclaimer: True
 toc: True
@@ -32,7 +32,7 @@ distinguishing between different types of information in long or complex
 output. This short tutorial will guide you through the process of installing
 and using grc.
 
-# Debian Versions
+## Debian Versions
 
 - The Debian 9.13 Stretch version is `1.9-1`
 - The Debian 10 Buster version is    `1.11.3-1`
@@ -210,8 +210,10 @@ alias hello-world.sh='grc PATH_TO/hello-world.sh'
 
 This would permanently colorize `hello_world.sh`.
 
-
 ## Links
+
+- [grc]
+- [github]
 
 [grc]: http://kassiopeia.juls.savba.sk/~garabik/software/grc.html
 [github]: https://github.com/garabik/grc
@@ -220,6 +222,7 @@ This would permanently colorize `hello_world.sh`.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2023-05-12 | Fix Heading                                          |
 | 0.1.2   | 2023-04-14 | Improve writing, add examples and steps              |
 | 0.1.1   | 2022-05-27 | Update for Debian 11 Bullseye, 9.13 Stretch, change  |
 |         |            | shell to bash, +History, Link to tail, +commands     |
