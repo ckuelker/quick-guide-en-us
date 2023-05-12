@@ -420,7 +420,7 @@ flint
 spark
 ```
 
-# The State of InfiniBand 2022
+## The State of InfiniBand 2022
 
 In 2022, InfiniBand will operate at a signaling rate of 100 Gbps and an
 effective throughput of 200 Gbps for a single link and up to 1200 Gbps for 12
