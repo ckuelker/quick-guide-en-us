@@ -1,8 +1,8 @@
 ---
 title: Ncdu
 author: Christian Külker
-date: 2023-04-14
-version: 0.1.0
+date: 2023-05-12
+version: 0.1.1
 locale: en_US
 lang: en
 type: doc
@@ -16,6 +16,7 @@ tags:
 - Ncdu
 description: NCurses Disk Usage
 
+---
 
 ## NCDU (NCurses Disk Usage)
 
@@ -129,5 +130,6 @@ management faster.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2023-05-12 | Fix frontmatter YAML                                 |
 | 0.1.0   | 2023-04-15 | Initial release                                      |
  
