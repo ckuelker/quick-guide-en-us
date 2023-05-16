@@ -2,8 +2,8 @@
 title: Favicon.ico
 linkTitle: Favicon.ico
 author: Christian Külker
-date: 2023-03-24
-version: 0.1.2
+date: 2023-05-16 
+version: 0.1.3
 type: doc
 disclaimer: True
 toc: True
@@ -153,10 +153,23 @@ favicon.ico[8] ICO 24x24 24x24+0+0 32-bit sRGB 300KB 0.000u 0:00.000
 favicon.ico[9] ICO 16x16 16x16+0+0 32-bit sRGB 300KB 0.000u 0:00.000
 ```
 
+## How to Create a Favicon on Command Line
+
+If you are short on time and simply do not want to see the red error in the web
+console when developing a website, you need a favicon.ico. Instead of copying
+one and worrying about copyright and other legal implications, you can create
+one with just two commands in ImageMagick.
+
+```bash
+convert -size 32x32 canvas:'#0062FF' favicon.png
+convert fovicon.png -resize 32x32 favicon.ico
+```
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2023-05-16 | Add section about comman line creation               |
 | 0.1.2   | 2023-03-24 | Improve writing, rewrite some parts, typos, fixes    |
 | 0.1.1   | 2022-07-08 | History, shell to bash, formatting                   |
 | 0.1.0   | 2020-05-11 | Initial release                                      |
