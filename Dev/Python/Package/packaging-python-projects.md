@@ -1,8 +1,8 @@
 ---
 title: Packaging Python Projects
 author: Christian Külker
-date: 2023-05-10
-version: 0.1.2
+date: 2023-05-16
+version: 0.1.3
 type: doc
 disclaimer: True
 toc: True
@@ -27,13 +27,14 @@ tags:
 - setuptools
 - wheel
 - Local Package Testing
+- boxbrainiac
 description: Packaging Python projects with setuptools
 
 ---
 
 This document briefly describes the process of packaging Python projects. It
 follows the Python Software Foundation's [Packaging Tutorial], which uses
-[setuptools]. Setuptools is a collection of extensions to the Python
+[setuptools]. __Setuptools__ is a collection of extensions to the Python
 distribution utilities that allow you to more easily build and distribute
 Python distributions, especially those that have dependencies on other
 packages.  For details on how to use the [setuptools], see the [setuptools
@@ -43,8 +44,8 @@ documentation].
 
 ### Create Account
 
-Because [TestPyPI] has a separate database from the live PyPI, you'll need a
-separate user account specifically for TestPyPI.  [Create an account at
+Because [TestPyPI] has a separate database from the live __PyPI__, you'll need
+a separate user account specifically for __TestPyPI__.  [Create an account at
 test.pypi.org to [register an account] with a valid email address.
 
 Go to the [Token Section] of your account and create a new API token; do not
@@ -239,7 +240,7 @@ The package should be visible at
 
 ### Install The Project
 
-It can be installed via `virtualenv` and `pip` (in this case python2):
+It can be installed via `virtualenv` and `pip` (in this case `python2`):
 
 ```bash
 virtualenv /tmp/python-packaging-tutorial-example-package
@@ -255,7 +256,7 @@ source /tmp/python-packaging-tutorial-example-package/bin/activate
 For `zsh`, you know that the environment is active when your `zsh` prompt is
 messed up because it prints (DIR) in front of your prompt.
 
-Or you use `virtalenv` with python3
+Or you use `virtalenv` with `python3`
 
 ```bash
 virtualenv -p /usr/bin/python3 /tmp/python-packaging-tutorial-example-package
@@ -270,7 +271,7 @@ source /tmp/python-packaging-tutorial-example-package/bin/activate
 ```
 
 Why `virtualenv` is complaining about 'Already ...' is unclear, since it surely
-used python2 before. Does this software have some attitude issuses?
+used `python2` before. Does this software have some attitude issues?
 
 Install the new test software:
 
@@ -307,7 +308,7 @@ to the sample project section above.
   the project name)
 * [Create an account on pypi.org] (not on the [test.pypi.org])
 * Use `twine upload dist/*` without `--repository` option
-* Test installation with `pip install` (No `--index-url`, no `--no-deps`)
+* Test installation with `pip3 install` (No `--index-url`, no `--no-deps`)
 
 
 ## Excursus On Python3 vs PyPy
@@ -376,14 +377,15 @@ Homepage: https://pypi.python.org/pypi/setuptools
 
 ## Local Package Installs and Testing
 
-Consider the following small Flask application called 'boxes'. It has the
-following structure. Note that unlike the previous example, the `tests` test
-directory is at the project level.
+Consider the following small Flask application called
+[boxbrainiac](https://github.com/ckuelker/boxbrainiac). It has the following
+structure. Note that unlike the previous example, the `tests` test directory is
+at the project level.
 
 ~~~
-boxes-project  # = PACKAGE_DEV
+boxbrainiac-dev  # = PACKAGE_DEV
 .
-├── boxes
+├── boxbrainiac
 │   ├── config.py
 │   ├── debug.py
 │   ├── env.py
@@ -422,7 +424,7 @@ boxes-project  # = PACKAGE_DEV
 ### Test a Python3 Package With pip3 Inside venv
 
 First, we need to create a new virtual environment to isolate our dependencies
-from the rest of our system. This is done using the venv module in Python.
+from the rest of our system. This is done using the `venv` module in Python.
 
 ```bash
 cd /tmp
@@ -439,7 +441,7 @@ wheel file, a kind of built-package format for Python.
 pip3 install wheel # And probably others
 # We assume the package to be in ~/PACKAGE_DEV
 cd PACKAGE_DEV
-python setup.py sdist bdist_wheel
+python3 setup.py sdist bdist_wheel
 ```
 
 This creates two different types of distributable package formats: `sdist` (a
@@ -447,7 +449,7 @@ source distribution format encapsulated in a tar file) and `bdist_wheel` (a
 built distribution format encapsulated in a `*.whl` file) and many other files.
 
 ~~~
-├── boxes.egg-info
+├── boxbrainiac.egg-info
 │   ├── dependency_links.txt
 │   ├── entry_points.txt
 │   ├── PKG-INFO
@@ -457,7 +459,7 @@ built distribution format encapsulated in a `*.whl` file) and many other files.
 ├── build
 │   ├── bdist.linux-x86_64
 │   └── lib
-│       └── boxes
+│       └── boxbrainiac
 │           ├── config.py
 │           ├── debug.py
 │           ├── env.py
@@ -476,10 +478,9 @@ built distribution format encapsulated in a `*.whl` file) and many other files.
 │           ├── util.py
 │           └── version.py
 ├── dist
-│   ├── boxes-0.1.0-py3-none-any.whl
-│   └── boxes-0.1.0.tar.gz
+│   ├── boxbrainiac-0.1.0-py3-none-any.whl
+│   └── boxbrainiac-0.1.0.tar.gz
 ~~~
-
 
 Some packages can run tests without installation (like Perl modules), in other
 cases you need to install the package before you can test it. Unlike Perl,
@@ -487,6 +488,9 @@ there is an uninstall target, so if the tests are negative, the software can be
 removed. For the moment we assume that we do not need to install it.
 
 #### Install Test Environment
+
+This will install test dependencies as well as all dependencies and the
+application.
 
 __Bash__
 
@@ -508,8 +512,8 @@ run directly from the command line to test single or multiple modules.
 
 ```bash
 cd PACKAGE_DEV
-python3 -m unittest tests/testutil.py # One test
-python3 -m unittest tests/test*.py    # All tests
+python3 -m unittest tests/test_util.py # One test
+python3 -m unittest tests/test_*.py    # All tests
 ```
 
 The last command automatically detects and executes all test cases found in the
@@ -518,36 +522,36 @@ tests directory.
 #### Install Package Inside venv
 
 Before installing our package, we need to make sure we're in a virtual
-environment (venv). A virtual environment is a self-contained directory tree
+environment (`venv`). A virtual environment is a self-contained directory tree
 that contains a Python installation and a number of additional packages. This
 helps to keep dependencies required by different projects separate by creating
 isolated spaces for them. In this case, it can be understood if the
-'(test_env)' is displayed after the shell prompt.  
+`(test_env)` is displayed after the shell prompt.
 
 __Install via tar archive:__
 
 ```bash
-tar tvzf dist/boxes-0.1.0.tar.gz # Check the content
-pip3 install dist/boxes-0.1.0.tar.gz # Install
+tar tvzf dist/boxbrainiac-0.1.0.tar.gz # Check the content
+pip3 install dist/boxbrainiac-0.1.0.tar.gz # Install
 ```
 
 __Install via `*.whl` file:__
 
 ```bash
-pip3 install dist/boxes-0.1.0-py3-none-any.whl
+pip3 install dist/boxbrainiac-0.1.0-py3-none-any.whl
 ```
 
 __Check if it is installed:__
 
 ```bash
-pip3 list|grep boxes
-boxes (0.1.0)
+pip3 list|grep boxbrainiac
+boxbrainiac (0.1.0)
 ```
 
 __Uninstall:__
 
 ```bash
-pip3 uninstall boxes
+pip3 uninstall boxbrainiac
 ```
 
 #### Conclusion
@@ -564,6 +568,7 @@ Guide <https://packaging.python.org/en/latest/>.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2023-05-16 | Fix some errors like names or python3, pip3          |
 | 0.1.2   | 2023-05-10 | Improve writing, Add Test a Python3 Package With ... |
 | 0.1.1   | 2022-05-26 | +History, Change shell to bash                       |
 | 0.1.0   | 2020-05-16 | Initial release                                      |
