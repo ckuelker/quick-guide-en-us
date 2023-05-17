@@ -3,7 +3,8 @@ linkTitle: Tftpd
 title: Trivial File Transfer Daemon
 type: doc
 author: Christian Külker
-date: 2016-06-22
+date: 2023-05-17
+version: 0.1.2
 keywords:
     - TFTP
     - TFTPD
@@ -20,22 +21,23 @@ tags:
     - xinetd
 ---
 
-In some cases a Trivial File Transfer Protocol Daemon (tftpd) comes handy. One
-case were it is almost mandatory is to boot systems via the Intel Pre-boot
-Execution Environment (PXE). But also some very simple devices as embedded
-systems or Systems On Chip (SOC) like Board Management Controller (BMC) the
-TFTP daemon is sometimes the only method to copy a file onto the device.
+In some cases, a Trivial File Transfer Protocol Daemon (tftpd) comes in handy.
+One case where it is almost mandatory is when booting systems using the Intel
+Pre-boot Execution Environment (PXE). But also for some very simple devices
+like embedded systems or Systems On Chip (SOC) like Board Management Controller
+(BMC), the TFTP daemon is sometimes the only method to copy a file to the
+device. This guide focuses on CentOS.
 
 ## TFTP Server On CentOS
 
-Check if already installed
+Check if the server is already installed
 
 ```bash
 rpm -q tftp-server
 tftp-server-0.49-2.el5.centos
 ```
 
-Activate for some run-levels via xinetd
+Activate the daemon for some run-levels via xinetd
 
 ```bash
 /sbin/chkconfig --level 245 xinetd on
@@ -52,10 +54,10 @@ Add `-vvv` to '`server_args`' that will help the initial debugging.
 
 ## HPA TFTP Server On Debian
 
-Install the HPA TFTP server. HPA stands for Hans Peter Anvin who maintained
+Install the HPA TFTP Server. HPA stands for Hans Peter Anvin, who maintains
 this version. Back in 1995 this was the best alternative of TFTP servers, as
-other where quiet buggy. There is also the `tftpd` package under Debian. The
-configuration and supported protocols can differ between flavours of TFTP
+others were quite buggy. There is also a `tftpd` package in Debian.
+Configuration and supported protocols may differ between flavors of TFTP
 servers.
 
 ```bash
@@ -131,12 +133,7 @@ TIMEOUT 10
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-05-17 | Improve writing                                      |
 | 0.1.1   | 2022-06-18 | History, shell->bash                                 |
 | 0.1.0   | 2016-06-22 | Initial release                                      |
-
-
-
-
-
-
 
