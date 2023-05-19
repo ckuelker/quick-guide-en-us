@@ -2,8 +2,8 @@
 title: Cpuinfo
 linkTitle: Cpuinfo
 author: Christian Külker
-date: 2022-07-02
-version: 0.1.1
+date: 2023-05-19
+version: 0.1.2
 type: doc
 disclaimer: True
 toc: True
@@ -17,11 +17,10 @@ description: Scripting Cpuinfo
 
 ---
 
-There are a lot of useful information in `/proc/cpuinfo`. However in modern
-server boards you have a lot of CPU's and sometimes even more cores. To keep
-the oversight about this lengthy information sometimes this information needs
-to be a little preprocessed. This article is about some small scripts that get
-specific information.
+There is a lot of useful information in `/proc/cpuinfo`. However, modern server
+boards have many CPUs and sometimes even more cores. In order to keep track of
+this long information, sometimes this information needs to be pre-processed a
+bit. This article is about some small scripts to get specific information.
 
 ## Model Name
 
@@ -73,13 +72,13 @@ Super Micro Intel(R) Xeon(R) CPU E5-2658 0 @ 2.10GHz                   16
 MIC         0b/01                                                      62
 ```
 
-However the 'cpu cores' value for MIC is set to 61. And 244 cores divided
-be 4 is 61 not 62.
+However, the `cpu cores` value for MIC is set to 61. And 244 cores divided by 4
+is 61, not 62.
 
 ### CPU Cores
 
 ```bash
-grep -i 'cpu cores' /proc/cpuinfo|uniq|sed -e 's%cpu cores.*: %%
+grep -i 'cpu cores' /proc/cpuinfo|uniq|sed -e 's%cpu cores.*: %%'
 
 Machine     Model Name                                              Value
 =========================================================================
@@ -90,8 +89,8 @@ MIC         0b/01                                                      61
 
 ### The Number Of Cores
 
-To make the situation not ambiguous the number or _real_ cores should be
-calculated as:
+To make the situation unambiguous, the number or _real_ cores should be
+calculated as
 
 ```bash
 echo $((`grep -i "physical id" /proc/cpuinfo|sort -u|uniq|wc -l` * \
@@ -108,6 +107,7 @@ MIC         0b/01                                                      61
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-05-19 | Improve writing                                      |
 | 0.1.1   | 2022-07-02 | Commands meta data, shell->bash                      |
 | 0.1.0   | 2016-06-22 | Initial release                                      |
 
