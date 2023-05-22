@@ -1,8 +1,8 @@
 ---
 title: Ipmitool
 author: Christian Külker
-date: 2022-06-30
-version: 0.1.3
+date: 2023-05-22
+version: 0.1.4
 type: doc
 keywords:
     - ipmitool
@@ -22,26 +22,16 @@ description: Interaction with the Board Management Controller
 
 ---
 
-The command line tool `ipmitool` is used to interact with a __Board Management
-Controller__ (`BMC`) via the **Intelligent Platform Management Interface**
-(`IPMI`).  `IPMI` is an open standard for monitoring, logging and control of
-hardware that is implemented independent of the main `CPU`, `BIOS`, and `OS`
-via a side band access. On some platforms `IPMI` can also be used to manage
-hardware inventory information.
+The `ipmitool` command line tool is used to interact with a __Board Management
+Controller__ (`BMC`) through the **Intelligent Platform Management Interface**
+(`IPMI`).  IPMI is an open standard for monitoring, logging, and controlling
+hardware that is implemented independently of the main CPU, BIOS, and OS via
+sideband access. On some platforms, `IPMI` can also be used to manage hardware
+inventory information.
 
 * `SDR` - Sensor Data Repository
 * `SEL` - System Event Log
 * `FRU` - Field Replaceable Unit
-
-## History
-
-| Version | Date       | Notes                                                |
-| ------- | ---------- | ---------------------------------------------------- |
-| 0.1.3   | 2022-06-30 | Formatting, changes->history, shell->bash            |
-| 0.1.2   | 2020-05-03 | Debug `SOL`                                          |
-| 0.1.1   | 2020-05-02 | Set MAC address raw                                  |
-| 0.1.0   | 2016-02-12 | Initial release                                      |
- 
 
 ## Install
 
@@ -79,11 +69,10 @@ ipmitool mc reset warm
 
 ## BMC Sensor List
 
-If the `BMC` supports it (that depends on the `OEM`) sensors can be listed.
-Some sensors might be on the `BMC` SOC, but most likely this sensors are made
-available to the `BMC` by various methods.  Usually the `OEM` defines if the
-value is in or out of specification. Some values are depending on the `CPU`
-`OEM`.
+If the `BMC` supports it (this depends on the `OEM`), sensors can be listed.
+Some sensors may be on the `BMC` SOC, but most likely these sensors are made
+available to the `BMC` in various ways. Usually the `OEM` defines if the value
+is in or out of specification. Some values are dependent on the `CPU` `OEM`.
 
 ```bash
 ipmitool -I open sdr list
@@ -115,9 +104,9 @@ Setting the MAC address if the `BMC` can be done via the `OS`.
 ipmitool lan set <channel> macaddr <macaddr>
 ```
 
-Sometimes the MAC address can only be set by Vendor specific raw commands.
+Sometimes the `MAC` address can only be set by vendor specific raw commands.
 Sometimes the `BMC` has 2 `LAN` interfaces. The number depends on the hardware
-and `BMC` firmware. The channel number needs usually to be specified.
+and the `BMC` firmware. The channel number usually needs to be specified.
 
 ```bash
 ipmitool raw 0x0c 0x01 0x01 0xc2 0x00
@@ -131,9 +120,9 @@ ipmitool lan print 8
 
 ## Activate SOL
 
-To activate the **Serial Console Over LAN** (`SOL`). If the `OEM` configured
-the `BMC` in a secure way, a **user** and **password** is needed. However,
-since this is usually not changed, it can be a security problem.
+To enable **Serial Console Over LAN** (`SOL`). If the `OEM` has configured the
+`BMC` in a secure way, a **user** and **password** are required. Since this is
+usually not changed, this can be a security problem.
 
 ```bash
 ipmitool -I lanplus -H $REMOTEHOST -U $USER -P $PASSWORD sol activate
@@ -142,23 +131,22 @@ ipmitool -I lanplus -H $REMOTEHOST -U $USER -P $PASSWORD -v sol info
 
 ## Debug SOL
 
-To debug the setup of **Serial Over Lan** (`SOL`) add the `-v` option to enable
-verbose output and in some case set the privilege level explicit with the `-L`
-option.
+To debug the setup of **Serial Over Lan** (`SOL`), add the `-v` option to
+enable verbose output. verbose output and in some cases set the privilege level
+explicitly with the `-L` option.
 
 ```bash
 ipmitool -v -L USER -I lanplus -H 172.20.50.102 -U admin -P admin sol activate
 ```
 
-If his does not help use `namp`. See [ipmitool Fails with Authentication
+If this does not help use `namp`. See [ipmitool Fails with Authentication
 Issues](http://h20564.www2.hpe.com/hpsc/doc/public/display?docId=emr_na-c03481170)
-
 
 ## Raw Commands
 
-Sometimes the `OEM` implements undocumented features into the `BMC` firmware
-that can be reach via the **raw** option. As this commands are not standard it
-depends on the `BMC` what the out come will be. This is just an example.
+Sometimes the `OEM` implements undocumented features in the `BMC` firmware that
+can be accessed via the **raw** option. Since these commands are not standard,
+it depends on the `BMC` what the result will be. This is just an example.
 
 ```bash
 ipmitool raw 0x36 0xc
@@ -166,8 +154,8 @@ ipmitool raw 0x36 0xc
 
 ## Testing
 
-Some `OEMs` implement meaningful self tests. However dummy self tests that
-always passes have been seen in the wild.
+Some `OEMs` implement meaningful self tests. However, dummy self tests that
+always pass have been seen in the wild.
 
 ```bash
 ipmitool mc selftest
@@ -179,5 +167,13 @@ Selftest: passed
 * [ipmitool source](https://github.com/ipmitool/ipmitool)
 * [IPMI v2.0 Rev 1.1](https://www.intel.com/content/dam/www/public/us/en/documents/product-briefs/ipmi-second-gen-interface-spec-v2-rev1-1.pdf)
 
+## History
 
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2023-05-22 | Improve writing, move history                        |
+| 0.1.3   | 2022-06-30 | Formatting, changes->history, shell->bash            |
+| 0.1.2   | 2020-05-03 | Debug `SOL`                                          |
+| 0.1.1   | 2020-05-02 | Set MAC address raw                                  |
+| 0.1.0   | 2016-02-12 | Initial release                                      |
 
