@@ -1,8 +1,8 @@
 ---
 title: Swap
 author: Christian Külker
-date: 2022-05-30
-version: 0.1.1
+date: 2023-05-25
+version: 0.1.2
 type: doc
 disclaimer: True
 toc: True
@@ -27,15 +27,15 @@ description: Simple commands around old fashioned swap space
 
 ---
 
-A temporary memory (aka swap) is not strictly needed by a Linux system. However
-some Linux distributions refuse to install if not provided. In some cases
-changing or adding swap space on the fly (if a system has no swap space) is a
-seldom task to do and sometimes the correct commands need to be remembered or
-looked up (in this document).
+Temporary memory (also known as swap) is not really needed by a Linux system.
+However, some Linux distributions refuse to install if it is not provided. In
+some cases, changing or adding swap space on the fly (when a system has no swap
+space) is an infrequent task, and sometimes the correct commands need to be
+remembered or looked up (in this document).
 
-Linux provides two types of swap space. By default, most Linux
-installations use or create a swap partition, but it is also possible to use a
-specially configured file as a swap file.
+Linux provides two types of swap space. By default, most Linux installations
+use or create a swap partition, but it is also possible to use a specially
+configured file as a swap file.
 
 ## Swap Games With Files
 
@@ -46,22 +46,27 @@ df -h
 ```
 
 Prints the summary (if any) of swap spaces
+
 ```bash
 swapon -s
 ```
+
 See how many main memory and swap is available
+
 ```bash
 free
 free -m
 cat /proc/swaps
 top
 ```
+
 See the swap in and out
 
 ```bash
 vmstat
 ```
-See the swap usage of singe applications
+
+See the swap usage of single applications
 
 ```bash
 smem -s swap
@@ -103,27 +108,27 @@ Show a summary
 swapon -s
 ```
 
-This should be visible in the memory oververview
+This should be visible in the memory overview
 
 ```bash
 free -m
 ```
 
-Turn off the swap partition with the command which turns off all swap spaces
+Disable the swap partition with the command that disables all swap space
 
 ```bash
 swapoff -a
 ```
 
 For some non Debian systems: To mount the swap file on boot, add an entry
-to /etc/fstab
+to `/etc/fstab`
 
 ```bash
 echo "/swapfile none swap sw 0 0" >>/etc/fstab
 ```
 
 For Debian systems: To mount the swap file on boot, add an entry to
-/etc/fstab
+`/etc/fstab`
 
 ```bash
 echo "/swapfile swap swap defaults 0 0" >>/etc/fstab
@@ -131,20 +136,20 @@ echo "/swapfile swap swap defaults 0 0" >>/etc/fstab
 
 ## Swap Games with systemd
 
-The command `smem -s swap` can list swap used by processes. Sometimes
-when only `root` is logged in one can see a line like:
+The `smem -s swap` command can list the swap space used by processes.
+Sometimes, if only `root` is logged in, you may see a line like this:
 
 ~~~
 16940 USER     /lib/systemd/systemd --user      240     1376     2444     8088
 ~~~
 
-The __240__  indicates that the process with PID __16940__ uses swap for the
-user `USER`. Usually this means that the user is logged in. In some case this
-is not the case and the entry hangs around. When the user logs in again with
-ssh for example usually the ssh process will "inherit" the 'swappiness'.
+The __240__ indicates that the process with PID __16940__ is using swap for the
+user `USER`. Usually this means the user is logged in. In some cases this is
+not the case and the entry is hanging. For example, if the user logs in again
+using ssh, the ssh process will usually "inherit" the swappiness.
 
-To understand  which service is using this entry by `systemd`, one has to
-remember the PID and execute the following command:
+To understand which service is using this entry from `systemd`, remember the
+PID and run the following command:
 
 ```bash
 systemd-cgls -u user.slice --no-pager
@@ -194,6 +199,7 @@ user `USER` any more.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-05-25 | Improve writing, spelling                            |
 | 0.1.1   | 2022-05-30 | Change shell to bash, +history, +systemd --user      |
 | 0.1.0   | 2022-05-27 | Initial release                                      |
 
