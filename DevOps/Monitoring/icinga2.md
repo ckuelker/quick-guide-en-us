@@ -2,8 +2,8 @@
 title: Icinga2
 subtitle: Installation and Configuration of Icinga2, Icingaweb2 and Graphite on Debian 10 Buster
 author: Christian Külker
-date: 2022-06-05
-version: 0.1.3
+date: 2023-05-27
+version: 0.1.4
 type: doc
 disclaimer: True
 toc: True
@@ -28,62 +28,64 @@ tags:
 - Kubernetes
 - Icingaweb2
 - InfluxDB
-description: Inspect the Entire Infrastructure. Monitors availability and performance. Access to relevant data. Raises alerts in case.
+description:
+  Inspect the Entire Infrastructure. Monitors availability and performance.
+  Access to relevant data. Raises alerts in case.
 
 ---
 
-[Icinga2] is a monitoring system which checks the availability of network
+[Icinga2] is a monitoring system that checks the availability of network
 resources and generates performance data. This document describes the
-installation of [Icinga2], [Icingaweb2], Carbon, Graphite and other software.
+installation of Icinga2, [Icingaweb2], Carbon, Graphite and other software.
 
-[Icinga2] has some modules as add-on:
+Icinga2 has some modules as add-on:
 
-* Reporting Module: display the data directly within the [Icinga2] web
-  interface or export it to PDF, JSON or CSV format
-* [Graphite] Module: is a time-series database storing collected metrics and
-  making them available through restful API's and web interfaces
-* [InfluxDB] is a time series, metrics, and analytics database
-* [Grafana] a front-end of [InfluxDB]
-* PNP: is a graphing add-on.
-* Visualization: displays host objects as markers on Openstreetmap
-* Business Process: Rules express dependencies between existing hosts and
-  services and alert on application level.
-* Certificate Monitoring
-* Dashing Dashboard: combines several popular widgets
-* Log Monitoring: correlate events with your monitoring
+- Reporting Module: view data directly in the Icinga2 web interface or export
+  to PDF, JSON or CSV format.
+- [Graphite] Module: is a time series database that stores collected metrics
+  and makes them available through restful APIs and web interfaces.
+- [InfluxDB] is a time series, metrics, and analytics database.
+- [Grafana] is a front-end to InfluxDB.
+- PNP: is a graphing add-on.
+- Visualization: displays host objects as markers on Openstreetmap
+- Business Process: Rules express dependencies between existing hosts and
+  services and alert at the application level.
+- Certificate monitoring
+- Dashing Dashboard: combines several popular widgets
+- Log monitoring: correlate events with your monitoring
+
 
 Not handled in this document:
 
-* [Installation via puppet](https://icinga.com/products/integrations/puppet/)
-* [check_md_raid](https://exchange.icinga.com/exchange/check_md_raid) and
+- [Installation via puppet](https://icinga.com/products/integrations/puppet/)
+- [check_md_raid](https://exchange.icinga.com/exchange/check_md_raid) and
   [Raid monitoring plugin](https://www.thomas-krenn.com/de/wiki/Linux_Software_RAID_Monitoring_Plugin)
-* [Classic UI](https://www.thomas-krenn.com/de/wikiDE/images/d/d1/Icinga-classicui-nrpe-check_raid.png)
-* Usage of [MySQL] or [MariaDB] for [Graphite]
-* Access to Graphite-Web via user and password
+- [Classic UI](https://www.thomas-krenn.com/de/wikiDE/images/d/d1/Icinga-classicui-nrpe-check_raid.png)
+- Usage of [MySQL] or [MariaDB] for [Graphite]
+- Access to Graphite-Web via user and password
 
 ### Difference Between Icinga2 and Prometheus
 
-[Icinga2] is written in mind of dedicated hosts that are up 24/7 and Prometheus
-is written in mind of containers or [Kubernetes] clusters that are volatile,
-and may not exist as a "hostname" object. Using [Icinga2] on those objects
-would lead to false alarms.
+[Icinga2] is written with dedicated hosts in mind, which are up 24/7, and
+Prometheus is written with containers or [Kubernetes] clusters in mind, which
+are volatile and may not exist as a "hostname" object. Using [Icinga2] on these
+objects would cause false alarms.
 
-[Icinga2] is an active "pull" system where the server actively check the status
-of the state of the client to monitor. Prometheus is a passive "push" listener
-that scrapes data from individual services executed on the target clients, in a
-configured interval. Per default Prometheus will not complain or send alarms if
-a metric is not coming from the client or if it can not scrape the data from a
-client, unlike [Icinga2].
+[Icinga2] is an active "pull" system where the server actively checks the
+status of the client being monitored. Prometheus is a passive "push" listener
+that scrapes data from individual services running on target clients at a
+configured interval. By default, Prometheus will not complain or send alarms if
+a metric is not coming from the client or if it cannot scrape the data from a
+client, unlike Icinga2.
 
-[Icinga2] (unlike  Prometheus) was not build as a time series metric collector,
+[Icinga2] (unlike Prometheus) was not built as a time series metrics collector,
 but as a "state probe" service.
 
-The micro services approach of Prometheus require each functionality to be a
-separate service that has to be managed and configured.
+Prometheus' microservices approach requires each functionality to be a separate
+service that must be managed and configured.
 
-Prometheus’s own graphical interface is minimal and require a 3rd party tool,
-like [Grafana].
-
+Prometheus' own graphical interface is minimal and requires a 3rd party tool
+such as [Grafana].
 
 | Topic                              | Icinga2               | Prometheus |
 | ---------------------------------- | --------------------- | ---------- |
@@ -109,7 +111,7 @@ aptitude update
 aptitude install icinga2
 ```
 
-This will install version 2.10.3-2 and source and the following dependencies:
+This will install version 2.10.3-2 and the following dependencies:
 
 ~~~
 icinga2 icinga2-bin icinga2-common icinga2-doc monitoring-plugins-basic
@@ -122,8 +124,8 @@ monitoring-plugins-common
 aptitude install nagios-nrpe-plugin nagios-plugins-contrib
 ```
 
-Using monitoring plugins enables **icinga2** to query external services.
-The location for that tools is: `/usr/lib/nagios/plugins`
+Using monitoring plugins allows **icinga2** to query external services. The
+location for these tools is `/usr/lib/nagios/plugins`.
 
 Check if the **icinga2** daemon is started
 
@@ -155,7 +157,7 @@ systemctl status icinga2
              --no-stack-rlimit daemon -e
 ```
 
-So far the following packages have been installed.
+The following packages have been installed so far.
 
 ```bash
 dpkg -l |egrep -e 'icinga|monitoring-plugins'
@@ -232,8 +234,8 @@ aptitude install mariadb-server
 aptitude install icingaweb2 icingacli php-fpm libapache2-mod-rpaf
 ```
 
-To configure [Icingaweb2] Interface the `FQDN` of `localhost` and a valid
-mail address need to specified.
+To configure the [Icingaweb2] interface, you must specify the `FQDN` of
+`localhost` and a valid mail address.
 
 ```bash
 export FQDN=host.example.org
@@ -297,7 +299,8 @@ systemctl reload apache2
 
 ## Database
 
-First install database (see previous section) and then install `icinga2` access.
+First install the database (see previous section) and then install `icinga2`
+access.
 
 ```bash
 aptitude install icinga2-ido-mysql
@@ -368,8 +371,7 @@ aptitude install icinga2-ido-mysql
 ```
 
 Enable `icinga` features and modules. The `icingacli module enable monitoring`
-enables the monitoring. This is needed to display the dashboard in
-[Icingaweb2].
+enables monitoring. This is needed to display the dashboard in [Icingaweb2].
 
 ```bash
 icinga2 feature enable command ido-mysql
@@ -570,7 +572,6 @@ mysql icingaweb2 -Bse "
 "
 ```
 
-
 ```bash
 a2dissite 000-default.conf
 systemctl reload apache2
@@ -669,13 +670,14 @@ apply Service for (tcp_port => config in host.vars.local_tcp_port) {
 }
 EOF
 ```
+
 ## Configuration Of Remote Clients
 
 ### On Main
 
-Even though `icinga2` might be configured for local usage, if remote clients
-are used, it is mandatory to re-configure the main host again, but at different
-locations. The "wizard" helps.
+Even if `icinga2` is configured for local use, when remote clients are used,
+the main host must be reconfigured again, but at different locations. The
+wizard will help you.
 
 ```bash
 icinga2 node wizard
@@ -713,8 +715,8 @@ Done.
 Now restart your Icinga 2 daemon to finish the installation!
 ```
 
-Restart the main and generate a ticket to set up a client.
-For the ticket the FQDN of the client is used.
+Restart the main and create a ticket to set up a client. The ticket will use
+the client's FQDN.
 
 ```bash
 systemctl restart icinga2
@@ -816,7 +818,7 @@ Now restart your Icinga 2 daemon to finish the installation!
 ## Graphite Installation
 
 This is a short how-to guide for installing and configuring a simple Graphite
-installation on Debian 10 Buster main server.
+installation on the Debian 10 Buster main server.
 
 ![schematics](graphite-carbon-whisper-schematics-0.1.0.png)
 
@@ -856,8 +858,8 @@ object GraphiteWriter "graphite" {
 EOF
 ```
 
-Run `graphite-manage check` to see if there is no error. This is an example
-with error
+Run `graphite-manage check` to see if there is no error. Here is an example
+with errors
 
 ```bash
 graphite-manage check
@@ -878,8 +880,8 @@ export FILENAME=/etc/graphite/local_settings.py
 echo SECRET_KEY = '`pwgen -N 1 $((32 + RANDOM % 64 ))`' >> $FILENAME
 ```
 
-Create Graphite database. This step was also required for Debian 9 Stretch, but
-the command is now different.
+Create a Graphite database. This step was also required for Debian 9 stretch,
+but the command is different now.
 
 ```bash
 graphite-manage migrate
@@ -909,23 +911,24 @@ Running migrations:
   Applying url_shortener.0001_initial... OK
 ```
 
-Check if the database is created. `graphite-manage dumpdata` should not give an
-error like:
+Verify that the database has been created. `graphite-manage dumpdata` should
+not return an error like this:
 
 ```bash
 graphite-manage dumpdata
 CommandError: Unable to serialize database: no such table: account_variable
 ```
 
-The integration to [Icingaweb2] should be done via the package
-`icingaweb2-module-graphite`. Unfortunately this package is not available in
-Debian 10 Buster (or older versions) probably due to a issue noted in the
+Integration with [Icingaweb2] should be done via the
+`icingaweb2-module-graphite` package. Unfortunately, this package is not
+available in Debian 10 Buster (or older versions), probably due to a problem
+noted in the
 [excuse](https://qa.debian.org/excuses.php?package=icingaweb2-module-graphite)
-marked as bug
-[939568](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=939568). This
-package is however available in sid. Merging two Debian releases (Buster + Sid)
-is not recommended. However version 1.1.0-1 seems to fit Buster. The packages
-mostly installs to `/usr/share/icingaweb2/modules/`.
+and marked as bug
+[939568](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=939568). However,
+this package is available in sid. Merging two Debian releases (buster + sid) is
+not recommended. However, version 1.1.0-1 seems to work for Buster. The
+packages are usually installed into `/usr/share/icingaweb2/modules/`.
 
 ```bash
 mkdir /srv/packages
@@ -943,11 +946,11 @@ monitoring     2.6.2     enabled   Icinga monitoring module
 /etc/init.d/icinga2 restart
 ```
 
-Now [Icingaweb2] has a new entry on the right 'Graphite' side. To give access
-to graphite the web interface you need to know how to access graphite. At least
-add the full URL to graphite. In this case `http://127.0.0.1:8080`. This can be
-done via [Icingaweb2] (Configuration->Modules->graphite->Backend->Graphite Web
-URL) and either set user/ password or insecure option, or edit the file
+Now [Icingaweb2] has a new entry on the right-hand side 'Graphite'. To give the
+web interface access to graphite, you need to know how to access graphite. At
+least add the full URL to graphite. In this case `http://127.0.0.1:8080`. This
+can be done via Icingaweb2 (Configuration->Modules->graphite->Backend->Graphite
+Web URL) and either set user/password or insecure option, or edit the file
 `/etc/icingaweb2/modules/graphite/config.ini`.
 
 More modules on the
@@ -978,11 +981,11 @@ systemctl restart carbon-cache
 ### Graphite Web Interface
 
 In principle, any web server that supports the WSGI interface can be used.
-[Apache2] is already used by [Icinga2], so we use that.  The following will add
-an [Apache2] virtual host that will serve Graphite on port 8080. If served only
-for `localhost` `127.0.0.1:8080` this should be safe, however to improve this
-other steps might be added: A firewall that blocks 8080, SSL and `httaccess`.
-(Both left as an exercise to the reader)
+[Apache2] is already used by [Icinga2], so we will use that.  The following
+will add an Apache2 virtual host that will serve Graphite on port 8080. If only
+`localhost` `127.0.0.1:8080` is served, this should be safe, but to improve
+this, other steps may be added: A firewall that blocks 8080, SSL and
+`httaccess`.  (Both left as an exercise for the reader).
 
 ```bash
 cat << EOF > /etc/uwsgi/apps-available/graphite.ini
@@ -1046,26 +1049,26 @@ Visit `http://localhost:8080/`
 
 ## Nginx And Debian 10 Buster Packages
 
-From internet blog entries as well as from the `icinga2` web site one can get
-the impression that it is possible to use `icinga2` with `nginx`. However, on
-Debian the `icinga2` package depends on `apache2`. This makes it impossible to
-use `icinga2` with `nginx` if one do not want to accept 3rd party packages or
-install it from source, and therefore makes it practical impossible to use
-`icinga2` with `nginx`, if maintainability is the focus.
+From Internet blog posts and the `icinga2` web site, one might get the
+impression that it is possible to use `icinga2` with `nginx`. However, on
+Debian, the `icinga2` package depends on `apache2`. This makes it impossible to
+use `icinga2` with `nginx` if you do not want to accept third party packages or
+install from source, and makes it virtually impossible to use `icinga2` with
+`nginx` if maintainability is a concern.
 
 ## Pros And Cons
 
 ### Pros
 
-* The installation is relatively easy
-* Client and server use certificates
-* Server and client are Debian packages
+- Installation is relatively simple
+- Client and server use certificates
+- Server and client are Debian packages
 
 ### Cons
 
-* The main web server GUI has an overview, but compared to [Nagios] displays too
-  much information.
-* The `icingaweb2-module-graphite` package is not in Buster and has some typos
+- The main web server GUI has an overview, but shows too much information
+  compared to [Nagios].
+- The `icingaweb2-module-graphite` package is not in Buster and has some typos.
 
 ## How To Change Main Server Host Name
 
@@ -1117,17 +1120,18 @@ systemctl restart icinga2
 
 ### Documentation Used In This Document
 
-* 2019-08-10 [Install Icinga 2 on Debian 10 Buster](https://kifarunix.com/install-icinga-2-on-debian-10-buster/)
-* German [Installation von Icinga 2 unter Ubuntu 18.04 LTS](https://www.thomas-krenn.com/de/wiki/Installation_von_Icinga_2_unter_Ubuntu_18.04_LTS)
-* 2019-12-21 [Icinga2Installation](https://wiki.debian.org/Icinga/Icinga2Installation)
-* icinga.com [Installation](https://icinga.com/docs/icinga2/latest/doc/02-installation/)
-* Nginx [Icinga Web with Nginx](https://community.icinga.com/t/icinga-web-with-nginx/164)
-* Nginx 2018-07-26 German [Icingaweb2 unter nginx betreiben](https://nichteinschalten.de/icingaweb2-unter-nginx-betreiben/)
+- 2019-08-10 [Install Icinga 2 on Debian 10 Buster](https://kifarunix.com/install-icinga-2-on-debian-10-buster/)
+- German [Installation von Icinga 2 unter Ubuntu 18.04 LTS](https://www.thomas-krenn.com/de/wiki/Installation_von_Icinga_2_unter_Ubuntu_18.04_LTS)
+- 2019-12-21 [Icinga2Installation](https://wiki.debian.org/Icinga/Icinga2Installation)
+- icinga.com [Installation](https://icinga.com/docs/icinga2/latest/doc/02-installation/)
+- Nginx [Icinga Web with Nginx](https://community.icinga.com/t/icinga-web-with-nginx/164)
+- Nginx 2018-07-26 German [Icingaweb2 unter nginx betreiben](https://nichteinschalten.de/icingaweb2-unter-nginx-betreiben/)
 
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2023-05-27 | Improve writing                                      |
 | 0.1.3   | 2022-06-05 | Change shell to bash                                 |
 | 0.1.2   | 2021-05-23 | Links                                                |
 | 0.1.1   | 2020-06-06 | Formatting for Quick-Guide                           |
