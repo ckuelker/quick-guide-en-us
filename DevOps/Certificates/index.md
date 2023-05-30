@@ -2,8 +2,8 @@
 title: TLS Certificates
 linkTitle: Certificates
 author: Christian Külker
-date: 2022-07-19
-version: 0.1.1
+date: 2023-05-30
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -29,26 +29,26 @@ description: Certificates ensure trust
 
 ## Abstract
 
-This document gives a non comprehensive very brief overview over open source
-certification standards. Two standards are handled in specifically: (1) Self
+This document provides a very brief, non-exhaustive overview of open source
+certification standards. Two standards are discussed in particular: (1) Self
 signed certificates and (2) Let's encrypt certificates.
 
 ## Introduction
 
-When it comes to encryption, of web services for example, a certificate is
-used. The old term  __Secure Sockets Layer__ `SSL` certificate changed
-to __Transport Layer Security__ [`TLS`] a while ago as the transport is not only
-over sockets any more. `TLS` is a cryptographic protocol designed to provide
-data security of a transport layer, for example a network. The `TLS` protocol
-ensures __pivacy__ (confidentiality), __integrity__ and __authenticity__ via
-certificates. It runs on the _application layer_ ([`OSI`] model layer 7)
-itself and can be divided between _TLS record protocols_ and _TLS handshake
-protocols_. The current (2022-07-19) version is `TLS` 1.3 from 2018.
+When it comes to encryption, for example of web services, a certificate is
+used. The old term __Secure Sockets Layer__ [`SSL`] certificate changed to
+__Transport Layer Security__ [`TLS`] some time ago, because the transport is
+not only done over sockets anymore. TLS is a cryptographic protocol designed to
+provide data security over a transport layer, such as a network. The TLS
+protocol guarantees _privacy__ (confidentiality), _integrity__ and
+_authenticity__ via certificates. It runs on the _application layer_ ([`OSI`]
+model layer 7) itself and can be divided into _TLS record protocols_ and _TLS
+handshake protocols_. The current (2022-07-19) version is `TLS` 1.3 from 2018.
 
 [`TLS`]: https://en.wikipedia.org/wiki/Transport_Layer_Security
 [`OSI`]: https://en.wikipedia.org/wiki/OSI_model
 
-Software that uses `TLS` certificates for example:
+Software that uses `TLS` certificates, for example:
 
 - Apache, Apache2
 - Calendarserver
@@ -65,28 +65,28 @@ Software that uses `TLS` certificates for example:
 
 ## Types/Provider of Certificates
 
-In the early days of Unix most connections were not encrypted. In 1990 for
-example `http` or `telnet` was often used. Later on, when it came apparent that
-encryption needed to be added to the communication, `SSL` and later `TLS` was
-added to the services. In the case of `telnet` it was not considered to be
-feasible to add security, people switched to a completely different service:
-`ssh`. In the case of the world wide web the `http` protocol over port 80 was
-and is still used, however the switch to `https` on port 443 is more common
-today, both handled by the same web server, Apache or Nginx for example. While
-the `telnet` or `ssh` users of a server understand the trust relation to that
-server and therefore use self signed certificates by the server, the users of
-the world wide web do not, and in the beginning self signed certificated used
-are now replaced by others. It is not the case that self signed certificates
-are insecure. The level of protection is the same as certificates signed by
-others. The reason why self signed certificates are less common for web
-services nowadays is that it is and was always difficult to understand if the
-certificate was actually issued by the web server or not. A trust problem. In
-contrast to `ssh` where a user uses one server often, in the world of `https` a
-user uses many different unknown servers per day and in may cases only once.
-The checking and management of `TLS` certificates for web services, if done
-manually, would take more time than to actually read the content of the web
-page.  Therefore the trust in oneself is replaced by the trust to certain more
-or less well known organizations that issue certificates on behalf.
+In the early days of Unix, most connections were not encrypted. For example, in
+1990, `http` or `telnet` was often used. Later, when it became apparent that
+encryption was needed, `SSL` and later `TLS` were added to the services. In the
+case of `telnet`, it was not considered feasible to add security, so people
+switched to a completely different service: `ssh`. In the case of the World
+Wide Web, the `http` protocol on port 80 was and still is used, but the switch
+to `https` on port 443 is more common today, both handled by the same web
+server, for example Apache or Nginx. While the `telnet` or `ssh` users of a
+server understand the trust relationship to that server and therefore use
+self-signed certificates from the server, the users of the World Wide Web do
+not, and the self-signed certificates used initially are now being replaced by
+others. It is not the case that self-signed certificates are insecure. The
+level of protection is the same as certificates signed by others. The reason
+why self-signed certificates are less common for web services today is that it
+is and has always been difficult to understand whether the certificate was
+actually issued by the web server or not. A trust issue. Unlike `ssh`, where a
+user often uses one server, in the `https` world a user uses many different
+unknown servers per day, and in some cases only once.  Checking and managing
+`TLS` certificates for web services, if done manually, would take more time
+than actually reading the content of the web page.  Therefore, trusting
+yourself is replaced by trusting certain more or less known organizations that
+issue certificates on your behalf.
 
 __Types and providers of certificates__
 
@@ -97,42 +97,42 @@ __Types and providers of certificates__
 
 ## Openssl Self Signed Certificates
 
-Self signed are as secure as 3rd party signed certificates. The question is a
-trust one: How do I know that the certificate is the correct certificate? The
-problem is similar to the quality problem of some countries: If there is no
-quality assurance of products, industry standards for example, people do not
-know the degree of quality of a product. It is often seen that people of such
-countries tend to buy brand products as they expect that it is less likely that
-a product of a well known brand would be of less quality. This assumption is
-not always justified.
+Self-signed certificates are as secure as third-party-signed certificates. The
+question is one of trust: How do I know the certificate is the right
+certificate? The problem is similar to the quality problem in some countries:
+If there is no quality assurance of products, such as industry standards,
+people do not know the level of quality of a product. It is often seen that
+people in such countries tend to buy branded products because they expect that
+a product of a well-known brand is less likely to be of inferior quality. This
+assumption is not always correct.
 
-However as the same effect applies to web certificates, some applications
-(browser) are now refusing self signed certificates for cultural reasons, as
-the user is not capable to read and judge the content of a self signed
-certificate.
+However, since the same effect applies to web certificates, some applications
+(browsers) now refuse self-signed certificates for cultural reasons, since the
+user is not able to read and judge the content of a self-signed certificate.
 
-Self signed certificates can still be used in some services and for also for
-testing web services in development. A very common method to create a self
-signed certificate is to create a certificate authority (`CA`) and sign
-certificates with this `CA` by a command called `openssl`.
+Self-signed certificates can still be used in some services and for testing Web
+services during development. A very common way to create a self-signed
+certificate is to create a Certificate Authority (`CA`) and sign certificates
+with that `CA` using a command called `openssl`.
 
 ## Let's Encrypt (openssl) aka ACMEv2
 
-As commercial certificates have the same protection level as self signed ones,
-but cost money and are not free (as in FOSS), there have been many approaches
-over the years to implement a free (as in FOSS) and free (as in beer - without
-money) open source service. A recent famous one is __Let's Encrypt__.
+Since commercial certificates provide the same level of protection as
+self-signed certificates, but cost money and are not free (as in FOSS), there
+have been many attempts over the years to implement a free (as in FOSS) and
+free (as in beer - without money) open source service. A recent famous one is
+__Let's Encrypt__.
 
-The Certificate Authority (`CA`) named  __Let's Encrypt__ is a non profit `CA`
-run by the __Internet Security Research Group__ (`ISRG`) that provide `X.509`
-certificates for `TLS` encryption without charge. So one can use this
-certificates for web and mail servers for example.
+The Certificate Authority (`CA`) called __Let's Encrypt__ is a non-profit `CA`
+run by the __Internet Security Research Group__ (`ISRG`) that provides `X.509`
+certificates for `TLS` encryption free of charge. You can use these
+certificates for web and mail servers.
 
-Unlike previous approaches, __Let's  Encrypt__ uses the __automated certificate
-management environment__ (`ACME`) aka `ACMEv2`
-[RFC8555](https://tools.ietf.org/html/rfc8555). `ACMEv2` certifies the domain
-name. Others like `ACME-IP` validates IP addresses. Certificate management
-includes:
+Unlike previous approaches, __Let's Encrypt__ uses the __Automated Certificate
+Management Environment__ (`ACME`), also known as `ACMEv2`
+[RFC8555](https://tools.ietf.org/html/rfc8555). ACMEv2 certifies the domain
+name. Others such as `ACME-IP` validate IP addresses. Certificate management is
+included:
 
 - Account Creation
 - Ordering a Certificate
@@ -140,33 +140,33 @@ includes:
 - Certificate Issuance
 - Certificate Revocation
 
-One of the problem of previous approaches of certificate distribution was that
-the certificate gets very old. Some system administrators therefor extend the
-validity time of certificates to decades, as it was labor to renew a
-certificate. Let's Encrypt solved the distribution problem and new certificates
-are rolled out approximately every 3 month.
+One of the problems with previous approaches to certificate distribution was
+that the certificate got very old. As a result, some system administrators
+extend the validity of certificates for decades because it is laborious to
+renew a certificate. Let's Encrypt solved the distribution problem and new
+certificates are rolled out approximately every 3 months.
 
 ### Challenges
 
-`ACMEv2` defines challenges. The `HTTP` challenge proves that the admin as
-resource control of a domain (web server). The `DNS` challenges proves the
-control of a specific domain name (`DNS` server). For example a `DNS` entry
+ACMEv2 defines challenges. The `HTTP` challenge proves that the admin is the
+resource controller of a domain (web server). The `DNS` challenge proves
+control of a specific domain name (`DNS` server). For example, a `DNS` record
 like this:
 
     _acme-challenge.www.example.org. 300 IN TXT "gfj9Xq...Rg85nM"
 
-This should be removed after challenge is over (status: valid, invalid)
+This should be removed after the challenge is over (status: valid, invalid).
 
-It is recommended that DNS servers use `DNSSEC` [`rfc8555` p. 87].
+It is recommended that DNS servers use `DNSSEC` [`rfc8555` p. 80].
 
-However, the most common challenges is the `HTTP` challenge. For this __port
-80__ needs to be open or used by a web server: Nginx or Apache2. The method is
-similar to the `DNS` challenge. Information is added to the web server to prove
-that the web server is under control of the script that requests the new
-certificate. When the new certificate was received, the information is removed
-and also the communication is changed from not-encrypted to encrypted. The
-complex process can be done manually, however there are scripts that can take
-over this task. They are called `ACMEv2` clients.
+However, the most common challenge is the `HTTP' challenge. For this, __port
+80__ must be open or used by a web server: Nginx or Apache2. The method is
+similar to the `DNS' challenge. Information is added to the web server to prove
+that the web server is under the control of the script requesting the new
+certificate. When the new certificate is received, the information is removed
+and the communication is changed from unencrypted to encrypted. This complex
+process can be done manually, but there are scripts that can do the job for
+you. They are called `ACMEv2` clients.
 
 ### Clients
 
@@ -197,6 +197,7 @@ Other clients are for example:
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-05-30 | Improve writing                                      |
 | 0.1.1   | 2022-07-19 | Updates for quick guide                              |
 | 0.1.0   | 2020-01-31 | Initial release                                      |
 
