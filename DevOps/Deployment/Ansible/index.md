@@ -8,6 +8,7 @@ lang: en
 type: doc
 disclaimer: True
 toc: True
+cards: True
 categories:
 - Ansible
 commands:
