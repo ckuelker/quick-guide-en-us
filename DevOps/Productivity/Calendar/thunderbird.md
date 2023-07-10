@@ -3,7 +3,7 @@ title: Thunderbird
 linkTitle: Thunderbird
 author: Christian Külker
 date: 2023-07-10
-version: 0.1.0
+version: 0.1.1
 locale: en_US
 lang: en
 type: doc
