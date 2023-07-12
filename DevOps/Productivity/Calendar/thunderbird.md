@@ -2,8 +2,8 @@
 title: Thunderbird
 linkTitle: Thunderbird
 author: Christian Külker
-date: 2023-07-10
-version: 0.1.1
+date: 2023-07-12
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -88,7 +88,7 @@ tools using:` thunderbird --devtools`
 
    Create an empty file named `userChrome.css` inside the `chrome` directory.
 
-    ```
+    ```bash
     cd ~/.thunderbird/*.default-default
     mkdir chrome
     cd chrome
@@ -100,7 +100,7 @@ tools using:` thunderbird --devtools`
    To verify Thunderbird's use of the file, add a test CSS rule. For instance,
    adjusting the size of the calendar day header:
 
-   ```
+   ```css
     .day-column-container {
        font-size: 12px;
     }
@@ -117,7 +117,7 @@ tools using:` thunderbird --devtools`
    to 16px and eliminate some padding. The original `.day-column-container`
    setting can be discarded.
 
-   ```
+   ```css
    .calendar-item-flex {
         padding-top: 0px !important;
         padding-bottom: 0px !important;
@@ -135,11 +135,13 @@ tools using:` thunderbird --devtools`
     to take effect.
 
 For additional guidance, refer to:
+
  - https://www.userchrome.org/how-create-userchrome-css.html
 
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-07-12 | Fix formatting                                       |
 | 0.1.1   | 2023-07-10 | Add section about changing calendar font size        |
 | 0.1.0   | 2023-07-07 | Initial release                                      |
