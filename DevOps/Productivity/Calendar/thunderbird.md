@@ -2,8 +2,8 @@
 title: Thunderbird
 linkTitle: Thunderbird
 author: Christian Külker
-date: 2023-07-13
-version: 0.1.3
+date: 2023-07-14
+version: 0.1.4
 locale: en_US
 lang: en
 type: doc
@@ -257,13 +257,147 @@ hosts: localhost
       when: config_path_result.stdout is defined and config_path_result.stdout != ''
 ```
 
+The is the template `tpl/caldav_calendar.js`:
+
+```javascript
+// {{ calendar.name }}
+user_pref("calendar.registry.{{ calendar.uuid }}.cache.enabled", true);
+user_pref("calendar.registry.{{ calendar.uuid }}.calendar-main-default", true);
+user_pref("calendar.registry.{{ calendar.uuid }}.calendar-main-in-composite", true);
+user_pref("calendar.registry.{{ calendar.uuid }}.color", "#1c71d8");
+user_pref("calendar.registry.{{ calendar.uuid }}.disabled", false);
+user_pref("calendar.registry.{{ calendar.uuid }}.imip.identity.key", "{{ calendar.imip.identity }}");
+user_pref("calendar.registry.{{ calendar.uuid }}.name", "{{ calendar.name }}");
+user_pref("calendar.registry.{{ calendar.uuid }}.notifications.times", "");
+user_pref("calendar.registry.{{ calendar.uuid }}.readOnly", false);
+user_pref("calendar.registry.{{ calendar.uuid }}.refreshInterval", "{{ calendar.refresh }}");
+user_pref("calendar.registry.{{ calendar.uuid }}.suppressAlarms", false);
+user_pref("calendar.registry.{{ calendar.uuid }}.type", "caldav");
+user_pref("calendar.registry.{{ calendar.uuid }}.uri", "{{ calendar.uri }}");
+user_pref("calendar.registry.{{ calendar.uuid }}.username", "{{ calendar.username }}");
+```
+
 By following this playbook, you can seamlessly integrate multiple CalDAV
 calendars into Thunderbird across various machines for one user.
+
+## Add ICS Calendars via Ansible
+
+Adding ICS calendars to Thunderbird through Ansible closely mirrors the process
+for adding CalDAV calendars, albeit with some variations in parameters. This
+section builds upon the Ansible playbook discussed in the previous section. If
+you haven't reviewed it yet, it's recommended to do so before proceeding.
+
+The primary distinctions between ICS and CalDAV calendars are as follows:
+
+    ICS calendars are read-only. (In this example)
+    They don't have an associated identity. (In this example)
+    They come without alarms. (In this example)
+    They possess the distinct type 'ics'
+
+For this configuration, we employ a template named `ics_calendar.js`.
+
+Below is the comprehensive playbook:
+
+```yaml
+# pb/thunderbird.yaml
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    ns: thunderbird
+    ansible_cfg_path: /srv/ansible
+    packages:
+      - thunderbird
+e
+    caldav_calendars:
+      - uuid: 03-work
+        color: "#1c71d8"
+        refresh: 5
+        name: Work
+        uri: https://example.org/rad/USER/work
+        username: USER
+        imip:
+          identity: id1
+    ics_calendars:
+      - uuid: 10-german-holidays
+        color: "#f5c211"
+        name: Feiertage
+i        uri: URL.ics
+  tasks:
+    - name: "{{ ns }}: Install and update packages"
+      package:
+        name: "{{ packages }}"
+        state: latest
+    - name: "{{ ns }}: Get Thunderbird configuration path"
+      command: "{{ ansible_cfg_path }}/bin/ansible-thunderbird-cfg-path-get"
+      register: config_path_result
+      changed_when: False
+    - name: "{{ ns }}: Create temporary directory for calendar files"
+      file:
+        path: "{{ config_path_result.stdout }}/ansible/calendars"
+        state: directory
+        owner: c
+        group: c
+        mode: '0750'
+        recurse: yes
+      register: tempdir
+    - name: "{{ ns }}: Show the configuration path (for debugging purposes, can be removed)"
+      debug:
+        var: config_path_result.stdout
+    - name: "{{ ns }}: Generate individual CalDAV calendar files"
+      template:
+        src: "{{ ansible_cfg_path }}/tpl/HOME/thunderbird/caldav_calendar.js"
+        dest: "{{ tempdir.path }}/caldav_calendar_{{ calendar.uuid }}.js"
+      loop: "{{ caldav_calendars }}"
+      loop_control:
+        loop_var: calendar
+      when: config_path_result.stdout is defined and config_path_result.stdout != ''
+    - name: "{{ ns }}: Generate individual ICS calendar files"
+      template:
+        src: "{{ ansible_cfg_path }}/tpl/HOME/thunderbird/ics_calendar.js"
+        dest: "{{ tempdir.path }}/ics_calendar_{{ calendar.uuid }}.js"
+      loop: "{{ ics_calendars }}"
+      loop_control:
+        loop_var: calendar
+      when: config_path_result.stdout is defined and config_path_result.stdout != ''
+    - name: "{{ ns }}: Assemble user.js from individual calendar files"
+      assemble:
+        src: "{{ tempdir.path }}/"
+        dest: "{{ config_path_result.stdout }}/user.js"
+      when: config_path_result.stdout is defined and config_path_result.stdout != ''
+```
+
+
+The is the template `tpl/ics_calendar.js`:
+
+```javascript
+// {{ calendar.name }}
+user_pref("calendar.registry.{{ calendar.uuid }}.cache.enabled", true);
+user_pref("calendar.registry.{{ calendar.uuid }}.calendar-main-in-composite", true);
+user_pref("calendar.registry.{{ calendar.uuid }}.color", "{{ calendar.color }}");
+user_pref("calendar.registry.{{ calendar.uuid }}.disabled", false);
+user_pref("calendar.registry.{{ calendar.uuid }}.imip.identity.key", "");
+user_pref("calendar.registry.{{ calendar.uuid }}.name", "{{ calendar.name }}");
+user_pref("calendar.registry.{{ calendar.uuid }}.notifications.times", "");
+user_pref("calendar.registry.{{ calendar.uuid }}.readOnly", true);
+user_pref("calendar.registry.{{ calendar.uuid }}.refreshInterval", "600");
+user_pref("calendar.registry.{{ calendar.uuid }}.suppressAlarms", true);
+user_pref("calendar.registry.{{ calendar.uuid }}.type", "ics"); 
+user_pref("calendar.registry.{{ calendar.uuid }}.uri", "{{ calendar.uri }}");
+```
+
+Ensure that you update placeholders such as USER, URL accordingly. If you alter
+the UUID, also remember to delete files from the cache directory located at `{{
+config_path_result.stdout }}/ansible/calendars`.
+
+By following this playbook, you can seamlessly integrate multiple CalDAV and
+ICS calendars into Thunderbird across various machines for one user.
 
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2023-07-14 | Add section about adding a ICS calendar (Ansible)    |
 | 0.1.3   | 2023-07-13 | Add section about adding a CalDAV calendar (Ansible) |
 | 0.1.2   | 2023-07-12 | Fix formatting                                       |
 | 0.1.1   | 2023-07-10 | Add section about changing calendar font size        |
