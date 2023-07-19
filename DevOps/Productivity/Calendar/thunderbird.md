@@ -2,8 +2,8 @@
 title: Thunderbird
 linkTitle: Thunderbird
 author: Christian Külker
-date: 2023-07-17
-version: 0.1.5
+date: 2023-07-19
+version: 0.1.6
 locale: en_US
 lang: en
 type: doc
@@ -198,7 +198,7 @@ The provided Ansible playbook performs the following functions:
 
 For this playbook to function correctly:
 
-- Ensure you have the correct ID, in this case 'id3' from `prefs.js`.
+- Ensure you have the correct ID, in this case 'id1' from `prefs.js`.
 - Modify the `USER` placeholder with the appropriate user name.
 - Adjust the `ansible_cfg_path` to the location where your playbooks,
   templates, and scripts are stored. The key directories are: `bin` (scripts),
@@ -224,7 +224,7 @@ hosts: localhost
         uri: https://example.org/rad/USER/work
         username: USER
         imip:
-          identity: id3
+          identity: id1
   tasks:
     - name: "{{ ns }}: Install and update Thunderbird"
       package:
@@ -236,28 +236,28 @@ hosts: localhost
       register: tempdir
     - name: "{{ ns }}: Retrieve the Thunderbird configuration path"
       command: "{{ ansible_cfg_path }}/bin/ansible-thunderbird-cfg-path-get"
-      register: config_path_result
+      register: config_path
       changed_when: False
     - name: "{{ ns }}: Display the configuration path (optional)"
       debug:
-        var: config_path_result.stdout
+        var: config_path.stdout
     - name: "{{ ns }}: Generate calendar configuration files"
       template:
-        src: "{{ ansible_cfg_path }}/tpl/HOME/thunderbird/user.js"
+        src: "{{ ansible_cfg_path }}/tpl/HOME/thunderbird/caldav_calendar.js"
         dest: "{{ tempdir.path }}/caldav_calendar_{{ calendar.uuid }}.js"
         mode: 'a'
       loop: "{{ caldav_calendars }}"
       loop_control:
         loop_var: calendar
-      when: config_path_result.stdout is defined and config_path_result.stdout != ''
+      when: config_path.stdout is defined and config_path.stdout != ''
     - name: "{{ ns }}: Combine individual files into user.js"
       assemble:
         src: "{{ tempdir.path }}/"
-        dest: "{{ config_path_result.stdout }}/user.js"
-      when: config_path_result.stdout is defined and config_path_result.stdout != ''
+        dest: "{{ config_path.stdout }}/user.js"
+      when: config_path.stdout is defined and config_path.stdout != ''
 ```
 
-The is the template `tpl/caldav_calendar.js`:
+The is the template `tpl/HOME/thunderbird/caldav_calendar.js`:
 
 ```javascript
 // {{ calendar.name }}
@@ -308,7 +308,6 @@ Below is the comprehensive playbook:
     ansible_cfg_path: /srv/ansible
     packages:
       - thunderbird
-e
     caldav_calendars:
       - uuid: 03-work
         color: "#1c71d8"
@@ -322,7 +321,7 @@ e
       - uuid: 10-german-holidays
         color: "#f5c211"
         name: Feiertage
-i        uri: URL.ics
+        uri: URL.ics
   tasks:
     - name: "{{ ns }}: Install and update packages"
       package:
@@ -330,20 +329,20 @@ i        uri: URL.ics
         state: latest
     - name: "{{ ns }}: Get Thunderbird configuration path"
       command: "{{ ansible_cfg_path }}/bin/ansible-thunderbird-cfg-path-get"
-      register: config_path_result
+      register: config_path
       changed_when: False
     - name: "{{ ns }}: Create temporary directory for calendar files"
       file:
-        path: "{{ config_path_result.stdout }}/ansible/calendars"
+        path: "{{ config_path.stdout }}/ansible/calendars"
         state: directory
-        owner: c
-        group: c
+        owner: USER
+        group: USER
         mode: '0750'
         recurse: yes
       register: tempdir
-    - name: "{{ ns }}: Show the configuration path (for debugging purposes, can be removed)"
+    - name: "{{ ns }}: Show the configuration path (debugging, can be removed)"
       debug:
-        var: config_path_result.stdout
+        var: config_path.stdout
     - name: "{{ ns }}: Generate individual CalDAV calendar files"
       template:
         src: "{{ ansible_cfg_path }}/tpl/HOME/thunderbird/caldav_calendar.js"
@@ -351,7 +350,7 @@ i        uri: URL.ics
       loop: "{{ caldav_calendars }}"
       loop_control:
         loop_var: calendar
-      when: config_path_result.stdout is defined and config_path_result.stdout != ''
+      when: config_path.stdout is defined and config_path.stdout != ''
     - name: "{{ ns }}: Generate individual ICS calendar files"
       template:
         src: "{{ ansible_cfg_path }}/tpl/HOME/thunderbird/ics_calendar.js"
@@ -359,16 +358,15 @@ i        uri: URL.ics
       loop: "{{ ics_calendars }}"
       loop_control:
         loop_var: calendar
-      when: config_path_result.stdout is defined and config_path_result.stdout != ''
+      when: config_path.stdout is defined and config_path.stdout != ''
     - name: "{{ ns }}: Assemble user.js from individual calendar files"
       assemble:
         src: "{{ tempdir.path }}/"
-        dest: "{{ config_path_result.stdout }}/user.js"
-      when: config_path_result.stdout is defined and config_path_result.stdout != ''
+        dest: "{{ config_path.stdout }}/user.js"
+      when: config_path.stdout is defined and config_path.stdout != ''
 ```
 
-
-The is the template `tpl/ics_calendar.js`:
+The is the template `tpl/HOME/thunderbird/ics_calendar.js`:
 
 ```javascript
 // {{ calendar.name }}
@@ -382,13 +380,19 @@ user_pref("calendar.registry.{{ calendar.uuid }}.notifications.times", "");
 user_pref("calendar.registry.{{ calendar.uuid }}.readOnly", true);
 user_pref("calendar.registry.{{ calendar.uuid }}.refreshInterval", "600");
 user_pref("calendar.registry.{{ calendar.uuid }}.suppressAlarms", true);
-user_pref("calendar.registry.{{ calendar.uuid }}.type", "ics"); 
+user_pref("calendar.registry.{{ calendar.uuid }}.type", "ics");
 user_pref("calendar.registry.{{ calendar.uuid }}.uri", "{{ calendar.uri }}");
 ```
 
 Ensure that you update placeholders such as USER, URL accordingly. If you alter
 the UUID, also remember to delete files from the cache directory located at `{{
-config_path_result.stdout }}/ansible/calendars`.
+config_path.stdout }}/ansible/calendars`.
+
+A notable modification from the previous section's playbook is the replacement
+of `tempdir` with a manually selected cache directory. This adjustment was made
+because with multiple Ansible runs would label the result as 'ok' instead of
+'changed'. The latter would have been the case with a `tempdir` that is
+constantly changing.
 
 By following this playbook, you can seamlessly integrate multiple CalDAV and
 ICS calendars into Thunderbird across various machines for one user.
@@ -397,6 +401,7 @@ ICS calendars into Thunderbird across various machines for one user.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.6   | 2023-07-19 | Improve playbooks (fixes, line width)                |
 | 0.1.5   | 2023-07-15 | Fix missing color in CalDAV template                 |
 | 0.1.4   | 2023-07-14 | Add section about adding a ICS calendar (Ansible)    |
 | 0.1.3   | 2023-07-13 | Add section about adding a CalDAV calendar (Ansible) |
