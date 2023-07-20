@@ -2,8 +2,8 @@
 title: Thunderbird
 linkTitle: Thunderbird
 author: Christian Külker
-date: 2023-07-19
-version: 0.1.6
+date: 2023-07-20
+version: 0.1.7
 locale: en_US
 lang: en
 type: doc
@@ -397,10 +397,77 @@ constantly changing.
 By following this playbook, you can seamlessly integrate multiple CalDAV and
 ICS calendars into Thunderbird across various machines for one user.
 
+## Change the Calendar Font Size with Ansible
+
+To modify the calendar font size in Thunderbird using Ansible, follow the steps
+outlined below:
+
+1. With the Ansible playbook from the previous section, Ansible first copies
+   the `userChrome.css` file to the chrome subdirectory.
+2. Next, `toolkit.js` is added to the ansible directory.
+3. Subsequently, this file, along with others, is appended to `user.js`.
+
+Here's a snippet illustrating the process:
+
+```yaml
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    ns: thunderbird
+    user_cal: 'c'
+    user_sys: 'c'
+    ansible_cfg_path: /srv/g/g.c8i.org/an
+    thunderbird_src: "HOME/thunderbird/UUID.default-default"
+    fls_src: "{{ ansible_cfg_path }}/fls/{{ thunderbird_src }}"
+  tasks:
+    - name: "{{ ns }}: Get Thunderbird configuration path"
+      command: "{{ ansible_cfg_path }}/bin/ansible-thunderbird-cfg-path-get"
+      register: config_path
+      changed_when: False
+    - name: "{{ ns }}: Ensure chrome directory exists in configuration"
+      file:
+        path: "{{ config_path.stdout }}/chrome"
+        state: directory
+        owner: "{{ user_sys }}"
+        group: "{{ user_sys }}"
+        mode: '0755'
+    - name: "{{ ns }}: Copy userChrome.css to thunderbird configuration"
+      copy:
+        src: "{{ fls_src }}/chrome/userChrome.css"
+        dest: "{{ config_path.stdout }}/chrome/userChrome.css"
+        owner: "{{ user_sys }}"
+        group: "{{ user_sys }}"
+        mode: '0644'
+    - name: "{{ ns }}: Create temporary directory for ansible files"
+      file:
+        path: "{{ config_path.stdout }}/ansible"
+        state: directory
+        owner: "{{ user_sys }}"
+        group: "{{ user_sys }}"
+        mode: '0755'
+      register: tempdir
+    - name: "{{ ns }}: Generate toolkit configuration for userChrome.js"
+      copy:
+        src: "{{ fls_src }}/ansible/toolkit.js"
+        dest: "{{ tempdir.path }}/toolkit.js"
+        owner: "{{ user_sys }}"
+        group: "{{ user_sys }}"
+        mode: '0644'
+    - name: "{{ ns }}: Assemble user.js from individual calendar files"
+      assemble:
+        src: "{{ tempdir.path }}/"
+        dest: "{{ config_path.stdout }}/user.js"
+      when: config_path.stdout is defined and config_path.stdout != ''
+```
+
+
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.7   | 2023-07-20 | Add Ansible playbook snippet for userChrome.css      |
 | 0.1.6   | 2023-07-19 | Improve playbooks (fixes, line width)                |
 | 0.1.5   | 2023-07-15 | Fix missing color in CalDAV template                 |
 | 0.1.4   | 2023-07-14 | Add section about adding a ICS calendar (Ansible)    |
