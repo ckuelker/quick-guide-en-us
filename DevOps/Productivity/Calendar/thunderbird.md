@@ -2,8 +2,8 @@
 title: Thunderbird
 linkTitle: Thunderbird
 author: Christian Külker
-date: 2023-07-20
-version: 0.1.7
+date: 2023-07-21
+version: 0.1.8
 locale: en_US
 lang: en
 type: doc
@@ -461,12 +461,42 @@ Here's a snippet illustrating the process:
       when: config_path.stdout is defined and config_path.stdout != ''
 ```
 
+The `{{ fls_src }}/ansible/toolkit.js` file as the following content:
 
+```javascript
+// Enable ~/.thunderbird/UUID.default-default/chrome/userChrome.css
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+```
+
+## Change the Date Format with Ansible
+
+The __Change the Date Format__ section elucidates how to utilize `user.js` to
+configure Thunderbird. This section leverages the Ansible playbook from the
+preceding section to automate this process.
+
+```yaml
+    - name: "{{ ns }}: Generate custome date configuration"
+      copy:
+        src: "{{ fls_src }}/ansible/date.js"
+        dest: "{{ tempdir.path }}/date.js"
+        owner: "{{ user_sys }}"
+        group: "{{ user_sys }}"
+        mode: '0644'
+```
+
+The file `{{ fls_src }}/ansible/date.js` contains the following settings:
+
+```javascript
+// Setting custom date format: yyyy-MM-dd
+user_pref("intl.regional_prefs.use_os_locales", false)
+user_pref("intl.date_time.pattern_override.date_short", "yyyy-MM-dd")
+```
 
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.8   | 2023-07-21 | Add section Change the Date Format with Ansible      |
 | 0.1.7   | 2023-07-20 | Add Ansible playbook snippet for userChrome.css      |
 | 0.1.6   | 2023-07-19 | Improve playbooks (fixes, line width)                |
 | 0.1.5   | 2023-07-15 | Fix missing color in CalDAV template                 |
