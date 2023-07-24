@@ -2,8 +2,8 @@
 title: Overview Calendars
 linkTitle: Calendars
 author: Christian Külker
-date: 2023-04-15
-version: 0.1.0
+date: 2023-07-24
+version: 0.1.1
 locale: en_US
 lang: en
 type: doc
@@ -23,7 +23,6 @@ tags:
 description: Brief overview of calendar software, some in Debian, mostly FOSS.
 
 ---
-
 
 ## Debian Software
 
@@ -62,13 +61,15 @@ description: Brief overview of calendar software, some in Debian, mostly FOSS.
 
 ### Command line
 
-- calcurse C
+- calcurse (C)
   - configuration example: https://github.com/jbh/dotfiles/blob/master/.config/calcurse/personal/caldav/config.example
 - khal Python
   - https://github.com/pimutils/khal
-- cadaver C
+- cadaver (C)
   - https://notroj.github.io/cadaver/
   - https://github.com/notroj/cadaver
+- carl (Rust)
+  -  https://github.com/b1rger/carl
 
 ## Proprietary Software
 
@@ -82,6 +83,6 @@ description: Brief overview of calendar software, some in Debian, mostly FOSS.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2023-07-24 | Add Carl                                             |
 | 0.1.0   | 2023-04-15 | Initial release                                      |
- 
 
