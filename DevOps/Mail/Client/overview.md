@@ -2,8 +2,8 @@
 title: Mail Client Overview
 linkTitle: Overview
 author: Christian Külker
-date: 2023-01-19
-version: 0.1.1
+date: 2023-07-25
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -66,6 +66,7 @@ is quite steep.
 
 |                | mutt              | neomutt             | luamail |
 | -------------- | ----------------- | ------------------- | ------- |
+| In Debian 12   | 2.2.9-1+b1        | 20220429+dfsg1-4.1  | no      |
 | In Debian 11   | 2.0.5-4.1+deb11u2 | 20201127+dfsg.1-1.2 | no      |
 | Latest version | 2.2.9             | 20220429            | 3.1     |
 | Latest update  | 2022              | 2023                | 2017    |
@@ -83,8 +84,7 @@ is quite steep.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2023-07-25 | Add versions for Debian 12 (bookworm)                |
 | 0.1.1   | 2023-01-19 | Improve writing, add more version numbers            |
 | 0.1.0   | 2022-07-17 | Initial release                                      |
-
-
 
