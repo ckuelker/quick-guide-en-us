@@ -1,8 +1,8 @@
 ---
 title: Linux Backup Solutions
 author: Christian Külker
-date: 2022-06-12
-version: 0.1.3
+date: 2023-07-31
+version: 0.1.4
 type: doc
 disclaimer: True
 toc: True
@@ -60,7 +60,7 @@ and de-duplication.
 
 Every backup should be planned with a strategy in mind. The 3-2-1 rule states,
 there should be 3 copies of the data, stored on 2 different media types (of 2
-different computers) and 1 copy should not be on site.
+different computers) and 1 copy should not be off site.
 
 The reason why one should use at least 2 different computers is, that sometimes
 even hardware (not the media) might introduce errors to the backup. A defective
@@ -79,7 +79,7 @@ attach to it but also that of SSDs, for example.
 ## Storage Media
 
 - Magnetic tapes
-- Hard disks (Spinning, SSD: via SCSI, USB, FireWire, eSATA, ethernet, iSCSI or
+- Hard disks (Spinning, SSD: via SCSI, USB, FireWire, eSATA, Ethernet, iSCSI or
   fibre channel)
 - optical storage
 - Flash memory (thumb drives, compactFlash, SmartMedia, memory sticks via USB)
@@ -165,24 +165,29 @@ administrators to understand the underlying problems of backups, there are free
 open source software already provided to Linux that can be used, if one
 understand the core principles of backups.
 
-| Package         | Debian   | Interface | Debian Buster       |  Bullseye   |
-| --------------- | -------- | --------- | ------------------- | ----------- |
-| [Amanda]        |          | CLI       | 1:3.3.9-5           | 1:3.5.1-7   |
-| [Areca Backup]  | n.a.     |           |                     |             |
-| [BackupPC]      |          | GUI       | 3.3.1-4             | 4.4.0-3     |
-| [Back In Time]  |          | GUI       | 1.1.12-2            | 1.2.1-3     |
-| [Bacula]        |          |           | 7.4.4+dfsg-6+deb9u2 | 9.6.7-3     |
-| [Bareos]        | Buster   | GUI       | 16.2.4-3+deb9u2     | 1)          |
-| [Cpio]          |          | CLI       | 2.11+dfsg-6         | 2.13+dfsg-4 |
-| [dirvish]       |          | CLI       | 1.2.1-1.3           | 1.2.1-2.1   |
-| [duplicity]     | Bullseye |           |                     | 0.8.17-1+b1 |
-| [rdiff-backup]  |          |           | 1.2.8-7             | 2.0.5-2     |
-| [rsbackup]      |          |           | 3.1-3+b1            | 6.0-2+b2    |
-| [rsnapshot]     | Buster   | CLI       | 1.4.2-1             | 2)          |
-| [slbackup]      |          | CLI       | 0.0.12-8            | 0.0.12-13   |
-| [snapper]       |          | CLI       | 0.4.1-3             | 0.8.15-1    |
-| [Warewulf]      | n.a.     | CLI       |                     |             |
-| Tar             |          | CLI       | 1.29b-1.1           | 1.34+dfsg-1 |
+| Package         | Debian   | Interface | Debian Buster       |  Bullseye   | Bookworm           |
+| --------------- | -------- | --------- | ------------------- | ----------- | ------------------ |
+| [amanda]-       |          | CLI       | 1:3.3.9-5           | 1:3.5.1-7   | 1:3.5.1-11+deb12u1 |
+| [Areca Backup]  | n.a.     |           |                     |             |                    |
+| [BackupPC]      |          | GUI       | 3.3.1-4             | 4.4.0-3     | 4.4.0-8            |
+| [BackInTime]    |          | GUI       | 1.1.12-2            | 1.2.1-3     | 1.3.3-4            |
+| [Bacula]        |          |           | 7.4.4+dfsg-6+deb9u2 | 9.6.7-3     | 9.6.7-7            |
+| [Bareos]        | Buster   | GUI       | 16.2.4-3+deb9u2     | 1)          | n.a.               |
+| [BorgBackup]    | YES      | CLI       |                     |             | 1.2.4-1            |
+| [BorgBackup2]   | YES      | CLI       |                     |             | 2.0.0b5-1          |
+|   [vorta]       | YES      | GUI       |                     |             | 0.8.10-1+deb12u1   |
+| [Cpio]          |          | CLI       | 2.11+dfsg-6         | 2.13+dfsg-4 | 2.13+dfsg-7.1      |
+| [dirvish]       |          | CLI       | 1.2.1-1.3           | 1.2.1-2.1   | 1.2.1-2.1          |
+| [duplicity]     | Bullseye |           |                     | 0.8.17-1+b1 | 0.8.22-1+b3        |
+| [rdiff-backup]  |          |           | 1.2.8-7             | 2.0.5-2     | 2.2.2-1            |
+| [restic]        | YES      |           |                     |             | 0.14.0-1+b5        |
+|  [npbackup]     | n.a.     |           |                     |             |                    |
+| [rsbackup]      |          |           | 3.1-3+b1            | 6.0-2+b2    | 8.0-1              |
+| [rsnapshot]     | Buster   | CLI       | 1.4.2-1             | 2)          | 1.4.5-1            |
+| [slbackup]      |          | CLI       | 0.0.12-8            | 0.0.12-13   | 0.0.12-13          |
+| [snapper]       |          | CLI       | 0.4.1-3             | 0.8.15-1    | 0.10.4-1           |
+| [Warewulf]      | n.a.     | CLI       |                     |             |                    |
+| Tar             |          | CLI       | 1.29b-1.1           | 1.34+dfsg-1 | 1.34+dfsg-1.2      |
 
 1) Removed at 2021-12-01 due to maintainer [inactivity and 9 RC
 bugs](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1000906#5). See
@@ -202,7 +207,7 @@ upstream maintainer do not intent continue to maintain it.
 
 ### Back In Time
 
-- [back in time]
+- [BackInTime]
 - Organization: snapshots
 - Storage: disk
 - Dependencies: rsync
@@ -225,6 +230,23 @@ only for desktop or personal computers, but also for servers.
     - Webinterface no choice of target dir
     - Webinterface no creation of host cfg
     - Webinterface no comparison of files?
+
+### BorgBackup
+
+- Package borgbackup2
+- GUI vorta <https://vorta.borgbase.com> <https://github.com/borgbase/vorta>
+- GUI Pika Backup <https://github.com/pika-backup/pika-backup> 
++ Python3
++ Dedublication
++ Single file restore
++ Encryption
++ Compression
+
+#### Documentation
+
+- https://www.borgbackup.org/demo.html
+- https://vorta.borgbase.com/
+- https://vorta.borgbase.com/usage/restore/
 
 ### Dirvish
 
@@ -257,6 +279,17 @@ only for desktop or personal computers, but also for servers.
 - Remote: ssh
 - Dependencies: librsync, phython
 
+### Restic
+
++ Go? https://restic.net/ <https://github.com/rubiojr/awesome-restic>
++ Debian package
++ CLI
++ GUI via external projects
+  - restic-browser (no restore) https://github.com/emuell/restic-browser
+  - restatic (dead projectm for of vorta https://github.com/Mebus/restatic
+  + npbackup (with prometheus support) https://github.com/netinvent/npbackup
+  - resticguigx (beta) https://gitlab.com/stormking/resticguigx
+
 ### Slbackup
 
 - [slbackup]
@@ -270,7 +303,7 @@ only for desktop or personal computers, but also for servers.
 - [areca backup wikipedia]
 - [backuppc]
 - [backuppc wikipedia]
-- [back in time]
+- [BackInTime]
 - [bacula]
 - [bareos]
 - [bareos home]
@@ -293,6 +326,7 @@ only for desktop or personal computers, but also for servers.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2023-07-31 | Bookworm; add borgbackup, restic                     |
 | 0.1.3   | 2022-06-12 | Add reason of package removal from Bullseye          |
 | 0.1.2   | 2022-06-11 | Shell -> bash, Bullseye                              |
 | 0.1.1   | 2021-06-08 | Typos, Slbackup, Details, Dirvish, Duplicity         |
@@ -303,18 +337,23 @@ only for desktop or personal computers, but also for servers.
 [areca backup wikipedia]: https://en.wikipedia.org/wiki/Areca_Backup
 [backuppc]: https://backuppc.github.io/backuppc/
 [backuppc wikipedia]: https://en.wikipedia.org/wiki/BackupPC
-[back in time]: https://github.com/bit-team/backintime
+[BackInTime]: https://github.com/bit-team/backintime
 [bacula]: http://www.bacula.org/
 [bareos]: https://www.bareos.com/
 [bareos home]: http://www.bareos.org/
 [bareos open source]: https://www.bareos.com/community/github/
 [bareos github]: https://github.com/bareos/
 [bareos documentation]: https://docs.bareos.org/
+[borgbackup]: https://borgbackup.github.io/borgbackup/
+[borgbackup2]: https://borgbackup.github.io/borgbackup/
+[vorta]: https://vorta.borgbase.com
 [cpio]: http:///www.gnu.org/software/cpio/
 [dirvish]: http://www.dirvish.org/
 [duplicity]: http://duplicity.nongnu.org/
 [duplicity gitlab]: https://gitlab.com/duplicity/duplicity
+[npbackup]: https://github.com/netinvent/npbackup
 [rdiff-backup]: http://rdiff-backup.nongnu.org/
+[restic]: https://github.com/restic/restic
 [rsnapshot]: http://www.rsnapshot.org/
 [rsbackup]: http://www.greenend.org.uk/rjk/rsbackup/
 [snapper]: http://snapper.io/
