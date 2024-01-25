@@ -1,8 +1,8 @@
 ---
 title: Installing Python
 author: Christian Külker
-date: 2023-08-02
-version: 0.1.1
+date: 2024-01-25
+version: 0.1.2
 type: doc
 disclaimer: True
 toc: True
@@ -18,23 +18,119 @@ description: Installing Python on Debian
 
 ## Abstract
 
-This document is about installing Python.
+This document is about installing Python from source.
 
 ### History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2024-01-25 | Python 3.12.1 on Debian 12 Bookworm                  |
 | 0.1.1   | 2023-08-02 | Typos                                                |
-| 0.1.0   | 2022-03-11 | Initial release                                      |
+| 0.1.0   | 2022-03-11 | Initial release (Python 3.10.2, Debian Stretch)      |
 
-
-## Python v3.10.2 on Debian Stretch from Source
-
-This document will probably also be valid for more recent versions of Debian.
+## Python v3.12.1 on Debian 12 Bookworm from Source
 
 ### Dependencies
 
+```bash
+aptitude install make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+libncurses5-dev libncursesw5-dev xz-utils tk-dev
 ```
+
+### Deciding the Version
+
+Look at [https://www.python.org/ftp/python/](https://www.python.org/ftp/python/) to chose the version of
+Python you would like to compile.
+
+### Getting the Source
+
+```bash
+export VER=3.12.1
+export DIR=Python-$VER
+export TAR=$DIR.tar.xz
+export URL=https://www.python.org/ftp/python/$VER/$TAR
+mkdir -p src
+mkdir -p build
+cd src
+wget $URL
+cd ../build
+tar xvJf ../src/$TAR
+cd $DIR
+```
+
+### Configure
+
+The `--enable-optimizations` flag will enable some optimizations within Python
+to make it run about 10 percent faster. Doing this may add twenty or thirty
+minutes to the compilation time. The `--with-ensurepip=install` flag will
+install pip bundled with this installation.
+
+This might take 10-20 seconds:
+
+```
+cd /srv/build/$DIR
+ ./configure --enable-optimizations --with-ensurepip=install
+```
+
+### Build
+
+This might take 2-3 hours (2:37h for a 2014 PC)
+
+```
+make -j 4
+```
+
+This takes about 15 minutes on a "AMD FX(tm)-4300" Quad-Core Processor and 17
+minutes on an AMD Athlon(tm) X2 Dual Core Processor BE-2400.
+
+### Build Tests
+
+Test the build with `make test` that executes 427 tests. This might need an
+internet connection. The tests are more demanding to the system as the
+compilation.
+
+```bash
+make test
+```
+
+The output with `time` might look like on an AMD dual core BE-2400:
+
+~~~
+== Tests result: SUCCESS ==
+
+20 tests skipped:
+    test.test_asyncio.test_windows_events
+    test.test_asyncio.test_windows_utils test.test_gdb.test_backtrace
+    test.test_gdb.test_cfunction test.test_gdb.test_cfunction_full
+    test.test_gdb.test_misc test.test_gdb.test_pretty_print
+    test_dbm_gnu test_dbm_ndbm test_devpoll test_ioctl test_kqueue
+    test_launcher test_lzma test_msilib test_startfile
+    test_winconsoleio test_winreg test_wmi test_zoneinfo
+
+6 tests skipped (resource denied):
+    test_ossaudiodev test_tix test_tkinter test_ttk test_winsound
+    test_zipfile64
+
+463 tests OK.
+
+Total duration: 15 min 11 sec
+Total tests: run=40,432 skipped=1,270
+Total test files: run=483/489 skipped=20 resource_denied=6
+Result: SUCCESS
+make test  1452.83s user 171.06s system 177% cpu 15:12.57 total
+~~~
+
+See 'Python v3.10.2 on Debian Stretch from Source' for different
+test invocations and alternative installation.
+
+## Python v3.10.2 on Debian Stretch from Source
+
+This guide will probably also be valid for more recent versions of Debian.
+
+### Dependencies
+
+```bash
 aptitude install make build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
 libncurses5-dev libncursesw5-dev xz-utils tk-dev
@@ -42,10 +138,9 @@ libncurses5-dev libncursesw5-dev xz-utils tk-dev
 
 ### Getting the Source
 
+Look at [https://www.python.org/ftp/python/](https://www.python.org/ftp/python/) for the desired or latest version.
 
-Look at `https://www.python.org/ftp/python/` for the desired or latest version.
-
-```
+```bash
 export VER=3.10.2
 export DIR=Python-$VER
 export TAR=$DIR.tar.xz
@@ -81,7 +176,7 @@ make -j 4
 
 Test the build with 427 tests. This might need an internet connection.
 
-```
+```bash
 make test
 ```
 
@@ -166,8 +261,4 @@ Installing collected packages: setuptools, pip
 Successfully installed pip-21.2.4 setuptools-58.1.0
 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
 ~~~
-
-
-
-
 
