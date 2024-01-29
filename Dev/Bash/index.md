@@ -1,8 +1,8 @@
 ---
 title: Bash
 author: Christian Külker
-date: 2024-01-25
-version: 0.1.1
+date: 2024-01-29
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -28,6 +28,7 @@ format string.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2024-01-29 | Fix code fences                                      |
 | 0.1.1   | 2024-01-25 | Add python, history, introduction                    |
 | 0.1.0   | 2023-05-15 | Initial release                                      |
 
@@ -43,7 +44,7 @@ Python
 
 ```python
 line = "=" * 80
-````
+```
 
 Bash
 
@@ -66,7 +67,7 @@ Python
 
 ```python
 line = "-" * 80
-````
+```
 
 Bash
 
