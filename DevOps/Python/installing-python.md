@@ -1,8 +1,8 @@
 ---
 title: Installing Python
 author: Christian Külker
-date: 2024-01-25
-version: 0.1.2
+date: 2024-01-29
+version: 0.1.3
 type: doc
 disclaimer: True
 toc: True
@@ -24,6 +24,7 @@ This document is about installing Python from source.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2024-01-29 | Fix line breaks                                      |
 | 0.1.2   | 2024-01-25 | Python 3.12.1 on Debian 12 Bookworm                  |
 | 0.1.1   | 2023-08-02 | Typos                                                |
 | 0.1.0   | 2022-03-11 | Initial release (Python 3.10.2, Debian Stretch)      |
@@ -40,8 +41,9 @@ libncurses5-dev libncursesw5-dev xz-utils tk-dev
 
 ### Deciding the Version
 
-Look at [https://www.python.org/ftp/python/](https://www.python.org/ftp/python/) to chose the version of
-Python you would like to compile.
+Look at
+[https://www.python.org/ftp/python/](https://www.python.org/ftp/python/) to
+chose the version of Python you would like to compile.
 
 ### Getting the Source
 
@@ -138,7 +140,9 @@ libncurses5-dev libncursesw5-dev xz-utils tk-dev
 
 ### Getting the Source
 
-Look at [https://www.python.org/ftp/python/](https://www.python.org/ftp/python/) for the desired or latest version.
+Look at
+[https://www.python.org/ftp/python/](https://www.python.org/ftp/python/) for
+the desired or latest version.
 
 ```bash
 export VER=3.10.2
@@ -240,7 +244,8 @@ make altinstall
 This will result in a bunch of warnings
 
 ~~~
-WARNING: Value for scheme.headers does not match. Please report this to <https://github.com/pypa/pip/issues/10151>
+WARNING: Value for scheme.headers does not match. Please report this to \
+  <https://github.com/pypa/pip/issues/10151>
 distutils: /usr/local/include/python3.10/UNKNOWN
 sysconfig: /srv/build/Python-3.10.2/Include/UNKNOWN
 WARNING: Additional context:
@@ -252,13 +257,17 @@ Looking in links: /tmp/tmpwdn4wp92
 Processing /tmp/tmpwdn4wp92/setuptools-58.1.0-py3-none-any.whl
 Processing /tmp/tmpwdn4wp92/pip-21.2.4-py3-none-any.whl
 Installing collected packages: setuptools, pip
-  WARNING: Value for scheme.headers does not match. Please report this to <https://github.com/pypa/pip/issues/10151>
+  WARNING: Value for scheme.headers does not match. Please report this to \
+    <https://github.com/pypa/pip/issues/10151>
   distutils: /usr/local/include/python3.10/setuptools
   sysconfig: /srv/build/Python-3.10.2/Include/setuptools
-  WARNING: Value for scheme.headers does not match. Please report this to <https://github.com/pypa/pip/issues/10151>
+  WARNING: Value for scheme.headers does not match. Please report this to \
+    <https://github.com/pypa/pip/issues/10151>
   distutils: /usr/local/include/python3.10/pip
   sysconfig: /srv/build/Python-3.10.2/Include/pip
 Successfully installed pip-21.2.4 setuptools-58.1.0
-WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+WARNING: Running pip as the 'root' user can result in broken permissions and \
+  conflicting behaviour with the system package manager. It is recommended to \
+  use a virtual environment instead: https://pip.pypa.io/warnings/venv
 ~~~
 
