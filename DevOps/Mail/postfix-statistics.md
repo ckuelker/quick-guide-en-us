@@ -1,8 +1,8 @@
 ---
 title: Postfix Statistics
 author: Christian Külker
-date: 2022-11-13
-version: 0.1.4
+date: 2024-01-31
+version: 0.1.5
 type: doc
 disclaimer: True
 toc: True
@@ -51,13 +51,14 @@ A list of software that has no mail statistic features.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.5   | 2024-01-31 | Improve writing                                      |
 | 0.1.4   | 2022-11-13 | Fix typo                                             |
-| 0.1.3   | 2022-06-04 | Change shell->bash, cron, links                      |
+| 0.1.3   | 2022-06-04 | Changed shell to bash; updated cron settings, links  |
 | 0.1.2   | 2022-05-09 | Change level of sections (one down)                  |
 | 0.1.1   | 2022-05-05 | Add poststats, list of software, links, front matter |
 | 0.1.0   | 2022-05-04 | Initial release with `pflogsumm.pl`                  |
 
-## Pflogsumm.pl
+## Pflogsumm
 
 When searching for "postfix mail statistic" the first 10 results are referring
 to a Perl script that analyses the Postfix log files. `pflogsumm.pl` is a
@@ -65,8 +66,8 @@ script written by James S. Seymour and copyrighted 1998-2004 under the `GPL
 v2+` license and lives on <https://jimsun.linxnet.com/postfix_contrib.html> as
 of this writing (2022-05-04).
 
-The `pflogsumm` scripts aims just an overview of past mail server activities to
-give an administrator a 'head-up' in case of troubles.
+The `pflogsumm` script aims to provide an overview of past mail server 
+activities, offering administrators a 'heads-up' in case of troubles.
 
 ### Installation
 
@@ -80,12 +81,12 @@ While some contributions, for example by
 [Falko Timme](https://www.howtoforge.com/postfix-monitoring-with-mailgraph-and-pflogsumm-on-debian-lenny),
 are suggesting to configure `logrotate` to have a dedicated log over 24 hours,
 I got the impression that `pflogsumm` can do this already by itself via a time
-stamp query and keywords like `yesterday`. I would agree, in case of using the
-`yesterday` feature, it would depend at which time the cron job needs to be
-executed and after 24h a re-invocation of the same job would give different
-result. So a recreation of the reports would be more difficult. However usually
-as a 'heads-up' using the `yesterday` scope as a one time shot cron job seems
-justified.
+stamp query and keywords like `yesterday`. I agree that when using the 
+yesterday feature, the results depend on the time at which the cron job is 
+executed. Additionally, re-invoking the same job after 24 hours would yield 
+different results. So a recreation of the reports would be more difficult. 
+However usually as a 'heads-up' using the `yesterday` scope as a one time shot
+cron job seems justified.
 
 ### Invocations
 
@@ -128,9 +129,10 @@ Then add a line to cron
 
 Unlike the name the `poststats` tool (GPLv3), despite the name is postfix
 monitor with a web interface and mail sending capability triggered via cron.
-Since it seems not providing a statistic it will not covered in this document.
+As it does not provide statistics, poststats will not be covered in this 
+document.
 
-### Links
+### Further reading
 
 - <https://github.com/jpylypiw/poststats>
 
