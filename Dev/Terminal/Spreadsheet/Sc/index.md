@@ -8,6 +8,7 @@ lang: en
 type: doc
 disclaimer: True
 toc: True
+PDF: True
 categories:
 - Spread sheet
 commands:
