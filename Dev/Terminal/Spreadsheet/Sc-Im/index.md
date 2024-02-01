@@ -1,8 +1,8 @@
 ---
 title: sc-im
 author: Christian Külker
-date: 2024-01-31
-version: 0.1.1
+date: 2024-02-01
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -105,6 +105,21 @@ For more features, see the github [repository]
 
 - [Repository](https://github.com/andmarti1424/sc-im)
 
+## Debian
+
+There is a [Debian package], but only available in testing (trixie) and
+unstable (sid).
+
+| Debian |           | Version               |
+| ------ | --------- | --------------------- |
+|        | Sid       | 0.8.3+ds-3            |
+|        | Trixie    | 0.8.3+ds-3+b1:riscv64 |
+| 12     | Bookwowrm | n.a.                  |
+
+[Debian package]: https://packages.debian.org/search?keywords=sc-im
+[trixie sc-im]: https://packages.debian.org/trixie/sc-im
+[sid sc-im]: https://packages.debian.org/sid/sc-im-dbgsym
+
 ## Related Projects
 
 - [sc on Wikipedia]
@@ -115,6 +130,7 @@ For more features, see the github [repository]
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2024-02-01 | Add Debian section                                   |
 | 0.1.1   | 2024-01-31 | Introduction, Build Debian 12                        |
 | 0.1.0   | 2022-12-11 | Initial release                                      |
 
