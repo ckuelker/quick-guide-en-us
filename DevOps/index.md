@@ -1,6 +1,9 @@
 ---
 title: DevOps
 type: title
+author: Christian Külker
+date: 2024-02-02
+version: 0.1.0
 cards: True
 description: System Administration
 
@@ -28,3 +31,10 @@ Administration_ is used.
   archived via queueing system (like Slurm and others) that sends new
   applications including its environment to the worker nodes.
 
+<!--
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.0   | 2024-02-02 | Initial release                                      |
+-->
