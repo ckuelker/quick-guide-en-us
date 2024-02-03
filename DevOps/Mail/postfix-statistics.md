@@ -81,10 +81,10 @@ While some contributions, for example by
 [Falko Timme](https://www.howtoforge.com/postfix-monitoring-with-mailgraph-and-pflogsumm-on-debian-lenny),
 are suggesting to configure `logrotate` to have a dedicated log over 24 hours,
 I got the impression that `pflogsumm` can do this already by itself via a time
-stamp query and keywords like `yesterday`. I agree that when using the 
-yesterday feature, the results depend on the time at which the cron job is 
-executed. Additionally, re-invoking the same job after 24 hours would yield 
-different results. So a recreation of the reports would be more difficult. 
+stamp query and keywords like `yesterday`. I agree that when using the
+yesterday feature, the results depend on the time at which the cron job is
+executed. Additionally, re-invoking the same job after 24 hours would yield
+different results. So a recreation of the reports would be more difficult.
 However usually as a 'heads-up' using the `yesterday` scope as a one time shot
 cron job seems justified.
 
@@ -129,7 +129,7 @@ Then add a line to cron
 
 Unlike the name the `poststats` tool (GPLv3), despite the name is postfix
 monitor with a web interface and mail sending capability triggered via cron.
-As it does not provide statistics, poststats will not be covered in this 
+As it does not provide statistics, poststats will not be covered in this
 document.
 
 ### Further reading
