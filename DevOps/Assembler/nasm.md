@@ -1,8 +1,8 @@
 ---
 title: Nasm
 author: Christian Külker
-date: 2023-03-08
-version: 0.1.0
+date: 2024-02-05
+version: 0.1.1
 locale: en_US
 lang: en
 type: doc
@@ -29,19 +29,20 @@ description: Netwide Assembler (NASM), an asssembler for the x86 CPU
 - <https://github.com/netwide-assembler/nasm>
 - <https://github.com/netwide-assembler/nasm.git>
 
-
 ## Debian Versions
 
 | Debian   |  # | Nasm         |
 | -------- | -- | ------------ |
-| Stretch  |  9 | 2.12.01-1+b1 |
-| Buster   | 10 | 2.14-1       |
+| Bookworm | 12 | 2.16.01-1    |
 | Bullseye | 11 | 2.15.05-1    |
+| Buster   | 10 | 2.14-1       |
+| Stretch  |  9 | 2.12.01-1+b1 |
 
 ## Compiling from Source
 
 The compiling from the git source has been tested on Debian 9 Stretch for
-`nasm` 2.16.01.
+`nasm` 2.16.01. Meanwhile this version is available via package. The
+current (2024-02-05) source release is 2.16.02rc10.
 
 ### Dependencies
 
@@ -110,5 +111,5 @@ share
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2024-02-05 | Debian 12 Bookworm                                   |
 | 0.1.0   | 2023-03-08 | Initial release                                      |
-
