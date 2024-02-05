@@ -1,7 +1,7 @@
 ---
 title: Assembler
 author: Christian Külker
-version: 0.1.0
+version: 0.1.1
 date: 2024-02-05
 type: doc
 locale: en_US
@@ -14,9 +14,7 @@ categories:
 tags:
 - Assembler
 description: >
- A program that takes computer instructions (nemonics) and converts them into a
- pattern of bits that the computer's processor can use to perform its
- operations.
+ A program using nemonics coverting them into bits used by a CPU to perform.
 
 ---
 
