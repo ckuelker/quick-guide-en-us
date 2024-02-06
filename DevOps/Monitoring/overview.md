@@ -2,8 +2,8 @@
 title: Monitoring Overview
 linkTitle: Overview
 author: Christian Külker
-date: 2021-05-19
-version: 0.1.5
+date: 2023-01-04
+version: 0.1.6
 type: doc
 disclaimer: True
 toc: True
@@ -32,28 +32,29 @@ ranges or not. This is marked as 'Mon.'.
 
 ## Overview
 
-
-| Software    | Language/Dependency    | Query | Deb | Kind  | License   | URL                                                   |
-| ----------- | ---------------------- | ----- | --- | ----- | --------- | ----------------------------------------------------- |
-| CACTI       | PHP5 Mysql Perl Apache |       | yes |       | GPL       | [🡺](http://www.cacti.net/)                            |
-| CENTREON    |                        |       |     |       |           |                                                       |
-| CHECK_MK    |                        |       |     |       |           | [🡺](https://checkmk.com/)                             |
-| GANGLIA     | C, Perl, PHP, Python   |       | yes |       |           | [🡺](http://www.ganglia.info)                          |
-| ICINGA      | Perl                   | Nag.  | yes | Mon.  | GPLv2/3   | [🡺](https://www.icinga.org/) [🡺](https://icinga.com)  |
-| ICINGA2     | C++, web: PHP          | Nag.  | yes | Mon.  |           | [🡺](https://www.icinga.org/) [🡺](https://icinga.com)  |
-| MANTIS      |                        |       |     |       |           |                                                       |
-| MRTG        | Perl                   | SNMP  | yes | Usage |           | [🡺](http://oss.oetiker.ch/mrtg/)                      |
-| MUNIN       | Perl httpd             |       | yes | Usage |           | [🡺](http://munin-monitoring.org/)                     |
-| NAV         |                        |       |     |       | GPLv3     | [🡺](https://nav.uninett.no/)                          |
-| NETSAINT    |                        |       |     |       |           |                                                       |
-| NAGIOS3     | Perl                   | Nag.  | yes | Mon.  |           | [🡺](https://www.nagios.org/)                          |
-| OBSERVIUM   | PHP                    | SNMP  | no  |       | Observium | [🡺](http://www.observium.org/)                        |
-| OPSVIEW     |                        |       |     |       |           |                                                       |
-| OP5/NINJA   |                        |       |     |       |           |                                                       |
-| OP5/MONITOR |                        |       |     |       |           |                                                       |
-| SHINKEN     | Phython                | Nag.  | yes | Mon.  | AGPL v3   | [🡺](http://www.shinken-monitoring.org/)               |
-| THRUK       |                        |       |     |       |           |                                                       |
-| ZABBIX      | C PHP                  |       | yes |       | GPLv2     | [🡺](http://zabbix.com/)                               |
+| Software      | Language/Dependency    | Query | Deb | Kind  | License   | URL                                                   |
+| ------------- | ---------------------- | ----- | --- | ----- | --------- | ----------------------------------------------------- |
+|  CACTI        | PHP5 Mysql Perl Apache |       | yes |       | GPL       | [🡺](http://www.cacti.net/)                            |
+|  CENTREON     |                        |       |     |       |           |                                                       |
+| [CHECKMK]     | Python,C++,Shell,C,JS  | Nag.  | no  |       | GPLv2     | [🡺](https://checkmk.com/)                             |
+| GANGLIA       | C, Perl, PHP, Python   |       | yes |       |           | [🡺](http://www.ganglia.info)                          |
+| [GRAFANA]     | Go, TypeScript, Shell  |       | no  | Usage | AGPL-v3   | [🡺](https://grafana.com/)                             |
+|  ICINGA       | Perl                   | Nag.  | yes | Mon.  | GPLv2/3   | [🡺](https://www.icinga.org/) [🡺](https://icinga.com)  |
+|  ICINGA2      | C++, web: PHP          | Nag.  | yes | Mon.  |           | [🡺](https://www.icinga.org/) [🡺](https://icinga.com)  |
+|  MANTIS       |                        |       |     |       |           |                                                       |
+|  MRTG         | Perl                   | SNMP  | yes | Usage |           | [🡺](http://oss.oetiker.ch/mrtg/)                      |
+|  MUNIN        | Perl httpd             |       | yes | Usage |           | [🡺](http://munin-monitoring.org/)                     |
+|  NAV          |                        |       |     |       | GPLv3     | [🡺](https://nav.uninett.no/)                          |
+|  NETSAINT     |                        |       |     |       |           |                                                       |
+|  NAGIOS3      | Perl                   | Nag.  | yes | Mon.  |           | [🡺](https://www.nagios.org/)                          |
+|  OBSERVIUM    | PHP                    | SNMP  | no  |       | Observium | [🡺](http://www.observium.org/)                        |
+|  OPSVIEW      |                        |       |     |       |           |                                                       |
+|  OP5/NINJA    |                        |       |     |       |           |                                                       |
+|  OP5/MONITOR  |                        |       |     |       |           |                                                       |
+| [PROMETHEUS]  | Go, TypeScript, Shell  |       | yes | Mon.  | Apache-v2 | [🡺](https://prometheus.io/)                           |
+|  SHINKEN      | Phython                | Nag.  | yes | Mon.  | AGPL-v3   | [🡺](http://www.shinken-monitoring.org/)               |
+|  THRUK        |                        |       |     |       |           |                                                       |
+|  ZABBIX       | C PHP                  |       | yes |       | GPLv2     | [🡺](http://zabbix.com/)                               |
 
     Nag.  - Nagios query type, including nrpe
     Usage - Tool display usage as target, no warnings
@@ -62,10 +63,9 @@ ranges or not. This is marked as 'Mon.'.
 ## Other
 
 - [OpenNMS]
-- [Prometheus] + [Grafana]
 - [Netdata]
-- M/Monit
-- LibreNMS
+- [M/Monit]
+- [LibreNMS]
 
 [checkmk]: https://checkmk.com/
 [Prometheus]: https://prometheus.io/
@@ -74,7 +74,6 @@ ranges or not. This is marked as 'Mon.'.
 [Netdata]: https://www.netdata.cloud/
 [M/Monit]: https://mmonit.com/
 [LibreNMS]: https://www.librenms.org/
-
 
 ## Web Interfaces
 
@@ -86,11 +85,13 @@ ranges or not. This is marked as 'Mon.'.
 
 | Software           | Repository                                                |
 | ------------------ | --------------------------------------------------------- |
-| chekMK             | [github](https://github.com/tribe29/checkMK)              |
+| checkMK            | [github](https://github.com/tribe29/checkMK)              |
+| grafana            | [github](https://github.com/grafana/grafana)              |
 | icinga2            | [github](https://github.com/Icinga/icinga2)               |
 | icinga2-web        | [github](https://github.com/Icinga/icingaweb2)            |
 | icinga2-puppet     | [github](https://github.com/Icinga/puppet-icinga2)        |
 | nagios4-nagioscore | [github](https://github.com/NagiosEnterprises/nagioscore) |
+| Prometheus         | [github](https://github.com/prometheus/prometheus)        |
 | Shinken            | [github](https://github.com/naparuba/shinken)             |
 
 ## Conference
@@ -109,6 +110,7 @@ ranges or not. This is marked as 'Mon.'.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.6   | 2023-01-04 | +PROMETHEUS+GRAFANA, mod CHECK_MK                    |
 | 0.1.5   | 2021-05-19 | Formatting for Quick-Guide                           |
 | 0.1.4   | 2020-02-14 | comparison links                                     |
 | 0.1.3   | 2016-07-02 | +NETSAINT to overview                                |
