@@ -2,8 +2,8 @@
 title: Source Code Hosting
 linkTitle: Source-Code-Hosting
 author: Christian Külker
-date: 2024-02-04
-version: 0.1.1
+date: 2024-02-12
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -42,13 +42,17 @@ document compiles Free Open Source Software options for hosting source code
 projects.
 
 *[VCS]: Version Control Systems
+
 *[SVN]: Subversion
+
 *[CVS]: Concurrent Version System
+
 *[FOSS]: Free Open Source Software
 
 [VCS]: https://en.wikipedia.org/wiki/Version_control
 [SVN]: https://en.wikipedia.org/wiki/Apache_Subversion
 [CVS]: https://en.wikipedia.org/wiki/Concurrent_Versions_System
+[FOSS]: https://en.wikipedia.org/wiki/Free_and_open-source_software
 
 ## Overview
 
@@ -119,5 +123,6 @@ projects.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2024-02-12 | Fix acronym definition (not supported by pandoc)     |
 | 0.1.1   | 2024-02-04 | Add project chapters                                 |
 | 0.1.0   | 2022-06-21 | Initial release                                      |
