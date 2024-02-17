@@ -2,8 +2,8 @@
 title: Hardware Storage Health
 linkTitle: Storage Health
 author: Christian Külker
-date: 2024-02-16
-version: 0.1.2
+date: 2024-02-17
+version: 0.1.3
 type: doc
 disclaimer: True
 toc: True
@@ -196,6 +196,15 @@ ATA SMART not supported.
 
 Since the last commit to `skdump` was on 2012-05-21, it is not surprising that
 this tool cannot support `NVMe`.
+
+However for older devices the `--overall` paramter is very nice:
+
+```bash
+for i in a b c; do echo -n "DEVICE /dev/sd$i: ";skdump --overall /dev/sd$i;done
+DEVICE /dev/sda: GOOD
+DEVICE /dev/sdb: GOOD
+DEVICE /dev/sdc: GOOD
+```
 
 ## Smartmontools
 
@@ -774,6 +783,7 @@ used to evaluate a drive:
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2024-02-17 | Skdump --overall                                     |
 | 0.1.2   | 2024-02-16 | Reorder sections, + UAS section                      |
 | 0.1.1   | 2023-03-14 | More on USB disks                                    |
 | 0.1.0   | 2020-06-11 | Initial release                                      |
