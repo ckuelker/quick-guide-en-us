@@ -2,8 +2,8 @@
 title: MRTG on Raspberry Pi
 linkTitle: MRTG
 author: Christian Külker
-date: 2023-05-01
-version: 0.1.7
+date: 2024-02-22
+version: 0.1.8
 type: doc
 disclaimer: True
 toc: True
@@ -17,28 +17,30 @@ tags:
 - Apache
 - Nginx
 - SNMP
-description:
-    Monitoring SNMP network devices and draw pretty pictures showing how much
-    traffic has passed through each interface.
+description: Monitoring SNMP network devices and draw pretty pictures showing how much traffic has passed through each interface.
 
 ---
 
 ## Introduction
 
-This article is about a software called "Multi Router Traffic Grapher" (MRTG),
-which can monitor network interface usage and other values on one or more
-computers.  While this article tries to be as explanatory as possible due to
-the nature of the subject, it is aimed at experienced Linux users or system
-administrators.
+This article provides a guide to the Multi Router Traffic Grapher (MRTG)
+software, a powerful tool for monitoring network interface usage and various
+other performance metrics on one or more computers. The primary focus of this
+article is on installing and configuring MRTG on a server, using a Raspberry Pi
+router as an example. However, the process should be very similar for any
+Debian-based distribution on other hardware.
 
-This article describes a simple installation on a server. In fact, a small
-Raspberry Pi router. It should be very similar with any Debian based
-distribution on other hardware too.
+MRTG offers several benefits to experienced Linux users and system
+administrators who want to gain insight into their network performance. One of
+the key benefits is the ability to generate detailed summaries of network
+device usage in terms of speed on a daily, weekly, and monthly basis. This
+feature can be particularly useful for those with limited Internet connections
+who need to keep track of their bandwidth usage.
 
-One advantage of using [MRTG] is that it explicitly summarizes the usage of
-network devices on a daily, weekly and monthly basis in terms of **speed**.
-This is useful if you are on a limited Internet connection and need to know how
-fast you are.
+In addition to discussing the installation process, this guide examines MRTG's
+various features and capabilities, as well as potential drawbacks and
+limitations, to help readers make informed decisions when evaluating different
+network monitoring solutions.
 
 ## Dependencies
 
@@ -50,7 +52,7 @@ installed on one machine.
 ### Web Server
 
 One dependency for [MRTG] is the web server. This can be basically any web
-server.  Out of curiosity, I tested **Nginx** (speak: engine x) and it works.
+server. Out of curiosity, I tested **Nginx** (speak: engine x) and it works.
 However, in the past, when [MRTG] was created, Apache was more common. For this
 reason, many guides on the web have some tricks when it comes to using Apache.
 You may want to consider [Apache2] if you need specific features.
@@ -349,7 +351,7 @@ Since one interface, ``wlan0``, does not provide a speed value, to use it with
 [MRTG], it is necessary to set a value with the ``-zero-speed=`` parameter.
 
 ```bash
-LANG=C cfgmaker --zero-speed=100000000 public@127.0.0.1  > /etc/mrtg.cfg
+LANG=C cfgmaker --zero-speed=100000000 public@127.0.0.1 > /etc/mrtg.cfg
 ```
 
 [MRTG] has a limited ability to scan hardware and create a configuration for
@@ -433,8 +435,8 @@ Options[localhost-CPU]: integer, gauge, nopercent, growright, unknaszero, noo
 ### Configuring MRTG Web output
 
 Of course, you can create an index page by hand, which is probably recommended.
-A quick and dirty approach is to use the `indexmaker` script.  This creates a
-page with one graph per target and a link to the target's subpage.
+A quick and dirty approach is to use the `indexmaker` script. This creates a
+page with one graph per target and a link to the target's sub-page.
 
 ```bash
 mkdir -p /var/www/mrtg
@@ -623,7 +625,8 @@ __Cons__
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
-| 0.1.7     2023-05-01 | Improve writing                                      |
+| 0.1.8   | 2024-02-22 | Rewrite Introduction                                 |
+| 0.1.7   | 2023-05-01 | Improve writing                                      |
 | 0.1.6   | 2022-06-06 | Change shell to bash                                 |
 | 0.1.5   | 2021-05-18 | Updates for Raspberry PI 4                           |
 | 0.1.4   | 2021-01-02 | Updates for Debian 10 Buster                         |
