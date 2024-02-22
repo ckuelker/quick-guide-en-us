@@ -1,8 +1,8 @@
 ---
 title: psensor
 author: Christian Külker
-version: 0.1.0
-date: 2024-02-10
+version: 0.1.1
+date: 2024-02-11
 type: doc
 locale: en_US
 lang: en
@@ -14,8 +14,7 @@ commands:
 - psensor
 tags:
 - psensor
-discription: <
-  A tool for measuring sensors, display them and issue alarms
+discription: A tool for measuring sensors, display them and issue alarms
 
 ---
 
@@ -136,9 +135,16 @@ temp3:     -128.0°C  (low  = -38.0°C, high = -119.0°C) sensor = disabled
 intrusion0: OK
 ```
 
+## Links
+
+- Home page: <http://wpitchoune.net/psensor/>
+- Source: <https://gitlab.com/jeanfi/psensor/tree/master>
+- FAQ: <http://wpitchoune.net/psensor/faq.html>
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2024-02-11 | Add links                                            |
 | 0.1.0   | 2024-02-10 | Initial release                                      |
 
