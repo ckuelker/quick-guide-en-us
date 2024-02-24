@@ -20,7 +20,7 @@ description: Kubernetes
 The word Kubernetes ([κυβερνήτης] comes from Greek and means "helmsman" or
 "pilot" or "governor", and is the etymological root of cybernetics).
 
-![Dedicated - Virtual - Container](sys-virt-container0.1.0.png){width=100%}
+![Dedicated - Virtual - Container](sys-virt-container-0.1.1.png)
 
 __Dedicated__ servers are easy to maintain and each application can communicate
 directly with any other application.
@@ -52,6 +52,7 @@ Some advantages of containerized servers are:
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2024-02-24 | Fix image                                            |
 | 0.1.2   | 2023-03-27 | Improve writing, fix date                            |
 | 0.1.1   | 2022-05-09 | +history; PDF: False (no Greek in Noto Sans CJK JP)  |
 | 0.1.0   | 2021-05-21 | Initial release                                      |
