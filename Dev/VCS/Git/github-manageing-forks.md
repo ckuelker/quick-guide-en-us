@@ -1,8 +1,8 @@
 ---
 title: Github Managing Forks
 author: Christian Külker
-date: 2023-05-09
-version: 0.1.2
+date: 2024-02-27
+version: 0.1.3
 type: doc
 disclaimer: True
 toc: True
@@ -12,9 +12,11 @@ tags:
 - Github-Managing-Forks
 commands:
 - git
-description: How to manage github.com forks
+description: How to manage GitHub forks
 
 ---
+
+## Introduction
 
 There are several ways to manage forks. One way is to manage forks through the
 web interface. While this has the advantage of no additional configuration in
@@ -26,9 +28,24 @@ requests cannot be deleted, marking the error forever. Therefore, this document
 describes a different method that uses the command line and the additional
 configuration of an upstream remote source.
 
-## To Long To Read - TLTR
+## Forking/ Merging
 
-**Set up a managing fork via upstream**  (drawback, local repo will be ahead)
+__Fork/Merge the upstream__
+
+Forking (GitHub) or merging (GitLab) the upstream needs to be done before the
+management. While the naming between GitHub and GitLab is different the concept
+is similar. So for now I use GitHub as an example: After logging into GitHub
+via the <https://github.com> web interface, browse to the project to be forked
+and use the drop down button 'fork' and choose '+ create a new fork'.  Enter a
+new fork name (repository name) and decide if you copy only the default branch
+or not. In some cases it has to be __not__ checked, because the default branch
+is not the development branch. This depends on the repositories policy.  Then
+clone the fork to your local working space. More details can be found in the
+document [GitHub Pull Requests](github-pull-request.md).
+
+## Management - To Long To Read - TLTR
+
+__Set up a managing fork via upstream__  (drawback, local repo will be ahead)
 
 ```bash
 git remote show
@@ -37,7 +54,7 @@ git remote show
 git remote show upstream
 ```
 
-**Update a fork via 'upstream'** (Update only, no local commits expected)
+__Update a fork via 'upstream'__ (Update only, no local commits expected)
 
 ```bash
 git remote show upstream # make sure the result is 'fast-forwardable'
@@ -72,7 +89,7 @@ git remote show origin
 
 For the repository `cwa-documentation` it will give for example:
 
-```
+```bash
 * remote origin
   Fetch URL: git@github.com:ckuelker/cwa-documentation.git
   Push  URL: git@github.com:ckuelker/cwa-documentation.git
@@ -154,9 +171,10 @@ situation (output truncated):
 ## Updating the Fork
 
 There is more than one way to update a fork. In trivial cases, the git
-repository GUI (e.g. `github.com`) provides a method to do this. Since this may
-change with a new release of the GUI, a more general method is to add a remote
-upstream, fetch the upstream, checkout main, and merge upstream and main.
+repository GUI (e.g. <https://github.com>) provides a method to do this. Since
+this may change with a new release of the GUI, a more general method is to add
+a remote upstream, fetch the upstream, checkout main, and merge upstream and
+main.
 
 It is not absolutely necessary to keep the fork current. If you are working on
 anything more than a tiny, quick fix, make sure you keep your fork up to date
@@ -244,17 +262,17 @@ The use question (2) can be divided into:
 
 ## Further Reading
 
-- [How do I update a `github` forked repository]
+- [How do I update a GitHub forked repository]
 - [Syncing a fork]
 
-[How do I update a github forked repository]: https://stackoverflow.com/questions/7244321/how-do-i-update-a-github-forked-repository/7244456#7244456
+[How do I update a GitHub forked repository]: https://stackoverflow.com/questions/7244321/how-do-i-update-a-github-forked-repository/7244456#7244456
 [Syncing a fork]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork
 
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2024-02-27 | Add remarks about forking in general; formatting     |
 | 0.1.2   | 2023-05-09 | Improve writing                                      |
 | 0.1.1   | 2022-06-25 | Examples, update TLTR, shell->bash, commands, main   |
 | 0.1.0   | 2020-09-24 | Initial release                                      |
-
