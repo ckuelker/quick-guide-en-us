@@ -2,8 +2,8 @@
 title: Github Pull Request
 linkTitle: Github-Pull-Request
 author: Christian Külker
-date: 2023-05-08
-version: 0.1.3
+date: 2024-02-27
+version: 0.1.4
 type: doc
 disclaimer: True
 toc: True
@@ -20,6 +20,8 @@ description: How to make a github.com pull request
 
 ---
 
+## Introduction
+
 A common way to participate in git-managed software projects is to submit a
 "pull request" to certain services such as <https://github.com> (it's called a
 "merge request" on <https://gitlab.com>). This technique is very popular with
@@ -27,19 +29,18 @@ git because people often have a one-time commitment and do not have write
 access to the repository. A pull request is therefore a one-time __write__
 exception to the repository. In traditional `VCS`, for example, a tarball would
 be emailed, and the repository maintainer would manually save the tarball to
-the filesystem, extract the contents and add the changes to the repository,
+the file-system, extract the contents and add the changes to the repository,
 review it, make a diff, and decide whether to include the changes in the next
 commit of the repository to allow for a one-time contribution. This was a
-labor-intensive, error-prone process. Git and <https://github.com> use the
-concept of a "pull request" and a "fork" to provide a semi-automated method for
-a one-time write contribution. This section is about how to make a pull request
-(and fork) on <https://github.com> specifically. As this is not a Git feature
-as such, the web interface of <https://github.com> must be used in conjunction
-with the command line.
+labor-intensive, error-prone process. Git and _GitHub_ use the concept of a
+"pull request" and a "fork" to provide a semi-automated method for a one-time
+write contribution. This section is about how to make a pull request (and fork)
+on _GitHub_ specifically. As this is not a Git feature as such, the web
+interface of _GitHub_ must be used in conjunction with the command line.
 
 1. Log into <https://github.com>
 2. Go to the website projects repository, press the fork button
-3. Clone **your** fork of the repository
+3. Clone __your__ fork of the repository
 
 ```bash
 user@host:~$ git clone git@github.com:USER/REPOSITORY.git
@@ -102,11 +103,11 @@ user@host:~$ git branch -a
   remotes/origin/master
 ```
 
-8. Create very few commits with **good** commit messages
+8. Create very few commits with __good__ commit messages
 
 ```bash
 user@host:~$ sed -i -e 's%A%B%' file.md
-user@host:~$ git commit -m 'typo (A -> B)' file.md
+user@host:~$ git commit -m 'Missspelling (A -> B)' file.md
 ```
 
 9. Cleanup the branch before pushing
@@ -120,7 +121,7 @@ user@host:~$ git push
 fatal: The current branch BRANCHNAME has no upstream branch. To push the
 current branch and set the remote as upstream, use
 
-    git push --set-upstream origin BRANCHNAME
+git push --set-upstream origin BRANCHNAME
 ```
 
 However you can just push it with a one time statement
@@ -151,11 +152,19 @@ To github.com:ckuelker/cwa-documentation.git
                      fix/typo-overview-security.md-identification-against
 ```
 
+After the push the GitHub Web Interface shows a message:
+
+> BRANCHMAME had recent pushes X seconds|minutes ago [Compare & pull request]
+
+
 11. Request A Pull
 
 The last commit already shows the URL to go to
 `https://github.com/UPSTREAM-USER/UPSTREAM-REPO/pull/new/BRANCHNAME`. Use the
 URL and press the green "Compare & Pull Request" button. Add a message.
+
+_OR_ use the button unte GitHub Web interface mentioned at the end of the
+last section.
 
 ## Understanding The Remote Origin
 
@@ -208,6 +217,7 @@ See [managing forks](github-manageing-forks.html) for details.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2024-02-27 | Small improvements and changes in formatting         |
 | 0.1.3   | 2023-05-08 | Improve writing                                      |
 | 0.1.2   | 2022-06-23 | Improve introduction                                 |
 | 0.1.1   | 2022-05-31 | Fix front matter, shell->bash                        |
