@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+# Author: Christian Külker
+# License: GPLv3
+# 0.1.0 2024-03-01 Initial release
+use strict;
+use warnings;
+use JSON;
+use Chart::Gnuplot;
+
+my $json_text = qx(iostat -d -o JSON sdb 1 60);
+
+my @io_stats = map { $_->{'disk'}[0]{'tps'} }
+   @{ decode_json($json_text)->{'sysstat'}{'hosts'}[0]{'statistics'} };
+
+my $chart = Chart::Gnuplot->new(
+    output => "iostat-tps-json-gnuplot-0.1.0.png",
+    title  => "Disk IO Statistics",
+    xlabel => "Time [sec]",
+    ylabel => "Transfers per Second [tps]",
+    bg => 'white',
+    yrange => [ -1, "*" ],
+);
+
+my $dataSet = Chart::Gnuplot::DataSet->new(
+    ydata => \@io_stats,
+    title => "sdb",
+    style => "lines",
+    width => 5,
+);
+
+$chart->plot2d($dataSet);
+
