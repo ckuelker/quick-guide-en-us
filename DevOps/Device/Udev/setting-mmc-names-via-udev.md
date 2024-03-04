@@ -2,8 +2,8 @@
 title: Setting MMC (SDHC) Names with Udev
 linkTitle: Setting MMC Names
 author: Christian Külker
-version: 0.1.0
-date: 2024-03-03
+version: 0.1.1
+date: 2024-03-04
 type: doc
 locale: en_US
 lang: en
@@ -35,17 +35,27 @@ implementing an _udev rule_.
 
 ## Drive Naming Convention
 
-On the MATE desktop, as well as on other desktop environments and the command
-line, the name of a drive is typically derived from the _product name_ and the
-_disk label_. In the absence of a _disk label_, the drive's size is used
-instead. However, if the _product name_ is missing, the _disk label_ will not
-be displayed; instead, the system defaults to showing the _device name_ (e.g.,
-`/dev/mmcblk0`).
+> ![Named drive with a label](good-drive-with-label-v0.1.0.png "Named drive with a label")
+>
+> On the MATE desktop, as well as on other desktop environments and the command
+> line, the name of a drive is typically derived from the _product name_ and the
+> _disk label_.
 
-a) ![Named drive with a label](good-drive-with-label-v0.1.0.png)
-b) ![Named drive without a label but showing size](good-drive-without-label-v0.1.0.png)
-c) ![Unnamed drive with a hidden label before applying fix](bad-drive-before-fix-v0.1.0.png)
-d) ![Named drive with a label after applying fix](bad-drive-after-fix-v0.1.0.png)
+> ![Named drive without a label but showing size](good-drive-without-label-v0.1.0.png "Named drive without a label but showing size")
+>
+> In the absence of a _disk label_, the drive's size is used instead.
+
+
+> ![Unnamed drive with a hidden label before applying fix](bad-drive-before-fix-v0.1.0.png "Unnamed drive with a hidden label before applying fix")
+>
+> However, if the _product name_ is missing, the _disk label_ will not
+> be displayed; instead, the system defaults to showing the _device name_ (e.g.,
+> `/dev/mmcblk0`).
+
+> ![Named drive with a label after applying fix](bad-drive-after-fix-v0.1.0.png "Named drive with a label after applying fix")
+>
+> Shows the renamed device after applying the fix with a changed symbol and the
+> label.
 
 ## Label Assignment
 
@@ -71,6 +81,7 @@ To set a disk label, execute:
 ```bash
 # Read current label:
 fatlabel /dev/mmcblk0p1
+OLDLABEL
 # Set new label:
 fatlabel /dev/mmcblk0p1 NEWLABEL
 ```
@@ -122,7 +133,7 @@ lshw -c disk
 Conversely, here is an instance of a problematic drive lacking `ID_NAME`:
 
 ```bash
-# Output showing missing ID_NAM
+# Output showing missing ID_NAME
 udevadm info --query=all --name=/dev/mmcblk0|grep ID_
 E: ID_SERIAL=0x00026ff3
 E: ID_PATH=pci-0000:02:00.0-platform-rtsx_pci_sdmmc.0
@@ -230,16 +241,16 @@ children of `mmcblk0` and itself, when the drive information tree is added.
 However, upon unmounting a partition, `ID_NAME` would be removed, rendering
 `ACTION=="add"` unsuitable.
 
-To refine the `udev` rule, consider adding a system link. Unlike a named `mmc`,
-an unnamed `mmc` cannot be accessed via a `/dev/` link containing its name.
-`SYMLINK+=` could be used for this purpose, but it is not essential for this
-basic example.
+To refine the `udev` rule, consider adding a symbolic link. Unlike a named
+`mmc`, an unnamed `mmc` cannot be accessed via a `/dev/` link containing its
+name. `SYMLINK+=` could be used for this purpose, but it is not essential for
+this basic example.
 
 ## Ansible Playbook
 
-This Ansible playbook is designed to apply specific udev rules
-across a group of client systems. It focuses on the automation of udev rule
-deployment for disk naming.
+This Ansible playbook is designed to apply specific `udev` rules across a group
+of client systems. It focuses on the automation of `udev` rule deployment for
+disk naming. The above example is added.
 
 ```ansible
 ---
@@ -271,5 +282,6 @@ deployment for disk naming.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2024-03-04 | Minor improvements, reformatting 2nd section         |
 | 0.1.0   | 2024-03-03 | Initial release                                      |
 
