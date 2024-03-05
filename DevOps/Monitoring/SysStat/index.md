@@ -1,8 +1,8 @@
 ---
 title: SysStat
 author: Christian Külker
-version: 0.1.0
-date: 2024-03-01
+version: 0.1.1
+date: 2024-03-05
 type: doc
 locale: en_US
 lang: en
@@ -16,8 +16,9 @@ commands:
 - ls
 tags:
 - sysstat
-discription: <
-   System performance tools for the Linux operating system
+- iostat
+- mpstat
+discription: System performance tools for the Linux operating system
 
 ---
 
@@ -29,7 +30,7 @@ aimed at monitoring system performance and usage:
 
 - [__iostat__]  : Delivers CPU and input/output statistics for block devices
                   and partitions.
-- __mpstat__    : Provides statistics related to individual or multiple
+- [__mpstat__]  : Provides statistics related to individual or multiple
                   processors.
 - __pidstat__   : Offers statistics for Linux tasks (processes), encompassing
                   I/O, CPU, memory, and more.
@@ -37,6 +38,7 @@ aimed at monitoring system performance and usage:
 - __cifsiostat__: Generates CIFS statistics.
 
 [__iostat__]: iostat.md
+[__mpstat__]: mpstat.md
 
 SysStat includes several tools intended for scheduling via cron or `systemd` to
 accumulate and record performance and activity data:
@@ -77,4 +79,12 @@ accumulate and record performance and activity data:
   speed, device temperature, voltage inputs).
 - Additional Metrics: Covers USB devices connected to the system, filesystems
   utilization (inodes and blocks), and Pressure-Stall Information statistics.
+
+## History
+
+| Version | Date       | Notes                                                |
+| ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2024-03-05 | Add link to mpstat                                   |
+| 0.1.0   | 2024-03-01 | Initial release                                      |
+
 
