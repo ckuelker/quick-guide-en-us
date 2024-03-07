@@ -3,8 +3,8 @@ linkTitle: NUMA
 title: Non-Uniform Memory Access
 type: doc
 author: Christian Külker
-date: 2023-03-11
-version: 0.1.4
+date: 2024-03-07
+version: 0.1.5
 disclaimer: True
 toc: True
 keywords:
@@ -146,6 +146,29 @@ Standard hardware not used for [HPC] typically has only one [NUMA] node.
 Typical __X86__ [NUMA] hardware has 2 or more CPUs and 2 or more memory banks,
 one attached to each CPU.
 
+It also can be useful to understand the architecture in general as such,
+because "CPU's" are not equal.
+
+__Desktop:__
+
+```bash
+lscpu | grep -E '^Thread|^Core|^Socket|^CPU\('|grep -v scaling
+CPU(s):                             4
+Thread(s) per core:                 2
+Core(s) per socket:                 2
+Socket(s):                          1
+```
+
+__Raspberry Pi:__
+
+```bash
+lscpu | grep -E '^Thread|^Core|^Socket|^CPU\('|grep -v scaling
+CPU(s):                             4
+Thread(s) per core:                 1
+Core(s) per socket:                 4
+Socket(s):                          1
+```
+
 ## Compiling And Installing numactl From Source
 
 ```bash
@@ -277,6 +300,7 @@ CPU is not supported!
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.5   | 2024-03-07 | Add architecture example for lscpu                   |
 | 0.1.4   | 2023-03-11 | Linux note, minor improvements in typeface           |
 | 0.1.3   | 2023-03-10 | Improve writing, move history                        |
 | 0.1.2   | 2022-05-17 | Change shell blocks to bash block, history, dots     |
