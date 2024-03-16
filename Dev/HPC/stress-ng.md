@@ -2,7 +2,7 @@
 title: Stress NG
 linkTitle: stress-ng
 author: Christian Külker
-version: 0.1.0
+version: 0.1.1
 date: 2024-03-16
 type: doc
 locale: en_US
@@ -57,8 +57,8 @@ levels, which again requires cautious application.
 
 Users can specify the number of processes for each stress test type. Setting
 this number to zero defaults to the number of processors available as defined
-by `sysconf(_SC_NPROCESSORS_CONF)`. If this cannot be determined, the number of
-online CPUs is used. A negative value defaults to the number of online CPUs.
+by `sysconf( _SC_NPROCESSORS_CONF )`. If this cannot be determined, the number
+of online CPUs is used. A negative value defaults to the number of online CPUs.
 
 stress-ng includes over 220 different stress tests (stressors), encompassing a
 broad spectrum of system components:
@@ -125,12 +125,13 @@ aptitude install stress-ng
 
 ## Basic Usage
 
-Amazingly stress-ng has approximately over 926 command line options[^1]
+Amazingly stress-ng has approximately over 926 command line options[^1].
 Consequently, this guide will not attempt to cover all of them. The manual page
 for stress-ng includes 18 usage examples. The usage examples provided here are
 configured for brief durations, allowing for quick testing. However, for
-substantive stress testing, longer run times are typically recommended.  ###
-CPU
+substantive stress testing, longer run times are typically recommended.
+
+### CPU
 
 ```bash
 # Run 1 CPU threads (stressor) for 1 minute
@@ -145,30 +146,31 @@ are available.
 
 ```bash
 stress-ng --cpu-method which
-cpu-method must be one of: all ackermann apery bitops callfunc cdouble cfloat \
-clongdouble collatz correlate crc16 decimal32 decimal64 decimal128 dither \
-div8 div16 div32 div64 div128 double euler explog factorial fibonacci fft \
-fletcher16 float float32 float64 float80 float128 floatconversion gamma gcd \
-gray hamming hanoi hyperbolic idct int128 int64 int32 int16 int8 int128float \
-int128double int128longdouble int128decimal32 int128decimal64 \
-int128decimal128 int64float int64double int64longdouble int32float \
-int32double int32longdouble intconversion ipv4checksum jmp lfs r32 ln2 logmap \
-longdouble loop matrixprod nsqrt omega parity phi pi prime psi queens rand \
-rand48 rgb sieve stats sqrt trig union zeta
+cpu-method must be one of: all ackermann apery bitops callfunc cdouble \
+cfloat clongdouble collatz correlate crc16 decimal32 decimal64 \
+decimal128 dither div8 div16 div32 div64 div128 double euler explog \
+factorial fibonacci fft fletcher16 float float32 float64 float80 \
+float128 floatconversion gamma gcd gray hamming hanoi hyperbolic idct \
+int128 int64 int32 int16 int8 int128float int128double int128longdouble \
+int128decimal32 int128decimal64 int128decimal128 int64float int64double \
+int64longdouble int32float int32double int32longdouble intconversion \
+ipv4checksum jmp lfs r32 ln2 logmap longdouble loop matrixprod nsqrt \
+omega parity phi pi prime psi queens rand rand48 rgb sieve stats sqrt \
+trig union zeta
 ```
 
 ### Memory
 
-Execute one virtual memory stressor, adjusting the number to align with the
+Execute two virtual memory stressors, adjusting the number to align with the
 core or thread count of your system. These stressors should collectively
 utilize 80% of the available memory for a duration of one minute. Accordingly,
-each stressor will consume approximately 10% of the total available memory.
+each stressor will consume approximately 40% of the total available memory.
 
-``bash
-stress-ng --vm 1 --vm-bytes 80% -t 1m
-stress-ng: info: [106325] setting to a 60 second run per stressor
-stress-ng: info: [106325] dispatching hogs: 1 vm
-stress-ng: info: [106325] successful run completed in 60.12s (1 min, 0.12 secs)
+```bash
+stress-ng --vm 2 --vm-bytes 80% -t 1m
+stress-ng: info: [119819] setting to a 60 second run per stressor
+stress-ng: info: [119819] dispatching hogs: 2 vm
+stress-ng: info: [119819] successful run completed in 60.12s (1 min, 0.12 secs)
 ```
 
 ### IO
@@ -261,8 +263,8 @@ more command line options. Example CPU + IO + Memory.
 stress-ng --cpu 4 --io 2 --vm 1 --vm-bytes 1G --timeout 60s
 stress-ng: info: [108632] setting to a 60 second run per stressor
 stress-ng: info: [108632] dispatching hogs: 4 cpu, 2 io, 1 vm
-stress-ng: info: [108637] io: this is a legacy I/O sync stressor, consider \
-using iomix instead
+stress-ng: info: [108637] io: this is a legacy I/O sync stressor, \
+consider using iomix instead
 stress-ng: info: [108632] successful run completed in 60.06s (1 min, 0.06 secs)
 
 # Replacing io with iomix:
@@ -282,17 +284,17 @@ __Page Faults:__
 
 stress-ng enables the testing and analysis of page fault rates by generating
 major page faults in pages that are not currently loaded in memory. In newer
-kernel versions, the _userfaultfd_ mechanism alerts fault-handling threads about
-page faults within the virtual memory layout of a process. Executing these
-operations requires root privileges on the system.
-
+kernel versions, the _userfaultfd_ mechanism alerts fault-handling threads
+about page faults within the virtual memory layout of a process. Executing
+these operations requires root privileges on the system.
 
 ```bash
-# For older kernel (output was run on newer kernel, stress-ng + PID removed)
-# Linux 6.1.0-18-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.76-1 (2024-02-01) \
-# x86_64 GNU/Linux
-# 1. Simple Run without performance reporting (we can not see that it do not
-#    fit well)
+# For older kernel (output was run on newer kernel, stress-ng + PID
+# removed)
+# Linux 6.1.0-18-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.76-1 \
+# (2024-02-01) x86_64 GNU/Linux
+# 1. Simple Run without performance reporting (we can not see that it do
+#    not fit well)
 stress-ng --fault 0 -t 1m
 setting to a 60 second run per stressor
 dispatching hogs: 4 fault
@@ -399,8 +401,8 @@ successful run completed in 61.96s (1 min, 1.96 secs)
 ```bash
 # For newer kernel
 # (output was run on newer kernel, stress-ng + PID removed)
-# Linux 6.1.0-18-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.76-1 (2024-02-01) \
-# x86_64 GNU/Linux
+# Linux 6.1.0-18-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.76-1 \
+# (2024-02-01) x86_64 GNU/Linux
 # 1. Simple run
 stress-ng --userfaultfd 0  -t 1m
 setting to a 60 second run per stressor
@@ -560,9 +562,11 @@ specific to Linux. However, exercise caution as per the guidance in
 `perf_event_open(2)`, which advises to "Always double-check your results!
 Various generalized events have had wrong values." It's important to note that
 as of Linux version 4.7, `CAP_SYS_ADMIN` capabilities are required for this
-option to function. Alternatively, adjusting
-`/proc/sys/kernel/perf_event_paranoid` to a value below 2 allows for the use of
-this feature without `CAP_SYS_ADMIN` capabilities.
+option to function[^2].
+
+[^2]: Alternatively, adjusting `/proc/sys/kernel/perf_event_paranoid` to a
+value below 2 allows for the use of this feature without `CAP_SYS_ADMIN`
+capabilities.
 
 ## Benchmarking
 
@@ -582,7 +586,7 @@ Test memory with different test patterns for 1 hour:
 
 __`--perf:`__
 
-See previous section __Reporting__.
+See previous section __Reporting__ and __Faults__.
 
 ## Exit
 
@@ -592,12 +596,12 @@ to the bottom of the manual page for comprehensive information on these
 conditions.
 
 - 0: Success.
-- 1: Error; incorrect user options or a fatal resource issue in the stress-ng
+- 1: Error; Incorrect user options or a fatal resource issue in the stress-ng
   stressor harness
 - 2: Error; One or more stressors failed
 - 3: Error; One or more  stressors failed to initialise because of lack of
   resources
-- 4: Error;  One or more stressors were not implemented on a specific
+- 4: Error; One or more stressors were not implemented on a specific
   architecture or operating system
 - 5: Error; A stressor has been killed by an unexpected signal
 - 6: Error; A stressor exited by exit(2) which was not expected and timing
@@ -612,9 +616,9 @@ Exit code: 1
 
 # With SUCCESS:
 stress-ng --cpu 0 --timeout 60s;echo "Exit code: $?"
-stress-ng: info:  [108944] setting to a 60 second run per stressor
-stress-ng: info:  [108944] dispatching hogs: 4 cpu
-stress-ng: info:  [108944] successful run completed in 60.01s (1 min, 0.01 secs)
+stress-ng: info: [108944] setting to a 60 second run per stressor
+stress-ng: info: [108944] dispatching hogs: 4 cpu
+stress-ng: info: [108944] successful run completed in 60.01s (1 min, 0.01 secs)
 Exit code: 0
 ```
 
@@ -629,8 +633,8 @@ Exit code: 0
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.1   | 2024-03-16 | Fix example descriptions, formatting                 |
 | 0.1.0   | 2024-03-16 | Initial release (to GitHub)                          |
-
 
 [^1]: Not counting the short options, just the long options parsed with:
 ```bash
