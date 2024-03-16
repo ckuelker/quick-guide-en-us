@@ -57,7 +57,7 @@ levels, which again requires cautious application.
 
 Users can specify the number of processes for each stress test type. Setting
 this number to zero defaults to the number of processors available as defined
-by `sysconf( _SC_NPROCESSORS_CONF )`. If this cannot be determined, the number
+by _sysconf( _SC_NPROCESSORS_CONF )_. If this cannot be determined, the number
 of online CPUs is used. A negative value defaults to the number of online CPUs.
 
 stress-ng includes over 220 different stress tests (stressors), encompassing a
@@ -256,7 +256,7 @@ In this example, stress-ng tests 32 instances at 1MHz.
 
 ### Combining
 
-The compination of tasks (stressors) is easily possible by adding
+The combination of tasks (stressors) is easily possible by adding
 more command line options. Example CPU + IO + Memory.
 
 ```bash
