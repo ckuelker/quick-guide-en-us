@@ -2,8 +2,8 @@
 title: Github Pull Request
 linkTitle: Github-Pull-Request
 author: Christian Külker
-date: 2024-02-27
-version: 0.1.4
+date: 2024-03-18
+version: 0.1.5
 type: doc
 disclaimer: True
 toc: True
@@ -107,7 +107,7 @@ user@host:~$ git branch -a
 
 ```bash
 user@host:~$ sed -i -e 's%A%B%' file.md
-user@host:~$ git commit -m 'Missspelling (A -> B)' file.md
+user@host:~$ git commit -m 'Misspelling (A -> B)' file.md
 ```
 
 9. Cleanup the branch before pushing
@@ -163,7 +163,7 @@ The last commit already shows the URL to go to
 `https://github.com/UPSTREAM-USER/UPSTREAM-REPO/pull/new/BRANCHNAME`. Use the
 URL and press the green "Compare & Pull Request" button. Add a message.
 
-_OR_ use the button unte GitHub Web interface mentioned at the end of the
+_OR_ use the button under GitHub Web interface mentioned at the end of the
 last section.
 
 ## Understanding The Remote Origin
@@ -217,6 +217,7 @@ See [managing forks](github-manageing-forks.html) for details.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.5   | 2024-03-18 | Fix typos                                            |
 | 0.1.4   | 2024-02-27 | Small improvements and changes in formatting         |
 | 0.1.3   | 2023-05-08 | Improve writing                                      |
 | 0.1.2   | 2022-06-23 | Improve introduction                                 |
