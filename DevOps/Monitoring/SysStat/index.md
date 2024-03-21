@@ -1,8 +1,8 @@
 ---
 title: SysStat
 author: Christian Külker
-version: 0.1.2
-date: 2024-03-08
+version: 0.1.3
+date: 2024-03-21
 type: doc
 locale: en_US
 lang: en
@@ -161,7 +161,7 @@ On the command-line the following works __after__ package installation.
 debconf-show sysstat
 * sysstat/enable: false
   sysstat/remove_files: true
-rm /etc/default/sysstat # Or edit it and set to "true"
+# Edit /etc/default/sysstat and set ENABLED to "true"
 echo sysstat sysstat/enable boolean true|debconf-set-selections
 dpkg-reconfigure --frontend=noninteractive sysstat
 debconf-show sysstat
@@ -217,10 +217,22 @@ With Ansible two more steps are needed.
         state: restarted
 ```
 
+## Graphics
+
+Projects related to sysstat that presents sar data in graphical format.
+
+- sarface: <http://sourceforge.net/projects/sarface/>
+- sar2png: <https://github.com/sqrt529/sar2png>
+- ksar: <https://sourceforge.net/projects/ksar/files/>
+  - ksar usage:
+    <https://www.thomas-krenn.com/en/wiki/Linux_Performance_Analysis_using_kSar>
+
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2024-03-21 | Add graphics section                                 |
 | 0.1.2   | 2024-03-08 | Improve introduction, add Debian section,  Ansible   |
 | 0.1.1   | 2024-03-05 | Add link to mpstat                                   |
 | 0.1.0   | 2024-03-01 | Initial release                                      |
+
