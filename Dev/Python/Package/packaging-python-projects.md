@@ -1,8 +1,8 @@
 ---
 title: Packaging Python Projects
 author: Christian Külker
-date: 2023-05-16
-version: 0.1.3
+date: 2024-06-17
+version: 0.1.4
 type: doc
 disclaimer: True
 toc: True
@@ -382,7 +382,7 @@ Consider the following small Flask application called
 structure. Note that unlike the previous example, the `tests` test directory is
 at the project level.
 
-~~~
+```tree
 boxbrainiac-dev  # = PACKAGE_DEV
 .
 ├── boxbrainiac
@@ -419,7 +419,7 @@ boxbrainiac-dev  # = PACKAGE_DEV
     ├── test_store.py
     ├── test_template.py
     └── test_util.py
-~~~
+```
 
 ### Test a Python3 Package With pip3 Inside venv
 
@@ -448,7 +448,7 @@ This creates two different types of distributable package formats: `sdist` (a
 source distribution format encapsulated in a tar file) and `bdist_wheel` (a
 built distribution format encapsulated in a `*.whl` file) and many other files.
 
-~~~
+```tree
 ├── boxbrainiac.egg-info
 │   ├── dependency_links.txt
 │   ├── entry_points.txt
@@ -480,7 +480,7 @@ built distribution format encapsulated in a `*.whl` file) and many other files.
 ├── dist
 │   ├── boxbrainiac-0.1.0-py3-none-any.whl
 │   └── boxbrainiac-0.1.0.tar.gz
-~~~
+```
 
 Some packages can run tests without installation (like Perl modules), in other
 cases you need to install the package before you can test it. Unlike Perl,
@@ -568,6 +568,7 @@ Guide <https://packaging.python.org/en/latest/>.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.4   | 2024-06-17 | Change verbatim environment for trees (PDF)          |
 | 0.1.3   | 2023-05-16 | Fix some errors like names or python3, pip3          |
 | 0.1.2   | 2023-05-10 | Improve writing, Add Test a Python3 Package With ... |
 | 0.1.1   | 2022-05-26 | +History, Change shell to bash                       |
