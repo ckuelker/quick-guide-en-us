@@ -1,7 +1,7 @@
 ---
 title: Qownnotes
 author: Christian Külker
-date: 2024-02-09
+date: 2024-06-20
 version: 0.1.1
 locale: en_US
 lang: en
@@ -17,9 +17,7 @@ commands:
 tags:
 - Qownnotes
 - Ansible
-description:
-  Qownnotes is an editor to write markdown files and maintain a notes
-  directory.
+description: Qownnotes is an editor to write markdown files and maintain a notes directory.
 
 ---
 
@@ -131,9 +129,6 @@ the list in case you have more than one user.
 
 
 ```yaml
-# qownnotes.yaml
-# 0.1.0 2024-02-08 Initial release
----
 - name: Install and setup QOwnNotes
   hosts: all
   become: yes  # This is required for installing packages and writing to /srv
@@ -310,6 +305,7 @@ catering to users who need a straightforward yet capable note-taking tool.
 - Encryption (not tested)
 - Tags
 - Web application support (not tested)
+- Can use a generic CalDAV server (not tested)
 
 ### Cons
 
@@ -324,6 +320,6 @@ catering to users who need a straightforward yet capable note-taking tool.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
-| 0.1.1   | 2024-02-09 | Add debug section and Ansible playbook               |
+| 0.1.1   | 2024-06-20 | Add debug section and Ansible playbook               |
 | 0.1.0   | 2023-09-14 | Initial release                                      |
 
