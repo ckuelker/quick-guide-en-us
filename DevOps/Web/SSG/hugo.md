@@ -1,9 +1,8 @@
 ---
 title: Hugo
 author: Christian Külker
-date: 2023-03-24
-version: 0.1.1
-tags:       [Hugo, Go]
+date: 2024-07-11
+version: 0.1.2
 categories:
   - SSG
   - CMS
@@ -14,6 +13,7 @@ type: doc
 disclaimer: True
 tags:
 - Hugo
+- Go
 description: Hugo is an open source static site generator
 
 ---
@@ -548,6 +548,7 @@ B
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2024-07-11 | Fix frontmatter (remove double 'tags' key)           |
 | 0.1.1   | 2023-03-24 | Improve writing, history                             |
 | 0.1.0   | 2020-02-12 | Initial release                                      |
 
