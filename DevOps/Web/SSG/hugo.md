@@ -436,7 +436,9 @@ $HOME/g/github.com/gohugoio/hugo/hugo server --enableGitInfo --i18n-warnings\
 
 ### Publish Content
 
+```bash
     $HOME/g/github.com/gohugoio/hugo/hugo
+```
 
 Will write data to `pulic`
 
@@ -458,7 +460,6 @@ Will write data to `pulic`
 
 * [hichdev.com](https://hitchdev.com/) hugo + Material Theme
 
-
 ## URLs
 
 * [home](https://github.com/gohugoio/hugo)
@@ -467,9 +468,11 @@ Will write data to `pulic`
 
 ## Using Hugo 0.64.1
 
+```bash
     source /srv/env/hugo-0.64.1
     hugo version
     Hugo Static Site Generator v0.64.1 linux/amd64 BuildDate: unknown
+```
 
 ```bash
 hugo new site $HOME/scratch/hugo-0.64.1-new-site
@@ -520,9 +523,10 @@ Then use it as `{{ T "imprint" }}`
 ## Problems
 
 Your rendered home page is blank: /index.html is zero-length
- * Did you specify a theme on the command-line or in your
+
+- Did you specify a theme on the command-line or in your
    "config.toml" file?  (Current theme: "")
- * For more debugging information, run "hugo -v"
+- For more debugging information, run "hugo -v"
 
 ## Output Formats
 
@@ -543,12 +547,11 @@ B
 {{- end }}
 ```
 
-
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
-| 0.1.2   | 2024-07-11 | Fix frontmatter (remove double 'tags' key)           |
+| 0.1.2   | 2024-07-11 | Fix frontmatter (remove double 'tags' key), Format   |
 | 0.1.1   | 2023-03-24 | Improve writing, history                             |
 | 0.1.0   | 2020-02-12 | Initial release                                      |
 
