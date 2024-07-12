@@ -1,8 +1,8 @@
 ---
 title: Hugo
 author: Christian Külker
-date: 2024-07-11
-version: 0.1.2
+date: 2024-07-12
+version: 0.1.3
 categories:
   - SSG
   - CMS
@@ -232,6 +232,56 @@ source /srv/env/node-v12.5.0-linux-x64
 npm install -D --save autoprefixer
 npm install -D --save postcss-cli
 ```
+
+### [theme/docsy] How To Change The List Format In Sections?
+
+Sections are Directories with a `_index.md` file that (if chosen)
+list the sub pages of that directory.
+
+~~~
+dev
+   _index.md
+   python.md
+   perl.md
+~~~
+
+Below the content of `_index_html` a list is shown. The format of
+list depends on the front matter:
+
+~~~
+    ---
+    simple_list: true
+    ---
+~~~
+
+For `simple_list: true` a simple list (ul, li) is shown.
+
+```html
+<ul>
+  {{ range $pages }}
+    {{ if eq .Parent $parent }}
+    <li><a href="{{ .RelPermalink }}">{{- .Title -}}</a></li>
+    {{ end }}
+  {{ end }}
+</ul>
+```
+
+Where as for `simple_list: false` a h5 description list is shown (that takes up
+more space).  The `theme/docsy` template that do that is:
+`layouts/partials/section-index.html`.
+
+```html
+<div class="entry">
+  <h5>
+    <a href="{{ .RelPermalink }}">{{- .Title -}}</a>
+  </h5>
+  <p>{{ .Description | markdownify }}</p>
+</div>
+```
+
+
+
+
 
 ## Source Code Latest Version
 
@@ -551,6 +601,7 @@ B
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2024-07-12 | Add How To Change The List Format In Sections        |
 | 0.1.2   | 2024-07-11 | Fix frontmatter (remove double 'tags' key), Format   |
 | 0.1.1   | 2023-03-24 | Improve writing, history                             |
 | 0.1.0   | 2020-02-12 | Initial release                                      |
