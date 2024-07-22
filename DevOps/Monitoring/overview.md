@@ -2,8 +2,8 @@
 title: Monitoring Overview
 linkTitle: Overview
 author: Christian Külker
-date: 2023-01-04
-version: 0.1.6
+date: 2024-07-22
+version: 0.1.7
 type: doc
 disclaimer: True
 toc: True
@@ -32,75 +32,103 @@ ranges or not. This is marked as 'Mon.'.
 
 ## Overview
 
-| Software      | Language/Dependency    | Query | Deb | Kind  | License   | URL                                                   |
-| ------------- | ---------------------- | ----- | --- | ----- | --------- | ----------------------------------------------------- |
-|  CACTI        | PHP5 Mysql Perl Apache |       | yes |       | GPL       | [🡺](http://www.cacti.net/)                            |
-|  CENTREON     |                        |       |     |       |           |                                                       |
-| [CHECKMK]     | Python,C++,Shell,C,JS  | Nag.  | no  |       | GPLv2     | [🡺](https://checkmk.com/)                             |
-| GANGLIA       | C, Perl, PHP, Python   |       | yes |       |           | [🡺](http://www.ganglia.info)                          |
-| [GRAFANA]     | Go, TypeScript, Shell  |       | no  | Usage | AGPL-v3   | [🡺](https://grafana.com/)                             |
-|  ICINGA       | Perl                   | Nag.  | yes | Mon.  | GPLv2/3   | [🡺](https://www.icinga.org/) [🡺](https://icinga.com)  |
-|  ICINGA2      | C++, web: PHP          | Nag.  | yes | Mon.  |           | [🡺](https://www.icinga.org/) [🡺](https://icinga.com)  |
-|  MANTIS       |                        |       |     |       |           |                                                       |
-|  MRTG         | Perl                   | SNMP  | yes | Usage |           | [🡺](http://oss.oetiker.ch/mrtg/)                      |
-|  MUNIN        | Perl httpd             |       | yes | Usage |           | [🡺](http://munin-monitoring.org/)                     |
-|  NAV          |                        |       |     |       | GPLv3     | [🡺](https://nav.uninett.no/)                          |
-|  NETSAINT     |                        |       |     |       |           |                                                       |
-|  NAGIOS3      | Perl                   | Nag.  | yes | Mon.  |           | [🡺](https://www.nagios.org/)                          |
-|  OBSERVIUM    | PHP                    | SNMP  | no  |       | Observium | [🡺](http://www.observium.org/)                        |
-|  OPSVIEW      |                        |       |     |       |           |                                                       |
-|  OP5/NINJA    |                        |       |     |       |           |                                                       |
-|  OP5/MONITOR  |                        |       |     |       |           |                                                       |
-| [PROMETHEUS]  | Go, TypeScript, Shell  |       | yes | Mon.  | Apache-v2 | [🡺](https://prometheus.io/)                           |
-|  SHINKEN      | Phython                | Nag.  | yes | Mon.  | AGPL-v3   | [🡺](http://www.shinken-monitoring.org/)               |
-|  THRUK        |                        |       |     |       |           |                                                       |
-|  ZABBIX       | C PHP                  |       | yes |       | GPLv2     | [🡺](http://zabbix.com/)                               |
+| Software      | Language/Dependency    | Query | Deb | Kind  | License   |
+| ------------- | ---------------------- | ----- | --- | ----- | --------- |
+|  CACTI        | PHP5 Mysql Perl Apache |       | yes |       | GPL       |
+|  CENTREON     |                        |       |     |       |           |
+|  CHECKMK      | Python,C++,Shell,C,JS  | Nag.  | no  |       | GPLv2     |
+|  GANGLIA      | C, Perl, PHP, Python   |       | yes |       |           |
+|  GRAFANA      | Go, TypeScript, Shell  |       | no  | Usage | AGPL-v3   |
+|  ICINGA       | Perl                   | Nag.  | yes | Mon.  | GPLv2/3   |
+|  ICINGA2      | C++, web: PHP          | Nag.  | yes | Mon.  |           |
+|  LIBRENMS     | PHP,MySQL              | SNMP  | no  |       | GPLv3     |
+|  MANTIS       |                        |       |     |       |           |
+|  MRTG         | Perl                   | SNMP  | yes | Usage |           |
+|  MUNIN        | Perl httpd             |       | yes | Usage |           |
+|  NAV          |                        |       |     |       | GPLv3     |
+|  NETDATA      | C, Go, JavaScript      |       | yes |       | GPLv3     |
+|  NETSAINT     |                        |       |     |       |           |
+|  NAGIOS3      | Perl                   | Nag.  | yes | Mon.  |           |
+|  OBSERVIUM    | PHP                    | SNMP  | no  |       | Observium |
+|  OPENNMS      | Java                   |       | no  |       | AGPLv3    |
+|  OPSVIEW      |                        |       |     |       |           |
+|  OP5/NINJA    |                        |       |     |       |           |
+|  OP5/MONITOR  |                        |       |     |       |           |
+|  PROMETHEUS   | Go, TypeScript, Shell  |       | yes | Mon.  | Apache-v2 |
+|  SHINKEN      | Phython                | Nag.  | yes | Mon.  | AGPL-v3   |
+|  THRUK        |                        |       |     |       |           |
+|  ZABBIX       | C PHP                  |       | yes |       | GPLv2     |
 
     Nag.  - Nagios query type, including nrpe
     Usage - Tool display usage as target, no warnings
     Mon.  - Tool monitors, give warnings
 
-## Other
+### Links 🡺
 
-- [OpenNMS]
-- [Netdata]
-- [M/Monit]
-- [LibreNMS]
-
-[checkmk]: https://checkmk.com/
-[Prometheus]: https://prometheus.io/
-[Grafana]: https://grafana.com/grafana/
-[OpenNMS]: https://www.opennms.org/en
-[Netdata]: https://www.netdata.cloud/
-[M/Monit]: https://mmonit.com/
-[LibreNMS]: https://www.librenms.org/
+- CACTI
+  - Home <https://www.cacti.net/>
+- CENTREON
+- CHECKMK
+  - Home <https://checkmk.com/>
+  - Source <https://github.com/tribe29/checkMK>
+- GANGLIA
+  - Home <http://www.ganglia.info>
+- GRAFANA
+  - Home <https://grafana.com/>
+  - Source <https://github.com/grafana/grafana>
+- ICINGA, ICINGA2
+  - Home <https://www.icinga.org/>
+  - Company <https://icinga.com>
+  - Source icinga2 <https://github.com/Icinga/icinga2>
+  - Source icinga2-web <https://github.com/Icinga/icingaweb2>
+  - Source icinga2-puppet <https://github.com/Icinga/puppet-icinga2>
+- LIBRENMS
+  - Home <https://www.librenms.org/>
+  - Source <https://github.com/librenms/librenms>
+- MANTIS
+- MRTG
+  - Home <http://oss.oetiker.ch/mrtg/>
+- MUNIN
+  - Home <http://munin-monitoring.org/>
+- NAV
+  - Home <https://nav.uninett.no/>
+- NETSAINT
+- NAGIOS3, NAGIOS4
+  - Home <https://www.nagios.org/>
+  - Source Nagios 4 nagios4-nagioscore <https://github.com/NagiosEnterprises/nagioscore>
+- NETDTATA
+  - Home <https://www.netdata.cloud/>
+  - Source <https://github.com/netdata/netdata>
+- OBSERVIUM
+  - Home <http://www.observium.org/>
+- OPENNMS
+  - Home <https://www.opennms.com/>
+  - Source <https://github.com/OpenNMS/opennms>
+- OPSVIEW
+- OP5/NINJA, OP5/MONITOR
+- PROMETHEUS
+  - Home <https://prometheus.io/>
+  - Source <https://github.com/prometheus/prometheus>
+- SHINKEN
+  - Home <http://www.shinken-monitoring.org/>
+  - Source <https://github.com/naparuba/shinken>
+- THRUK
+-  ZABBIX
+  - Home <http://zabbix.com/>
 
 ## Web Interfaces
 
 | Software | Application                  | URL                         |
 | -------- | ---------------------------- | --------------------------- |
-| Thruk    | Naemon Icinga Shinken Nagios | [🡺](https://www.thruk.org/) |
-
-## Source
-
-| Software           | Repository                                                |
-| ------------------ | --------------------------------------------------------- |
-| checkMK            | [github](https://github.com/tribe29/checkMK)              |
-| grafana            | [github](https://github.com/grafana/grafana)              |
-| icinga2            | [github](https://github.com/Icinga/icinga2)               |
-| icinga2-web        | [github](https://github.com/Icinga/icingaweb2)            |
-| icinga2-puppet     | [github](https://github.com/Icinga/puppet-icinga2)        |
-| nagios4-nagioscore | [github](https://github.com/NagiosEnterprises/nagioscore) |
-| Prometheus         | [github](https://github.com/prometheus/prometheus)        |
-| Shinken            | [github](https://github.com/naparuba/shinken)             |
+| Thruk    | Naemon Icinga Shinken Nagios | 🡺 <https://www.thruk.org/>  |
 
 ## Conference
 
 | Software           | URL                                          |
 | ------------------ | -------------------------------------------- |
-| icinga             | [icingaconf](https://icingaconf.com/)        |
+| icinga             | 🡺 <https://icingaconf.com/>                  |
 
-## Links
+## Additional information
 
 * [2015: nagios, icinga2, sensu](https://phillbarber.blogspot.com/2015/03/nagios-vs-sensu-vs-icinga2.html)
 * [2016: 9 reasons not to install Nagios](https://pandorafms.com/blog/9-reasons-not-to-install-nagios-in-your-company/)
@@ -110,6 +138,7 @@ ranges or not. This is marked as 'Mon.'.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.7   | 2024-07-22 | Reformat, -M/MONIT
 | 0.1.6   | 2023-01-04 | +PROMETHEUS+GRAFANA, mod CHECK_MK                    |
 | 0.1.5   | 2021-05-19 | Formatting for Quick-Guide                           |
 | 0.1.4   | 2020-02-14 | comparison links                                     |
