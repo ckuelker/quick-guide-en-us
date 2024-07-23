@@ -2,8 +2,8 @@
 title: Monitoring Overview
 linkTitle: Overview
 author: Christian Külker
-date: 2024-07-22
-version: 0.1.7
+date: 2024-07-23
+version: 0.1.8
 type: doc
 disclaimer: True
 toc: True
@@ -48,6 +48,7 @@ ranges or not. This is marked as 'Mon.'.
 |  NAV          |                        |       |     |       | GPLv3     |
 |  NETDATA      | C, Go, JavaScript      |       | yes |       | GPLv3     |
 |  NETSAINT     |                        |       |     |       |           |
+|  NETXMS       | Java, C++, C           |       | no  |       | LGPL/GPL  |
 |  NAGIOS3      | Perl                   | Nag.  | yes | Mon.  |           |
 |  OBSERVIUM    | PHP                    | SNMP  | no  |       | Observium |
 |  OPENNMS      | Java                   |       | no  |       | AGPLv3    |
@@ -93,6 +94,9 @@ ranges or not. This is marked as 'Mon.'.
 - NAV
   - Home <https://nav.uninett.no/>
 - NETSAINT
+- NETXMS
+  - Home <https://netxms.com/>
+  - Source <https://github.com/netxms/netxms>
 - NAGIOS3, NAGIOS4
   - Home <https://www.nagios.org/>
   - Source Nagios 4 nagios4-nagioscore <https://github.com/NagiosEnterprises/nagioscore>
@@ -138,7 +142,8 @@ ranges or not. This is marked as 'Mon.'.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
-| 0.1.7   | 2024-07-22 | Reformat, -M/MONIT
+| 0.1.8   | 2024-07-23 | +NETXMS                                              |
+| 0.1.7   | 2024-07-22 | Reformat, -M/MONIT                                   |
 | 0.1.6   | 2023-01-04 | +PROMETHEUS+GRAFANA, mod CHECK_MK                    |
 | 0.1.5   | 2021-05-19 | Formatting for Quick-Guide                           |
 | 0.1.4   | 2020-02-14 | comparison links                                     |
