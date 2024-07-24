@@ -2,8 +2,8 @@
 title: Monitoring Overview
 linkTitle: Overview
 author: Christian Külker
-date: 2024-07-23
-version: 0.1.8
+date: 2024-07-24
+version: 0.1.9
 type: doc
 disclaimer: True
 toc: True
@@ -47,6 +47,7 @@ ranges or not. This is marked as 'Mon.'.
 |  MUNIN        | Perl httpd             |       | yes | Usage |           |
 |  NAV          |                        |       |     |       | GPLv3     |
 |  NETDATA      | C, Go, JavaScript      |       | yes |       | GPLv3     |
+|  NETDISCO     | Perl, Javascript       |       |     |       | BSD3      |
 |  NETSAINT     |                        |       |     |       |           |
 |  NETXMS       | Java, C++, C           |       | no  |       | LGPL/GPL  |
 |  NAGIOS3      | Perl                   | Nag.  | yes | Mon.  |           |
@@ -100,6 +101,9 @@ ranges or not. This is marked as 'Mon.'.
 - NAGIOS3, NAGIOS4
   - Home <https://www.nagios.org/>
   - Source Nagios 4 nagios4-nagioscore <https://github.com/NagiosEnterprises/nagioscore>
+- NETDISCO
+  - Home <https://netdisco.org/>
+  - Source <https://github.com/netdisco/netdisco>
 - NETDTATA
   - Home <https://www.netdata.cloud/>
   - Source <https://github.com/netdata/netdata>
@@ -142,6 +146,7 @@ ranges or not. This is marked as 'Mon.'.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.9   | 2024-07-24 | +NETDISCO                                            |
 | 0.1.8   | 2024-07-23 | +NETXMS                                              |
 | 0.1.7   | 2024-07-22 | Reformat, -M/MONIT                                   |
 | 0.1.6   | 2023-01-04 | +PROMETHEUS+GRAFANA, mod CHECK_MK                    |
