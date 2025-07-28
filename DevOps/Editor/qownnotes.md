@@ -1,8 +1,8 @@
 ---
 title: Qownnotes
 author: Christian Külker
-date: 2024-06-20
-version: 0.1.1
+date: 2025-07-28
+version: 0.1.2
 locale: en_US
 lang: en
 type: doc
@@ -311,15 +311,22 @@ catering to users who need a straightforward yet capable note-taking tool.
 
 - Install to `/usr` instead of `/usr/local` without PREFIX
 - Uses many SQL lite databases (for meta data)
-- Configuration data at several locations ($HOME/.local, $HOME/.config,
-  $HOME/Notes)
+- Configuration data at several locations (HOME/.local, HOME/.config,
+  HOME/Notes)
 - Some features (like versioning) only works with cloud service
 - Binary is spelled mixed case including upper case
+- The binary is not capable to edit a Markdown file provided on command line
+- The binary renames nodes based on the first heading and therefore changes
+  (and deletes) files on the file system without asking.
+- Editing in typewriter mode is a second hand citizen, the editing is not
+  smooth and characters changes places depending on what mode the highlight
+  engine thinks it is in
 
 ## History
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2025-07-28 | Add more cons to critique                            |
 | 0.1.1   | 2024-06-20 | Add debug section and Ansible playbook               |
 | 0.1.0   | 2023-09-14 | Initial release                                      |
 
