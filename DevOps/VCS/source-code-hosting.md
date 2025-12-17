@@ -2,8 +2,8 @@
 title: Source Code Hosting
 linkTitle: Source-Code-Hosting
 author: Christian Külker
-date: 2024-02-12
-version: 0.1.2
+date: 2025-12-17
+version: 0.1.3
 locale: en_US
 lang: en
 type: doc
@@ -33,7 +33,7 @@ _CVS_, centralized source code management was the sole option. However, _Git_
 and similar systems are decentralized. Manual management of these distributed
 repositories becomes overly complex as an organization or project expands.
 Despite _Git's_ decentralized nature, most organizations and projects opt for a
-centralized server infrastructure. The choice between onsite hosting or
+centralized server infrastructure. The choice between on-site hosting or
 third-party hosting depends on the organization's IT infrastructure and the
 confidentiality of the source code. Third-party hosting often involves
 platforms like <https://github.com>, though numerous solutions exist for both
@@ -107,9 +107,13 @@ projects.
 
 ## Gitea
 
+(Fork of Gogs)
+
 - Home: <https://gitea.io/en-us/>
+- Source: <https://github.com/go-gitea/gitea>
 - Source: <https://code.gitea.io/gitea/>
 - Documentation: <https://docs.gitea.io/en-us/>
+- Demo: <https://demo.gitea.com/>
 
 ### Databases
 
@@ -123,6 +127,7 @@ projects.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2025-12-17 | Add more info for Gitea                              |
 | 0.1.2   | 2024-02-12 | Fix acronym definition (not supported by pandoc)     |
 | 0.1.1   | 2024-02-04 | Add project chapters                                 |
 | 0.1.0   | 2022-06-21 | Initial release                                      |
