@@ -1,8 +1,8 @@
 ---
 title: Postfix Statistics
 author: Christian Külker
-date: 2024-01-31
-version: 0.1.5
+date: 2026-02-13
+version: 0.1.6
 type: doc
 disclaimer: True
 toc: True
@@ -16,7 +16,7 @@ tags:
 - Pflogsumm
 - Poststats
 - Mailx
-description:
+description: |
   As many communication servers, to know if the service performs at an expected
   level, a statistic overview comes in handy to evaluate service health.
 
@@ -31,7 +31,7 @@ A list of software that has mail statistic features.
 
 | Name             | Cov. | URL                                             |
 | ---------------- |----- | ----------------------------------------------- |
-| pflogsum         | Yes  | https://jimsun.linxnet.com/postfix_contrib.html |
+| pflogsumm        | Yes  | https://jimsun.linxnet.com/postfix_contrib.html |
 | lightmeter       | No   | https://gitlab.com/lightmeter/controlcenter/    |
 | Postscreen-Stats | No   | https://github.com/jvehent/Postscreen-Stats     |
 | PostConf         | No   | https://www.postconf.com/docs/spamrep/          |
@@ -51,6 +51,7 @@ A list of software that has no mail statistic features.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.6   | 2026-02-13 | Fix typo, improve formatting, fix front matter YAML  |
 | 0.1.5   | 2024-01-31 | Improve writing                                      |
 | 0.1.4   | 2022-11-13 | Fix typo                                             |
 | 0.1.3   | 2022-06-04 | Changed shell to bash; updated cron settings, links  |
@@ -82,11 +83,11 @@ While some contributions, for example by
 are suggesting to configure `logrotate` to have a dedicated log over 24 hours,
 I got the impression that `pflogsumm` can do this already by itself via a time
 stamp query and keywords like `yesterday`. I agree that when using the
-yesterday feature, the results depend on the time at which the cron job is
+yesterday feature, the results depend on the time at which the `cron` job is
 executed. Additionally, re-invoking the same job after 24 hours would yield
 different results. So a recreation of the reports would be more difficult.
 However usually as a 'heads-up' using the `yesterday` scope as a one time shot
-cron job seems justified.
+`cron` job seems justified.
 
 ### Invocations
 
@@ -119,7 +120,7 @@ after 24:00 on every Sunday (4:10):
 /usr/bin/mailx -s "`hostname --fqdn` weekly mail statistic" postmaster
 ```
 
-Then add a line to cron
+Then add a line to `cron`
 
 ```cron
 10 4 * * 0 /usr/local/sbin/postfix-statistics-pdflogsumm-week
@@ -127,9 +128,9 @@ Then add a line to cron
 
 ## Poststats
 
-Unlike the name the `poststats` tool (GPLv3), despite the name is postfix
-monitor with a web interface and mail sending capability triggered via cron.
-As it does not provide statistics, poststats will not be covered in this
+Unlike the name the `poststats` tool (GPLv3), despite the name is `postfix`
+monitor with a web interface and mail sending capability triggered via `cron`.
+As it does not provide statistics, `poststats` will not be covered in this
 document.
 
 ### Further reading
